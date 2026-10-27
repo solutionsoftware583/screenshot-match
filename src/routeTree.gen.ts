@@ -10,33 +10,535 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WorkflowsRouteImport } from './routes/workflows'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminConfigRouteImport } from './routes/admin.config'
+import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
+import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAnalysisRouteImport } from './routes/app.analysis'
+import { Route as AppAppealsRouteImport } from './routes/app.appeals'
+import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
+import { Route as AppBillingRouteImport } from './routes/app.billing'
+import { Route as AppBusinessesRouteImport } from './routes/app.businesses'
+import { Route as AppDiscoverRouteImport } from './routes/app.discover'
+import { Route as AppEvidenceRouteImport } from './routes/app.evidence'
+import { Route as AppFindingsRouteImport } from './routes/app.findings'
+import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
+import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
+import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppRemovalsRouteImport } from './routes/app.removals'
+import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppRolesRouteImport } from './routes/app.roles'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppSubmissionsRouteImport } from './routes/app.submissions'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppCasesIndexRouteImport } from './routes/app.cases.index'
+import { Route as AppCasesIdRouteImport } from './routes/app.cases.$id'
+import { Route as AppReviewsIndexRouteImport } from './routes/app.reviews.index'
+import { Route as AppReviewsIdRouteImport } from './routes/app.reviews.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkflowsRoute = WorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfigRoute = AdminConfigRouteImport.update({
+  id: '/config',
+  path: '/config',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsRoute = AdminJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTenantsRoute = AdminTenantsRouteImport.update({
+  id: '/tenants',
+  path: '/tenants',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalysisRoute = AppAnalysisRouteImport.update({
+  id: '/analysis',
+  path: '/analysis',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAppealsRoute = AppAppealsRouteImport.update({
+  id: '/appeals',
+  path: '/appeals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppApprovalsRoute = AppApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBusinessesRoute = AppBusinessesRouteImport.update({
+  id: '/businesses',
+  path: '/businesses',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDiscoverRoute = AppDiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppEvidenceRoute = AppEvidenceRouteImport.update({
+  id: '/evidence',
+  path: '/evidence',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFindingsRoute = AppFindingsRouteImport.update({
+  id: '/findings',
+  path: '/findings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRemovalsRoute = AppRemovalsRouteImport.update({
+  id: '/removals',
+  path: '/removals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportsRoute = AppReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRolesRoute = AppRolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSubmissionsRoute = AppSubmissionsRouteImport.update({
+  id: '/submissions',
+  path: '/submissions',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasesIndexRoute = AppCasesIndexRouteImport.update({
+  id: '/cases/',
+  path: '/cases/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasesIdRoute = AppCasesIdRouteImport.update({
+  id: '/cases/$id',
+  path: '/cases/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReviewsIndexRoute = AppReviewsIndexRouteImport.update({
+  id: '/reviews/',
+  path: '/reviews/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReviewsIdRoute = AppReviewsIdRouteImport.update({
+  id: '/reviews/$id',
+  path: '/reviews/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/app': typeof AppRouteWithChildren
+  '/features': typeof FeaturesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
+  '/workflows': typeof WorkflowsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/config': typeof AdminConfigRoute
+  '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/app/analysis': typeof AppAnalysisRoute
+  '/app/appeals': typeof AppAppealsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/businesses': typeof AppBusinessesRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/findings': typeof AppFindingsRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/notifications': typeof AppNotificationsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/removals': typeof AppRemovalsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/roles': typeof AppRolesRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/submissions': typeof AppSubmissionsRoute
+  '/app/team': typeof AppTeamRoute
+  '/admin/': typeof AdminIndexRoute
+  '/app/': typeof AppIndexRoute
+  '/app/cases/$id': typeof AppCasesIdRoute
+  '/app/reviews/$id': typeof AppReviewsIdRoute
+  '/app/cases/': typeof AppCasesIndexRoute
+  '/app/reviews/': typeof AppReviewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/features': typeof FeaturesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
+  '/workflows': typeof WorkflowsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/config': typeof AdminConfigRoute
+  '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/app/analysis': typeof AppAnalysisRoute
+  '/app/appeals': typeof AppAppealsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/businesses': typeof AppBusinessesRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/findings': typeof AppFindingsRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/notifications': typeof AppNotificationsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/removals': typeof AppRemovalsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/roles': typeof AppRolesRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/submissions': typeof AppSubmissionsRoute
+  '/app/team': typeof AppTeamRoute
+  '/admin': typeof AdminIndexRoute
+  '/app': typeof AppIndexRoute
+  '/app/cases/$id': typeof AppCasesIdRoute
+  '/app/reviews/$id': typeof AppReviewsIdRoute
+  '/app/cases': typeof AppCasesIndexRoute
+  '/app/reviews': typeof AppReviewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/app': typeof AppRouteWithChildren
+  '/features': typeof FeaturesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
+  '/workflows': typeof WorkflowsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/config': typeof AdminConfigRoute
+  '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/app/analysis': typeof AppAnalysisRoute
+  '/app/appeals': typeof AppAppealsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/businesses': typeof AppBusinessesRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/findings': typeof AppFindingsRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/notifications': typeof AppNotificationsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/removals': typeof AppRemovalsRoute
+  '/app/reports': typeof AppReportsRoute
+  '/app/roles': typeof AppRolesRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/submissions': typeof AppSubmissionsRoute
+  '/app/team': typeof AppTeamRoute
+  '/admin/': typeof AdminIndexRoute
+  '/app/': typeof AppIndexRoute
+  '/app/cases/$id': typeof AppCasesIdRoute
+  '/app/reviews/$id': typeof AppReviewsIdRoute
+  '/app/cases/': typeof AppCasesIndexRoute
+  '/app/reviews/': typeof AppReviewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/app'
+    | '/features'
+    | '/forgot-password'
+    | '/login'
+    | '/pricing'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/workflows'
+    | '/admin/audit'
+    | '/admin/config'
+    | '/admin/integrations'
+    | '/admin/jobs'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/tenants'
+    | '/admin/users'
+    | '/app/analysis'
+    | '/app/appeals'
+    | '/app/approvals'
+    | '/app/billing'
+    | '/app/businesses'
+    | '/app/discover'
+    | '/app/evidence'
+    | '/app/findings'
+    | '/app/integrations'
+    | '/app/notifications'
+    | '/app/profile'
+    | '/app/removals'
+    | '/app/reports'
+    | '/app/roles'
+    | '/app/settings'
+    | '/app/submissions'
+    | '/app/team'
+    | '/admin/'
+    | '/app/'
+    | '/app/cases/$id'
+    | '/app/reviews/$id'
+    | '/app/cases/'
+    | '/app/reviews/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/features'
+    | '/forgot-password'
+    | '/login'
+    | '/pricing'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/workflows'
+    | '/admin/audit'
+    | '/admin/config'
+    | '/admin/integrations'
+    | '/admin/jobs'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/tenants'
+    | '/admin/users'
+    | '/app/analysis'
+    | '/app/appeals'
+    | '/app/approvals'
+    | '/app/billing'
+    | '/app/businesses'
+    | '/app/discover'
+    | '/app/evidence'
+    | '/app/findings'
+    | '/app/integrations'
+    | '/app/notifications'
+    | '/app/profile'
+    | '/app/removals'
+    | '/app/reports'
+    | '/app/roles'
+    | '/app/settings'
+    | '/app/submissions'
+    | '/app/team'
+    | '/admin'
+    | '/app'
+    | '/app/cases/$id'
+    | '/app/reviews/$id'
+    | '/app/cases'
+    | '/app/reviews'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/app'
+    | '/features'
+    | '/forgot-password'
+    | '/login'
+    | '/pricing'
+    | '/privacy'
+    | '/register'
+    | '/terms'
+    | '/workflows'
+    | '/admin/audit'
+    | '/admin/config'
+    | '/admin/integrations'
+    | '/admin/jobs'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/tenants'
+    | '/admin/users'
+    | '/app/analysis'
+    | '/app/appeals'
+    | '/app/approvals'
+    | '/app/billing'
+    | '/app/businesses'
+    | '/app/discover'
+    | '/app/evidence'
+    | '/app/findings'
+    | '/app/integrations'
+    | '/app/notifications'
+    | '/app/profile'
+    | '/app/removals'
+    | '/app/reports'
+    | '/app/roles'
+    | '/app/settings'
+    | '/app/submissions'
+    | '/app/team'
+    | '/admin/'
+    | '/app/'
+    | '/app/cases/$id'
+    | '/app/reviews/$id'
+    | '/app/cases/'
+    | '/app/reviews/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AppRoute: typeof AppRouteWithChildren
+  FeaturesRoute: typeof FeaturesRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RegisterRoute: typeof RegisterRoute
+  TermsRoute: typeof TermsRoute
+  WorkflowsRoute: typeof WorkflowsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +550,386 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workflows': {
+      id: '/workflows'
+      path: '/workflows'
+      fullPath: '/workflows'
+      preLoaderRoute: typeof WorkflowsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/config': {
+      id: '/admin/config'
+      path: '/config'
+      fullPath: '/admin/config'
+      preLoaderRoute: typeof AdminConfigRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/integrations': {
+      id: '/admin/integrations'
+      path: '/integrations'
+      fullPath: '/admin/integrations'
+      preLoaderRoute: typeof AdminIntegrationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs': {
+      id: '/admin/jobs'
+      path: '/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AdminJobsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/tenants': {
+      id: '/admin/tenants'
+      path: '/tenants'
+      fullPath: '/admin/tenants'
+      preLoaderRoute: typeof AdminTenantsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analysis': {
+      id: '/app/analysis'
+      path: '/analysis'
+      fullPath: '/app/analysis'
+      preLoaderRoute: typeof AppAnalysisRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/appeals': {
+      id: '/app/appeals'
+      path: '/appeals'
+      fullPath: '/app/appeals'
+      preLoaderRoute: typeof AppAppealsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/approvals': {
+      id: '/app/approvals'
+      path: '/approvals'
+      fullPath: '/app/approvals'
+      preLoaderRoute: typeof AppApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/businesses': {
+      id: '/app/businesses'
+      path: '/businesses'
+      fullPath: '/app/businesses'
+      preLoaderRoute: typeof AppBusinessesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/discover': {
+      id: '/app/discover'
+      path: '/discover'
+      fullPath: '/app/discover'
+      preLoaderRoute: typeof AppDiscoverRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/evidence': {
+      id: '/app/evidence'
+      path: '/evidence'
+      fullPath: '/app/evidence'
+      preLoaderRoute: typeof AppEvidenceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/findings': {
+      id: '/app/findings'
+      path: '/findings'
+      fullPath: '/app/findings'
+      preLoaderRoute: typeof AppFindingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/integrations': {
+      id: '/app/integrations'
+      path: '/integrations'
+      fullPath: '/app/integrations'
+      preLoaderRoute: typeof AppIntegrationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/notifications': {
+      id: '/app/notifications'
+      path: '/notifications'
+      fullPath: '/app/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/removals': {
+      id: '/app/removals'
+      path: '/removals'
+      fullPath: '/app/removals'
+      preLoaderRoute: typeof AppRemovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reports': {
+      id: '/app/reports'
+      path: '/reports'
+      fullPath: '/app/reports'
+      preLoaderRoute: typeof AppReportsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/roles': {
+      id: '/app/roles'
+      path: '/roles'
+      fullPath: '/app/roles'
+      preLoaderRoute: typeof AppRolesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/submissions': {
+      id: '/app/submissions'
+      path: '/submissions'
+      fullPath: '/app/submissions'
+      preLoaderRoute: typeof AppSubmissionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cases/': {
+      id: '/app/cases/'
+      path: '/cases'
+      fullPath: '/app/cases/'
+      preLoaderRoute: typeof AppCasesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cases/$id': {
+      id: '/app/cases/$id'
+      path: '/cases/$id'
+      fullPath: '/app/cases/$id'
+      preLoaderRoute: typeof AppCasesIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reviews/': {
+      id: '/app/reviews/'
+      path: '/reviews'
+      fullPath: '/app/reviews/'
+      preLoaderRoute: typeof AppReviewsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reviews/$id': {
+      id: '/app/reviews/$id'
+      path: '/reviews/$id'
+      fullPath: '/app/reviews/$id'
+      preLoaderRoute: typeof AppReviewsIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminConfigRoute: typeof AdminConfigRoute
+  AdminIntegrationsRoute: typeof AdminIntegrationsRoute
+  AdminJobsRoute: typeof AdminJobsRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminTenantsRoute: typeof AdminTenantsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAuditRoute: AdminAuditRoute,
+  AdminConfigRoute: AdminConfigRoute,
+  AdminIntegrationsRoute: AdminIntegrationsRoute,
+  AdminJobsRoute: AdminJobsRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminSupportRoute: AdminSupportRoute,
+  AdminTenantsRoute: AdminTenantsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface AppRouteChildren {
+  AppAnalysisRoute: typeof AppAnalysisRoute
+  AppAppealsRoute: typeof AppAppealsRoute
+  AppApprovalsRoute: typeof AppApprovalsRoute
+  AppBillingRoute: typeof AppBillingRoute
+  AppBusinessesRoute: typeof AppBusinessesRoute
+  AppDiscoverRoute: typeof AppDiscoverRoute
+  AppEvidenceRoute: typeof AppEvidenceRoute
+  AppFindingsRoute: typeof AppFindingsRoute
+  AppIntegrationsRoute: typeof AppIntegrationsRoute
+  AppNotificationsRoute: typeof AppNotificationsRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppRemovalsRoute: typeof AppRemovalsRoute
+  AppReportsRoute: typeof AppReportsRoute
+  AppRolesRoute: typeof AppRolesRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppSubmissionsRoute: typeof AppSubmissionsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppCasesIdRoute: typeof AppCasesIdRoute
+  AppReviewsIdRoute: typeof AppReviewsIdRoute
+  AppCasesIndexRoute: typeof AppCasesIndexRoute
+  AppReviewsIndexRoute: typeof AppReviewsIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAnalysisRoute: AppAnalysisRoute,
+  AppAppealsRoute: AppAppealsRoute,
+  AppApprovalsRoute: AppApprovalsRoute,
+  AppBillingRoute: AppBillingRoute,
+  AppBusinessesRoute: AppBusinessesRoute,
+  AppDiscoverRoute: AppDiscoverRoute,
+  AppEvidenceRoute: AppEvidenceRoute,
+  AppFindingsRoute: AppFindingsRoute,
+  AppIntegrationsRoute: AppIntegrationsRoute,
+  AppNotificationsRoute: AppNotificationsRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppRemovalsRoute: AppRemovalsRoute,
+  AppReportsRoute: AppReportsRoute,
+  AppRolesRoute: AppRolesRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppSubmissionsRoute: AppSubmissionsRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppCasesIdRoute: AppCasesIdRoute,
+  AppReviewsIdRoute: AppReviewsIdRoute,
+  AppCasesIndexRoute: AppCasesIndexRoute,
+  AppReviewsIndexRoute: AppReviewsIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AppRoute: AppRouteWithChildren,
+  FeaturesRoute: FeaturesRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  RegisterRoute: RegisterRoute,
+  TermsRoute: TermsRoute,
+  WorkflowsRoute: WorkflowsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
