@@ -9,7 +9,13 @@ function fail(error: { message: string } | null) {
 
 export interface DashboardData {
   platform_roles: string[];
-  org_roles: { org_id: string; org_name: string; role_key: string; region: string | null; region_level: string | null }[];
+  org_roles: {
+    org_id: string;
+    org_name: string;
+    role_key: string;
+    region: string | null;
+    region_level: string | null;
+  }[];
   reseller_roles: { reseller_id: string; reseller_name: string; role_key: string }[];
   team_roles: { team_id: string; team_name: string; org_id: string; role_key: string }[];
   counts: {
@@ -39,25 +45,44 @@ export const getDashboard = createServerFn({ method: "GET" })
 
     const [pr, om, rm, tm] = await Promise.all([
       sb.from("user_roles").select("role_key").eq("user_id", uid),
-      sb.from("organization_memberships").select("organization_id, role_key, organizations(name), geographic_scopes(name, level)").eq("user_id", uid),
-      sb.from("reseller_memberships").select("reseller_id, role_key, resellers(name)").eq("user_id", uid),
-      sb.from("team_memberships").select("team_id, organization_id, role_key, teams(name)").eq("user_id", uid),
+      sb
+        .from("organization_memberships")
+        .select("organization_id, role_key, organizations(name), geographic_scopes(name, level)")
+        .eq("user_id", uid),
+      sb
+        .from("reseller_memberships")
+        .select("reseller_id, role_key, resellers(name)")
+        .eq("user_id", uid),
+      sb
+        .from("team_memberships")
+        .select("team_id, organization_id, role_key, teams(name)")
+        .eq("user_id", uid),
     ]);
     [pr, om, rm, tm].forEach((r) => fail(r.error));
     const platform_roles = (pr.data ?? []).map((r: any) => r.role_key as string);
 
-    const [organizations, resellers, teams, regions, members, pending_invitations, audit_7d] = await Promise.all([
-      count(head("organizations")),
-      count(head("resellers")),
-      count(head("teams")),
-      count(head("geographic_scopes")),
-      count(head("organization_memberships")),
-      count(head("invitations").is("accepted_at", null).is("rejected_at", null).is("revoked_at", null).gt("expires_at", new Date().toISOString())),
-      count(head("audit_events").gte("at", weekAgo)),
-    ]);
+    const [organizations, resellers, teams, regions, members, pending_invitations, audit_7d] =
+      await Promise.all([
+        count(head("organizations")),
+        count(head("resellers")),
+        count(head("teams")),
+        count(head("geographic_scopes")),
+        count(head("organization_memberships")),
+        count(
+          head("invitations")
+            .is("accepted_at", null)
+            .is("rejected_at", null)
+            .is("revoked_at", null)
+            .gt("expires_at", new Date().toISOString()),
+        ),
+        count(head("audit_events").gte("at", weekAgo)),
+      ]);
 
     let platform_users: number | null = null;
-    const { data: canView } = await sb.rpc("has_platform_permission", { _uid: uid, _perm: "platform.view_all" });
+    const { data: canView } = await sb.rpc("has_platform_permission", {
+      _uid: uid,
+      _perm: "platform.view_all",
+    });
     if (canView) {
       const { data, error } = await sb.rpc("rg_platform_people");
       fail(error);
@@ -84,7 +109,16 @@ export const getDashboard = createServerFn({ method: "GET" })
         org_id: m.organization_id,
         role_key: m.role_key,
       })),
-      counts: { organizations, resellers, teams, regions, members, pending_invitations, audit_7d, platform_users },
+      counts: {
+        organizations,
+        resellers,
+        teams,
+        regions,
+        members,
+        pending_invitations,
+        audit_7d,
+        platform_users,
+      },
     };
   });
 
@@ -113,15 +147,25 @@ const optDate = (v: unknown) => {
 
 export const listAudit = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { orgId?: string | null | undefined; search?: string | undefined; action?: string | undefined; from?: string | undefined; to?: string | undefined; page?: number; pageSize?: number }) => ({
-    orgId: optUuid(d.orgId),
-    search: typeof d.search === "string" ? d.search.trim().slice(0, 100) : "",
-    action: typeof d.action === "string" && d.action ? d.action.slice(0, 100) : null,
-    from: optDate(d.from),
-    to: optDate(d.to),
-    page: Math.max(1, Math.floor(Number(d.page) || 1)),
-    pageSize: Math.min(100, Math.max(5, Math.floor(Number(d.pageSize) || 25))),
-  }))
+  .inputValidator(
+    (d: {
+      orgId?: string | null | undefined;
+      search?: string | undefined;
+      action?: string | undefined;
+      from?: string | undefined;
+      to?: string | undefined;
+      page?: number;
+      pageSize?: number;
+    }) => ({
+      orgId: optUuid(d.orgId),
+      search: typeof d.search === "string" ? d.search.trim().slice(0, 100) : "",
+      action: typeof d.action === "string" && d.action ? d.action.slice(0, 100) : null,
+      from: optDate(d.from),
+      to: optDate(d.to),
+      page: Math.max(1, Math.floor(Number(d.page) || 1)),
+      pageSize: Math.min(100, Math.max(5, Math.floor(Number(d.pageSize) || 25))),
+    }),
+  )
   .handler(async ({ data, context }) => {
     const { data: rows, error } = await (context.supabase as any).rpc("rg_audit_list", {
       _org: data.orgId,
@@ -135,7 +179,17 @@ export const listAudit = createServerFn({ method: "GET" })
     fail(error);
     const list = (rows ?? []) as (AuditRow & { total: number })[];
     return {
-      rows: list.map((r) => ({ id: r.id, at: r.at, actor_id: r.actor_id, actor_email: r.actor_email, organization_id: r.organization_id, org_name: r.org_name, action: r.action, target_type: r.target_type, target_id: r.target_id })),
+      rows: list.map((r) => ({
+        id: r.id,
+        at: r.at,
+        actor_id: r.actor_id,
+        actor_email: r.actor_email,
+        organization_id: r.organization_id,
+        org_name: r.org_name,
+        action: r.action,
+        target_type: r.target_type,
+        target_id: r.target_id,
+      })),
       total: Number(list[0]?.total ?? 0),
       page: data.page,
       pageSize: data.pageSize,
@@ -183,7 +237,12 @@ export const updateMyProfile = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { data: row, error } = await context.supabase
       .from("profiles")
-      .upsert({ id: context.userId, full_name: data.full_name, organization: data.organization, updated_at: new Date().toISOString() })
+      .upsert({
+        id: context.userId,
+        full_name: data.full_name,
+        organization: data.organization,
+        updated_at: new Date().toISOString(),
+      })
       .select("full_name, organization")
       .single();
     fail(error);

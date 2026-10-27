@@ -38,11 +38,19 @@ function Page() {
     },
     onError: (e) => setMsg({ ok: false, text: errMsg(e) }),
   });
-  const nameError = name.trim().length > 0 && name.trim().length < 2 ? "At least 2 characters" : null;
+  const nameError =
+    name.trim().length > 0 && name.trim().length < 2 ? "At least 2 characters" : null;
 
   return (
-    <InfoPage connected title="Profile & Security" description="Your personal details, password and sessions.">
-      <Section title="Profile" description="Your name and organization label. Roles and permissions are managed by administrators and can't be changed here.">
+    <InfoPage
+      connected
+      title="Profile & Security"
+      description="Your personal details, password and sessions."
+    >
+      <Section
+        title="Profile"
+        description="Your name and organization label. Roles and permissions are managed by administrators and can't be changed here."
+      >
         <QueryState q={q}>
           <form
             className="space-y-4"
@@ -54,7 +62,14 @@ function Page() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <Label htmlFor="n">Full name</Label>
-                <Input id="n" value={name} maxLength={100} required onChange={(e) => setName(e.target.value)} aria-invalid={!!nameError} />
+                <Input
+                  id="n"
+                  value={name}
+                  maxLength={100}
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                  aria-invalid={!!nameError}
+                />
                 {nameError && <p className="text-xs text-destructive">{nameError}</p>}
               </div>
               <div className="space-y-1.5">
@@ -63,7 +78,12 @@ function Page() {
               </div>
               <div className="space-y-1.5 sm:col-span-2">
                 <Label htmlFor="o">Organization (label)</Label>
-                <Input id="o" value={org} maxLength={120} onChange={(e) => setOrg(e.target.value)} />
+                <Input
+                  id="o"
+                  value={org}
+                  maxLength={120}
+                  onChange={(e) => setOrg(e.target.value)}
+                />
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-3">
