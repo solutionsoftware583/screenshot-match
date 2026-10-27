@@ -45,7 +45,7 @@ function Pricing() {
           {PLANS.map((p) => (
             <div
               key={p.name}
-              className={`rounded-xl border bg-card p-6 ${p.featured ? "border-accent shadow-glow" : ""}`}
+              className={`rounded-xl border bg-card p-6 ${p.featured ? "border-primary shadow-glow" : ""}`}
             >
               <h2 className="text-xl font-semibold">{p.name}</h2>
               <p className="mt-2 font-display text-3xl">Price TBC</p>
