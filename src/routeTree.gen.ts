@@ -18,6 +18,21 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
+import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AppAppealsRouteImport } from './routes/app.appeals'
+import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
+import { Route as AppBusinessesRouteImport } from './routes/app.businesses'
+import { Route as AppDiscoverRouteImport } from './routes/app.discover'
+import { Route as AppEvidenceRouteImport } from './routes/app.evidence'
+import { Route as AppFindingsRouteImport } from './routes/app.findings'
+import { Route as AppSubmissionsRouteImport } from './routes/app.submissions'
+import { Route as AppTeamRouteImport } from './routes/app.team'
+import { Route as AppCasesIndexRouteImport } from './routes/app.cases.index'
+import { Route as AppReviewsIndexRouteImport } from './routes/app.reviews.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +79,81 @@ const WorkflowsRoute = WorkflowsRouteImport.update({
   path: '/workflows',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/admin/audit',
+  path: '/admin/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/admin/subscriptions',
+  path: '/admin/subscriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/admin/support',
+  path: '/admin/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTenantsRoute = AdminTenantsRouteImport.update({
+  id: '/admin/tenants',
+  path: '/admin/tenants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAppealsRoute = AppAppealsRouteImport.update({
+  id: '/app/appeals',
+  path: '/app/appeals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppApprovalsRoute = AppApprovalsRouteImport.update({
+  id: '/app/approvals',
+  path: '/app/approvals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppBusinessesRoute = AppBusinessesRouteImport.update({
+  id: '/app/businesses',
+  path: '/app/businesses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppDiscoverRoute = AppDiscoverRouteImport.update({
+  id: '/app/discover',
+  path: '/app/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppEvidenceRoute = AppEvidenceRouteImport.update({
+  id: '/app/evidence',
+  path: '/app/evidence',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppFindingsRoute = AppFindingsRouteImport.update({
+  id: '/app/findings',
+  path: '/app/findings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppSubmissionsRoute = AppSubmissionsRouteImport.update({
+  id: '/app/submissions',
+  path: '/app/submissions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppTeamRoute = AppTeamRouteImport.update({
+  id: '/app/team',
+  path: '/app/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppCasesIndexRoute = AppCasesIndexRouteImport.update({
+  id: '/app/cases/',
+  path: '/app/cases/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppReviewsIndexRoute = AppReviewsIndexRouteImport.update({
+  id: '/app/reviews/',
+  path: '/app/reviews/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +165,21 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/app/appeals': typeof AppAppealsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/businesses': typeof AppBusinessesRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/findings': typeof AppFindingsRoute
+  '/app/submissions': typeof AppSubmissionsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/cases/': typeof AppCasesIndexRoute
+  '/app/reviews/': typeof AppReviewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +191,21 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/app/appeals': typeof AppAppealsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/businesses': typeof AppBusinessesRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/findings': typeof AppFindingsRoute
+  '/app/submissions': typeof AppSubmissionsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/cases': typeof AppCasesIndexRoute
+  '/app/reviews': typeof AppReviewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +218,21 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/tenants': typeof AdminTenantsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/app/appeals': typeof AppAppealsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/businesses': typeof AppBusinessesRoute
+  '/app/discover': typeof AppDiscoverRoute
+  '/app/evidence': typeof AppEvidenceRoute
+  '/app/findings': typeof AppFindingsRoute
+  '/app/submissions': typeof AppSubmissionsRoute
+  '/app/team': typeof AppTeamRoute
+  '/app/cases/': typeof AppCasesIndexRoute
+  '/app/reviews/': typeof AppReviewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +246,21 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/workflows'
+    | '/admin/audit'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/tenants'
+    | '/admin/users'
+    | '/app/appeals'
+    | '/app/approvals'
+    | '/app/businesses'
+    | '/app/discover'
+    | '/app/evidence'
+    | '/app/findings'
+    | '/app/submissions'
+    | '/app/team'
+    | '/app/cases/'
+    | '/app/reviews/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +272,21 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/workflows'
+    | '/admin/audit'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/tenants'
+    | '/admin/users'
+    | '/app/appeals'
+    | '/app/approvals'
+    | '/app/businesses'
+    | '/app/discover'
+    | '/app/evidence'
+    | '/app/findings'
+    | '/app/submissions'
+    | '/app/team'
+    | '/app/cases'
+    | '/app/reviews'
   id:
     | '__root__'
     | '/'
@@ -133,6 +298,21 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/workflows'
+    | '/admin/audit'
+    | '/admin/subscriptions'
+    | '/admin/support'
+    | '/admin/tenants'
+    | '/admin/users'
+    | '/app/appeals'
+    | '/app/approvals'
+    | '/app/businesses'
+    | '/app/discover'
+    | '/app/evidence'
+    | '/app/findings'
+    | '/app/submissions'
+    | '/app/team'
+    | '/app/cases/'
+    | '/app/reviews/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +325,21 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
   WorkflowsRoute: typeof WorkflowsRoute
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminTenantsRoute: typeof AdminTenantsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AppAppealsRoute: typeof AppAppealsRoute
+  AppApprovalsRoute: typeof AppApprovalsRoute
+  AppBusinessesRoute: typeof AppBusinessesRoute
+  AppDiscoverRoute: typeof AppDiscoverRoute
+  AppEvidenceRoute: typeof AppEvidenceRoute
+  AppFindingsRoute: typeof AppFindingsRoute
+  AppSubmissionsRoute: typeof AppSubmissionsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppCasesIndexRoute: typeof AppCasesIndexRoute
+  AppReviewsIndexRoute: typeof AppReviewsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -212,6 +407,111 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkflowsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/admin/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/admin/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/admin/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/tenants': {
+      id: '/admin/tenants'
+      path: '/admin/tenants'
+      fullPath: '/admin/tenants'
+      preLoaderRoute: typeof AdminTenantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/appeals': {
+      id: '/app/appeals'
+      path: '/app/appeals'
+      fullPath: '/app/appeals'
+      preLoaderRoute: typeof AppAppealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/approvals': {
+      id: '/app/approvals'
+      path: '/app/approvals'
+      fullPath: '/app/approvals'
+      preLoaderRoute: typeof AppApprovalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/businesses': {
+      id: '/app/businesses'
+      path: '/app/businesses'
+      fullPath: '/app/businesses'
+      preLoaderRoute: typeof AppBusinessesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/discover': {
+      id: '/app/discover'
+      path: '/app/discover'
+      fullPath: '/app/discover'
+      preLoaderRoute: typeof AppDiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/evidence': {
+      id: '/app/evidence'
+      path: '/app/evidence'
+      fullPath: '/app/evidence'
+      preLoaderRoute: typeof AppEvidenceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/findings': {
+      id: '/app/findings'
+      path: '/app/findings'
+      fullPath: '/app/findings'
+      preLoaderRoute: typeof AppFindingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/submissions': {
+      id: '/app/submissions'
+      path: '/app/submissions'
+      fullPath: '/app/submissions'
+      preLoaderRoute: typeof AppSubmissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/team': {
+      id: '/app/team'
+      path: '/app/team'
+      fullPath: '/app/team'
+      preLoaderRoute: typeof AppTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/cases/': {
+      id: '/app/cases/'
+      path: '/app/cases'
+      fullPath: '/app/cases/'
+      preLoaderRoute: typeof AppCasesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/reviews/': {
+      id: '/app/reviews/'
+      path: '/app/reviews'
+      fullPath: '/app/reviews/'
+      preLoaderRoute: typeof AppReviewsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -225,6 +525,21 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,
   WorkflowsRoute: WorkflowsRoute,
+  AdminAuditRoute: AdminAuditRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminSupportRoute: AdminSupportRoute,
+  AdminTenantsRoute: AdminTenantsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AppAppealsRoute: AppAppealsRoute,
+  AppApprovalsRoute: AppApprovalsRoute,
+  AppBusinessesRoute: AppBusinessesRoute,
+  AppDiscoverRoute: AppDiscoverRoute,
+  AppEvidenceRoute: AppEvidenceRoute,
+  AppFindingsRoute: AppFindingsRoute,
+  AppSubmissionsRoute: AppSubmissionsRoute,
+  AppTeamRoute: AppTeamRoute,
+  AppCasesIndexRoute: AppCasesIndexRoute,
+  AppReviewsIndexRoute: AppReviewsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
