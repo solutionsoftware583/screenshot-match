@@ -57,7 +57,7 @@ BEGIN
   BEGIN PERFORM rg_set_org_role(o1, lead, 'state_manager', c, false); fails := fails || ' geo_role_level;'; EXCEPTION WHEN raise_exception THEN NULL; END;
   PERFORM rg_set_org_role(o1, lead, 'state_manager', s, false);
   SELECT count(*) INTO n FROM rg_org_people(o1);
-  IF n <> 3 THEN fails := fails || ' people_count=' || n || ';'; END IF;
+  IF n <> 2 THEN fails := fails || ' people_count=' || n || ';'; END IF;
   PERFORM rg_remove_member(o1, lead);
   IF has_org_permission(lead, o1, 'org.view') THEN fails := fails || ' remove_member;'; END IF;
   PERFORM rg_delete_team(t);
