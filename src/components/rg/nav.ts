@@ -64,6 +64,7 @@ export const APP_SECONDARY: NavItem[] = [
   { title: "AI Analysis", to: "/app/analysis", icon: Sparkles },
   { title: "Removal Requests", to: "/app/removals", icon: FilePen },
   { title: "Roles & Permissions", to: "/app/roles", icon: KeyRound },
+  { title: "Audit Log", to: "/app/audit", icon: ScrollText },
   { title: "Notifications", to: "/app/notifications", icon: Bell },
   { title: "Profile & Security", to: "/app/profile", icon: UserCircle },
 ];
