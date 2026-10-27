@@ -95,3 +95,10 @@ Variables are listed in `.env.example` (placeholders only). Client values are va
 ## 7. Git workflow
 
 Lovable commits each change to the synced branch. Work locally on feature branches and merge via pull request; never force-push or rewrite history.
+
+## Management workflows (Part 3)
+- Screens: Super Admin → Resellers, Organizations, Users (platform roles); Workspace → Members & Roles, Teams, Invitations, Geography, Roles & Permissions; `/invite?token=` to accept.
+- Writes: `rg_*` SECURITY DEFINER functions (see `drizzle/migrations/0003_management_rpcs.sql`) check `has_org_permission` / platform permission, block self-role changes, validate geo levels and team/org consistency, and append an audit event.
+- Invitations: random token returned once, only its SHA-256 hash stored; accept requires the signed-in email to match; 7-day expiry. Email delivery is NOT configured — the link is shown for manual sharing.
+- Known limits: team managers hold `teams.manage` organization-wide (not limited to their own team); geographic managers' data visibility is not yet narrowed to their region (needs case data); there is no ownership-transfer flow for the last Org Admin.
+- Verify: run `db/tests/management.sql` and `db/tests/tenant_isolation.sql` with a privileged connection; both end with `..._RESULT:ALL_PASSED` and roll back.
