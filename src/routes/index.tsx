@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Radar, Sparkles, FolderLock, Send, ShieldCheck, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PublicLayout } from "@/components/rg/PublicLayout";
+import { BRAND_IMAGES } from "@/components/rg/primitives";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -54,7 +55,7 @@ function Landing() {
       <section className="bg-hero text-primary-foreground">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 lg:grid-cols-2 lg:py-28">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-accent/40 px-3 py-1 text-xs text-accent">
+            <p className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/40 px-3 py-1 text-xs text-primary-foreground">
               <ShieldCheck className="h-3.5 w-3.5" /> Reputation operations, done properly
             </p>
             <h1 className="mt-5 text-4xl font-semibold leading-tight sm:text-5xl">
@@ -68,7 +69,7 @@ function Landing() {
               <Button
                 asChild
                 size="lg"
-                className="bg-accent text-accent-foreground hover:bg-accent/90"
+                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
               >
                 <Link to="/register">Get started</Link>
               </Button>
@@ -86,28 +87,8 @@ function Landing() {
               guarantee removal.
             </p>
           </div>
-          <div className="rounded-xl border border-primary-foreground/15 bg-primary-foreground/5 p-4 shadow-glow">
-            <div className="mb-3 flex gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-primary-foreground/30" />
-              <span className="h-2.5 w-2.5 rounded-full bg-primary-foreground/30" />
-              <span className="h-2.5 w-2.5 rounded-full bg-primary-foreground/30" />
-            </div>
-            <div className="space-y-2 text-sm">
-              {["Discover", "Assess", "Document", "Approve", "Submit", "Follow up"].map((s, i) => (
-                <div
-                  key={s}
-                  className="flex items-center gap-3 rounded-md bg-primary-foreground/5 px-3 py-2.5"
-                >
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-accent text-xs font-semibold text-accent-foreground">
-                    {i + 1}
-                  </span>
-                  {s}
-                </div>
-              ))}
-            </div>
-            <p className="mt-3 text-center text-[10px] uppercase tracking-wider text-primary-foreground/50">
-              Case lifecycle illustration
-            </p>
+          <div className="flex items-center">
+            <img src={BRAND_IMAGES.banner} alt="Rating Guard — We Manage Reviews & Ratings" width={1600} height={666} className="w-full rounded-2xl shadow-glow ring-1 ring-primary-foreground/20" />
           </div>
         </div>
       </section>
@@ -116,7 +97,7 @@ function Landing() {
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PILLARS.map((p) => (
             <div key={p.title} className="rounded-lg border bg-card p-5">
-              <p.icon className="h-6 w-6 text-accent" />
+              <p.icon className="h-6 w-6 text-primary" />
               <h3 className="mt-4 font-semibold">{p.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>
             </div>

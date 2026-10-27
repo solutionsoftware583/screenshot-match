@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { Brand } from "./primitives";
+import { Brand, BRAND_IMAGES } from "./primitives";
 import { useSessionUser } from "@/lib/auth";
 
 const LINKS = [
@@ -100,10 +100,13 @@ export function AuthCard({
   return (
     <PublicLayout>
       <div className="mx-auto flex max-w-md flex-col px-4 py-16">
-        <div className="rounded-xl border bg-card p-6 shadow-sm sm:p-8">
+        <div className="overflow-hidden rounded-xl border bg-card shadow-glow">
+          <img src={BRAND_IMAGES.banner} alt="Rating Guard — We Manage Reviews & Ratings" width={1600} height={666} className="w-full" />
+          <div className="p-6 sm:p-8">
           <h1 className="text-2xl font-semibold">{title}</h1>
           {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
           <div className="mt-6">{children}</div>
+          </div>
         </div>
       </div>
     </PublicLayout>
