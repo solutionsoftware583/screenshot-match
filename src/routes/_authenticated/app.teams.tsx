@@ -89,7 +89,7 @@ function TeamCard({ team, d, canManage }: { team: Detail["teams"][number]; d: De
   const region = d.geo.find((g) => g.id === team.geographic_scope_id);
 
   return (
-    <Section title={team.name} description={region ? `${LEVEL_LABEL[region.level]}: ${region.name}` : undefined}>
+    <Section title={team.name} description={region ? `${LEVEL_LABEL[region.level]}: ${region.name}` : ""}>
       {canManage && (
         <div className="mb-3 flex flex-wrap gap-2">
           {edit ? (

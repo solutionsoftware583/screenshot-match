@@ -49,7 +49,7 @@ export function useCurrentOrg() {
 export function OrgPicker({ list, orgId, select }: ReturnType<typeof useCurrentOrg>) {
   if (list.length < 2) return null;
   return (
-    <Select value={orgId ?? undefined} onValueChange={select}>
+    <Select value={orgId ?? ""} onValueChange={select}>
       <SelectTrigger className="w-60" aria-label="Organization">
         <SelectValue placeholder="Organization" />
       </SelectTrigger>

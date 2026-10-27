@@ -7,7 +7,7 @@ import { ActionMessage, MKEY, QueryState, useAction } from "@/components/rg/mana
 import { getInvitationByToken, respondInvitation } from "@/lib/management.functions";
 
 export const Route = createFileRoute("/_authenticated/invite")({
-  validateSearch: (s: Record<string, unknown>) => ({ token: typeof s.token === "string" ? s.token : "" }),
+  validateSearch: (s: Record<string, unknown>) => ({ token: typeof s["token"] === "string" ? s["token"] : "" }),
   head: () => ({
     meta: [
       { title: "Accept invitation — Rating Guard" },
