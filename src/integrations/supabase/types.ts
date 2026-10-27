@@ -611,6 +611,138 @@ export type Database = {
         Args: { _role: string; _uid: string }
         Returns: boolean
       }
+      rg_assign_reseller_staff: {
+        Args: { _assign: boolean; _org: string; _user: string }
+        Returns: undefined
+      }
+      rg_audit: {
+        Args: {
+          _action: string
+          _meta?: Json
+          _org: string
+          _reseller: string
+          _target: string
+          _type: string
+        }
+        Returns: undefined
+      }
+      rg_create_geo: {
+        Args: { _level: string; _name: string; _org: string; _parent: string }
+        Returns: string
+      }
+      rg_create_invitation: {
+        Args: {
+          _email: string
+          _org: string
+          _reseller: string
+          _role: string
+          _team: string
+        }
+        Returns: string
+      }
+      rg_create_org: {
+        Args: { _name: string; _reseller: string }
+        Returns: string
+      }
+      rg_create_reseller: { Args: { _name: string }; Returns: string }
+      rg_delete_geo: { Args: { _id: string }; Returns: undefined }
+      rg_delete_org: { Args: { _id: string }; Returns: undefined }
+      rg_delete_reseller: { Args: { _id: string }; Returns: undefined }
+      rg_delete_team: { Args: { _id: string }; Returns: undefined }
+      rg_invitation_by_token: {
+        Args: { _token: string }
+        Returns: {
+          email: string
+          email_matches: boolean
+          id: string
+          org_name: string
+          reseller_name: string
+          role_name: string
+          status: string
+          team_name: string
+        }[]
+      }
+      rg_my_access: { Args: never; Returns: Json }
+      rg_org_people: {
+        Args: { _org: string }
+        Returns: {
+          email: string
+          full_name: string
+          user_id: string
+        }[]
+      }
+      rg_org_permissions: { Args: { _org: string }; Returns: string[] }
+      rg_platform_people: {
+        Args: never
+        Returns: {
+          created_at: string
+          email: string
+          full_name: string
+          platform_roles: string[]
+          user_id: string
+        }[]
+      }
+      rg_remove_member: {
+        Args: { _org: string; _user: string }
+        Returns: undefined
+      }
+      rg_remove_team_member: {
+        Args: { _team: string; _user: string }
+        Returns: undefined
+      }
+      rg_rename_geo: {
+        Args: { _id: string; _name: string }
+        Returns: undefined
+      }
+      rg_require: { Args: { _ok: boolean }; Returns: undefined }
+      rg_reseller_people: {
+        Args: { _reseller: string }
+        Returns: {
+          email: string
+          full_name: string
+          role_key: string
+          user_id: string
+        }[]
+      }
+      rg_respond_invitation: {
+        Args: { _accept: boolean; _token: string }
+        Returns: undefined
+      }
+      rg_revoke_invitation: { Args: { _id: string }; Returns: undefined }
+      rg_save_team: {
+        Args: { _geo: string; _id: string; _name: string; _org: string }
+        Returns: string
+      }
+      rg_set_org_reseller: {
+        Args: { _id: string; _reseller: string }
+        Returns: undefined
+      }
+      rg_set_org_role: {
+        Args: {
+          _geo: string
+          _org: string
+          _remove: boolean
+          _role: string
+          _user: string
+        }
+        Returns: undefined
+      }
+      rg_set_platform_role: {
+        Args: { _email: string; _remove: boolean; _role: string }
+        Returns: undefined
+      }
+      rg_set_team_member: {
+        Args: { _role: string; _team: string; _user: string }
+        Returns: undefined
+      }
+      rg_update_org: {
+        Args: { _geo: boolean; _id: string; _name: string; _teams: boolean }
+        Returns: undefined
+      }
+      rg_update_reseller: {
+        Args: { _id: string; _name: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
