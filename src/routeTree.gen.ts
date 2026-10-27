@@ -37,6 +37,7 @@ import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAppAnalysisRouteImport } from './routes/_authenticated/app.analysis'
 import { Route as AuthenticatedAppAppealsRouteImport } from './routes/_authenticated/app.appeals'
 import { Route as AuthenticatedAppApprovalsRouteImport } from './routes/_authenticated/app.approvals'
+import { Route as AuthenticatedAppAuditRouteImport } from './routes/_authenticated/app.audit'
 import { Route as AuthenticatedAppBillingRouteImport } from './routes/_authenticated/app.billing'
 import { Route as AuthenticatedAppBusinessesRouteImport } from './routes/_authenticated/app.businesses'
 import { Route as AuthenticatedAppDiscoverRouteImport } from './routes/_authenticated/app.discover'
@@ -206,6 +207,11 @@ const AuthenticatedAppApprovalsRoute =
     path: '/approvals',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppAuditRoute = AuthenticatedAppAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppBillingRoute = AuthenticatedAppBillingRouteImport.update({
   id: '/billing',
   path: '/billing',
@@ -352,6 +358,7 @@ export interface FileRoutesByFullPath {
   '/app/analysis': typeof AuthenticatedAppAnalysisRoute
   '/app/appeals': typeof AuthenticatedAppAppealsRoute
   '/app/approvals': typeof AuthenticatedAppApprovalsRoute
+  '/app/audit': typeof AuthenticatedAppAuditRoute
   '/app/billing': typeof AuthenticatedAppBillingRoute
   '/app/businesses': typeof AuthenticatedAppBusinessesRoute
   '/app/discover': typeof AuthenticatedAppDiscoverRoute
@@ -400,6 +407,7 @@ export interface FileRoutesByTo {
   '/app/analysis': typeof AuthenticatedAppAnalysisRoute
   '/app/appeals': typeof AuthenticatedAppAppealsRoute
   '/app/approvals': typeof AuthenticatedAppApprovalsRoute
+  '/app/audit': typeof AuthenticatedAppAuditRoute
   '/app/billing': typeof AuthenticatedAppBillingRoute
   '/app/businesses': typeof AuthenticatedAppBusinessesRoute
   '/app/discover': typeof AuthenticatedAppDiscoverRoute
@@ -452,6 +460,7 @@ export interface FileRoutesById {
   '/_authenticated/app/analysis': typeof AuthenticatedAppAnalysisRoute
   '/_authenticated/app/appeals': typeof AuthenticatedAppAppealsRoute
   '/_authenticated/app/approvals': typeof AuthenticatedAppApprovalsRoute
+  '/_authenticated/app/audit': typeof AuthenticatedAppAuditRoute
   '/_authenticated/app/billing': typeof AuthenticatedAppBillingRoute
   '/_authenticated/app/businesses': typeof AuthenticatedAppBusinessesRoute
   '/_authenticated/app/discover': typeof AuthenticatedAppDiscoverRoute
@@ -504,6 +513,7 @@ export interface FileRouteTypes {
     | '/app/analysis'
     | '/app/appeals'
     | '/app/approvals'
+    | '/app/audit'
     | '/app/billing'
     | '/app/businesses'
     | '/app/discover'
@@ -552,6 +562,7 @@ export interface FileRouteTypes {
     | '/app/analysis'
     | '/app/appeals'
     | '/app/approvals'
+    | '/app/audit'
     | '/app/billing'
     | '/app/businesses'
     | '/app/discover'
@@ -603,6 +614,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/analysis'
     | '/_authenticated/app/appeals'
     | '/_authenticated/app/approvals'
+    | '/_authenticated/app/audit'
     | '/_authenticated/app/billing'
     | '/_authenticated/app/businesses'
     | '/_authenticated/app/discover'
@@ -840,6 +852,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppApprovalsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/audit': {
+      id: '/_authenticated/app/audit'
+      path: '/audit'
+      fullPath: '/app/audit'
+      preLoaderRoute: typeof AuthenticatedAppAuditRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/billing': {
       id: '/_authenticated/app/billing'
       path: '/billing'
@@ -1023,6 +1042,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppAnalysisRoute: typeof AuthenticatedAppAnalysisRoute
   AuthenticatedAppAppealsRoute: typeof AuthenticatedAppAppealsRoute
   AuthenticatedAppApprovalsRoute: typeof AuthenticatedAppApprovalsRoute
+  AuthenticatedAppAuditRoute: typeof AuthenticatedAppAuditRoute
   AuthenticatedAppBillingRoute: typeof AuthenticatedAppBillingRoute
   AuthenticatedAppBusinessesRoute: typeof AuthenticatedAppBusinessesRoute
   AuthenticatedAppDiscoverRoute: typeof AuthenticatedAppDiscoverRoute
@@ -1051,6 +1071,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppAnalysisRoute: AuthenticatedAppAnalysisRoute,
   AuthenticatedAppAppealsRoute: AuthenticatedAppAppealsRoute,
   AuthenticatedAppApprovalsRoute: AuthenticatedAppApprovalsRoute,
+  AuthenticatedAppAuditRoute: AuthenticatedAppAuditRoute,
   AuthenticatedAppBillingRoute: AuthenticatedAppBillingRoute,
   AuthenticatedAppBusinessesRoute: AuthenticatedAppBusinessesRoute,
   AuthenticatedAppDiscoverRoute: AuthenticatedAppDiscoverRoute,
