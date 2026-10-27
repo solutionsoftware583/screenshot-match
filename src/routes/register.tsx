@@ -56,7 +56,7 @@ export const Route = createFileRoute("/register")({
           },
         ]}
         onSubmit={async (v) => {
-          const { error } = await supabase.auth.signUp({
+          const { data, error } = await supabase.auth.signUp({
             email: (v["email"] ?? "").trim(),
             password: v["password"] ?? "",
             options: {
@@ -65,6 +65,10 @@ export const Route = createFileRoute("/register")({
             },
           });
           if (error) return { error: error.message };
+          if (data.session) {
+            window.location.assign("/app");
+            return { success: "Account created — opening your workspace…" };
+          }
           return { success: "Check your email and click the confirmation link, then sign in." };
         }}
       />
