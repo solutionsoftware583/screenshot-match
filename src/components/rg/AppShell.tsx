@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 
 const ALL = [...APP_NAV, ...APP_SECONDARY, ...ADMIN_NAV];
 
-function NavList({ groups, path, onNavigate }: { groups: { label: string; items: NavItem[] }[]; path: string; onNavigate?: () => void }) {
+function NavList({ groups, path, onNavigate }: { groups: { label: string; items: NavItem[] }[]; path: string; onNavigate?: (() => void) | undefined }) {
   return (
     <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4" aria-label="Main">
       {groups.map((g) => (

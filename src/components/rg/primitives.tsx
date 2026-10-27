@@ -49,7 +49,7 @@ export function BackendNotice({ feature }: { feature?: string }) {
   );
 }
 
-export function EmptyState({ title, description, action, icon }: { title: string; description?: string; action?: ReactNode; icon?: ReactNode }) {
+export function EmptyState({ title, description, action, icon }: { title: string; description?: string | undefined; action?: ReactNode; icon?: ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-card px-6 py-14 text-center">
       <div className="mb-3 grid h-11 w-11 place-items-center rounded-full bg-muted text-muted-foreground">{icon ?? <Inbox className="h-5 w-5" />}</div>
@@ -96,7 +96,7 @@ export function DataTable<T extends { id: string }>({
   rows: T[];
   pageSize?: number;
   emptyTitle: string;
-  emptyDescription?: string;
+  emptyDescription?: string | undefined;
   filters?: ReactNode;
 }) {
   const [q, setQ] = useState("");

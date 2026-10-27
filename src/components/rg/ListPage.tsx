@@ -50,5 +50,5 @@ export function ListPage<T extends { id: string }>({
   );
 }
 
-export const PLATFORM_OPTIONS = ["google", "yelp", "trustpilot", "facebook", "web", "other"].map((v) => ({ value: v, label: v[0].toUpperCase() + v.slice(1) }));
+export const PLATFORM_OPTIONS = ["google", "yelp", "trustpilot", "facebook", "web", "other"].map((v) => ({ value: v, label: v.charAt(0).toUpperCase() + v.slice(1) }));
 export const STATUS_OPTIONS = ["draft", "under_review", "awaiting_approval", "submitted", "platform_responded", "appealed", "closed"].map((v) => ({ value: v, label: v.replace(/_/g, " ") }));
