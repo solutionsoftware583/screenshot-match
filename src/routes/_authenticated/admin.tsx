@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
     } catch {
       allowed = false;
     }
-    if (!allowed) throw redirect({ to: "/app", search: { denied: "admin" } as never });
+    if (!allowed) throw redirect({ to: "/app", search: { denied: "admin" } });
   },
   component: () => <AppShell variant="admin" />,
 });
