@@ -14,3 +14,5 @@
 - Until a service is truly connected it returns empty data with `connected: false`, and backend-dependent actions render disabled with a "not connected" notice — never fake success.
 - Workspace pages live under `/app/*` and Super Admin under `/admin/*`, each with a layout route rendering `AppShell`; shared nav config is in `src/components/rg/nav.ts`.
 - Admin access must be enforced server-side once auth exists; hidden navigation is not authorization.
+- Signed-in pages live in `src/routes/_authenticated/` (client-only gate redirecting to `/login?redirect=`); public pages stay top-level. Post-login redirects go through `safeRedirect` in `src/lib/auth.ts` to block off-site redirects.
+- Profile data (name, organization) lives in `public.profiles`, filled by a signup trigger; roles must go in a separate table when added.

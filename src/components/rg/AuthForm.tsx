@@ -18,21 +18,41 @@ export const rules = {
   password: (v: string) => (v.length >= 8 ? null : "Password must be at least 8 characters."),
 };
 
-export function AuthForm({ fields, submitLabel }: { fields: Field[]; submitLabel: string }) {
+export type SubmitResult = { error?: string; success?: string } | void;
+
+export function AuthForm({
+  fields,
+  submitLabel,
+  onSubmit,
+}: {
+  fields: Field[];
+  submitLabel: string;
+  onSubmit: (values: Record<string, string>) => Promise<SubmitResult>;
+}) {
   const [values, setValues] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string | null>>({});
-  const [notice, setNotice] = useState(false);
+  const [result, setResult] = useState<SubmitResult>();
+  const [busy, setBusy] = useState(false);
 
-  function onSubmit(e: FormEvent) {
+  async function handle(e: FormEvent) {
     e.preventDefault();
     const next: Record<string, string | null> = {};
     for (const f of fields) next[f.name] = f.validate(values[f.name] ?? "", values);
     setErrors(next);
-    setNotice(Object.values(next).every((x) => !x));
+    if (Object.values(next).some(Boolean)) return;
+    setBusy(true);
+    setResult(undefined);
+    try {
+      setResult(await onSubmit(values));
+    } catch {
+      setResult({ error: "Something went wrong. Please try again." });
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-4">
+    <form onSubmit={handle} noValidate className="space-y-4">
       {fields.map((f) => (
         <div key={f.name} className="space-y-1.5">
           <Label htmlFor={f.name}>{f.label}</Label>
@@ -52,12 +72,20 @@ export function AuthForm({ fields, submitLabel }: { fields: Field[]; submitLabel
           )}
         </div>
       ))}
-      <Button type="submit" className="w-full">
-        {submitLabel}
+      <Button type="submit" className="w-full" disabled={busy}>
+        {busy ? "Please wait…" : submitLabel}
       </Button>
-      {notice && (
-        <p role="status" className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
-          Your details look valid, but accounts are not connected yet — nothing was sent or saved.
+      {result?.error && (
+        <p
+          role="alert"
+          className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm"
+        >
+          {result.error}
+        </p>
+      )}
+      {result?.success && (
+        <p role="status" className="rounded-md border border-success/40 bg-success/10 p-3 text-sm">
+          {result.success}
         </p>
       )}
     </form>

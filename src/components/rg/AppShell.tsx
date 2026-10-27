@@ -23,6 +23,9 @@ import {
 import { Brand } from "./primitives";
 import { ADMIN_NAV, APP_NAV, APP_SECONDARY, type NavItem } from "./nav";
 import { cn } from "@/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useSessionUser } from "@/lib/auth";
 
 const ALL = [...APP_NAV, ...APP_SECONDARY, ...ADMIN_NAV];
 
@@ -72,6 +75,14 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useSessionUser();
+  const queryClient = useQueryClient();
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/login", replace: true });
+  }
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
@@ -160,7 +171,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
             <DropdownMenuContent align="start" className="w-64">
               <DropdownMenuLabel>Organizations</DropdownMenuLabel>
               <p className="px-2 pb-2 text-xs text-muted-foreground">
-                No organizations available — accounts and tenants are not connected yet.
+                Organization workspaces are not available yet.
               </p>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -225,7 +236,9 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Not signed in</DropdownMenuLabel>
+                <DropdownMenuLabel className="max-w-56 truncate">
+                  {user?.email ?? "Signed in"}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={() => navigate({ to: "/app/profile" })}>
                   Profile & security

@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Brand } from "./primitives";
+import { useSessionUser } from "@/lib/auth";
 
 const LINKS = [
   { to: "/features", label: "Features" },
@@ -12,6 +13,7 @@ const LINKS = [
 
 export function PublicLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const { user } = useSessionUser();
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="sticky top-0 z-20 border-b bg-card/90 backdrop-blur">

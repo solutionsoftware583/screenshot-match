@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AuthCard } from "@/components/rg/PublicLayout";
 import { AuthForm, rules } from "@/components/rg/AuthForm";
+import { SocialSignIn } from "@/components/rg/SocialSignIn";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -15,6 +17,7 @@ export const Route = createFileRoute("/register")({
   }),
   component: () => (
     <AuthCard title="Create your account" subtitle="Set up a workspace for your organization.">
+      <SocialSignIn redirectTo="/app" />
       <AuthForm
         submitLabel="Create account"
         fields={[
@@ -52,6 +55,18 @@ export const Route = createFileRoute("/register")({
             validate: (v, all) => (v && v === all["password"] ? null : "Passwords must match."),
           },
         ]}
+        onSubmit={async (v) => {
+          const { error } = await supabase.auth.signUp({
+            email: (v["email"] ?? "").trim(),
+            password: v["password"] ?? "",
+            options: {
+              emailRedirectTo: window.location.origin + "/login",
+              data: { full_name: (v["name"] ?? "").trim(), organization: (v["org"] ?? "").trim() },
+            },
+          });
+          if (error) return { error: error.message };
+          return { success: "Check your email and click the confirmation link, then sign in." };
+        }}
       />
       <p className="mt-4 text-center text-sm text-muted-foreground">
         Already have an account?{" "}
