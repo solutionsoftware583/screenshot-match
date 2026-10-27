@@ -10,8 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as AppRouteImport } from './routes/app'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
@@ -20,51 +18,43 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
-import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AdminAuditRouteImport } from './routes/admin.audit'
-import { Route as AdminConfigRouteImport } from './routes/admin.config'
-import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
-import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
-import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
-import { Route as AdminSupportRouteImport } from './routes/admin.support'
-import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
-import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as AppIndexRouteImport } from './routes/app.index'
-import { Route as AppAnalysisRouteImport } from './routes/app.analysis'
-import { Route as AppAppealsRouteImport } from './routes/app.appeals'
-import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
-import { Route as AppBillingRouteImport } from './routes/app.billing'
-import { Route as AppBusinessesRouteImport } from './routes/app.businesses'
-import { Route as AppDiscoverRouteImport } from './routes/app.discover'
-import { Route as AppEvidenceRouteImport } from './routes/app.evidence'
-import { Route as AppFindingsRouteImport } from './routes/app.findings'
-import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
-import { Route as AppNotificationsRouteImport } from './routes/app.notifications'
-import { Route as AppProfileRouteImport } from './routes/app.profile'
-import { Route as AppRemovalsRouteImport } from './routes/app.removals'
-import { Route as AppReportsRouteImport } from './routes/app.reports'
-import { Route as AppRolesRouteImport } from './routes/app.roles'
-import { Route as AppSettingsRouteImport } from './routes/app.settings'
-import { Route as AppSubmissionsRouteImport } from './routes/app.submissions'
-import { Route as AppTeamRouteImport } from './routes/app.team'
-import { Route as AppCasesIndexRouteImport } from './routes/app.cases.index'
-import { Route as AppCasesIdRouteImport } from './routes/app.cases.$id'
-import { Route as AppReviewsIndexRouteImport } from './routes/app.reviews.index'
-import { Route as AppReviewsIdRouteImport } from './routes/app.reviews.$id'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminConfigRouteImport } from './routes/_authenticated/admin.config'
+import { Route as AuthenticatedAdminIntegrationsRouteImport } from './routes/_authenticated/admin.integrations'
+import { Route as AuthenticatedAdminJobsRouteImport } from './routes/_authenticated/admin.jobs'
+import { Route as AuthenticatedAdminSubscriptionsRouteImport } from './routes/_authenticated/admin.subscriptions'
+import { Route as AuthenticatedAdminSupportRouteImport } from './routes/_authenticated/admin.support'
+import { Route as AuthenticatedAdminTenantsRouteImport } from './routes/_authenticated/admin.tenants'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppAnalysisRouteImport } from './routes/_authenticated/app.analysis'
+import { Route as AuthenticatedAppAppealsRouteImport } from './routes/_authenticated/app.appeals'
+import { Route as AuthenticatedAppApprovalsRouteImport } from './routes/_authenticated/app.approvals'
+import { Route as AuthenticatedAppBillingRouteImport } from './routes/_authenticated/app.billing'
+import { Route as AuthenticatedAppBusinessesRouteImport } from './routes/_authenticated/app.businesses'
+import { Route as AuthenticatedAppDiscoverRouteImport } from './routes/_authenticated/app.discover'
+import { Route as AuthenticatedAppEvidenceRouteImport } from './routes/_authenticated/app.evidence'
+import { Route as AuthenticatedAppFindingsRouteImport } from './routes/_authenticated/app.findings'
+import { Route as AuthenticatedAppIntegrationsRouteImport } from './routes/_authenticated/app.integrations'
+import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
+import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
+import { Route as AuthenticatedAppRemovalsRouteImport } from './routes/_authenticated/app.removals'
+import { Route as AuthenticatedAppReportsRouteImport } from './routes/_authenticated/app.reports'
+import { Route as AuthenticatedAppRolesRouteImport } from './routes/_authenticated/app.roles'
+import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/app.settings'
+import { Route as AuthenticatedAppSubmissionsRouteImport } from './routes/_authenticated/app.submissions'
+import { Route as AuthenticatedAppTeamRouteImport } from './routes/_authenticated/app.team'
+import { Route as AuthenticatedAppCasesIndexRouteImport } from './routes/_authenticated/app.cases.index'
+import { Route as AuthenticatedAppCasesIdRouteImport } from './routes/_authenticated/app.cases.$id'
+import { Route as AuthenticatedAppReviewsIndexRouteImport } from './routes/_authenticated/app.reviews.index'
+import { Route as AuthenticatedAppReviewsIdRouteImport } from './routes/_authenticated/app.reviews.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppRoute = AppRouteImport.update({
-  id: '/app',
-  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
@@ -107,166 +97,193 @@ const WorkflowsRoute = WorkflowsRouteImport.update({
   path: '/workflows',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/_authenticated/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/_authenticated/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const AdminAuditRoute = AdminAuditRouteImport.update({
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   id: '/audit',
   path: '/audit',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const AdminConfigRoute = AdminConfigRouteImport.update({
-  id: '/config',
-  path: '/config',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
-  id: '/integrations',
-  path: '/integrations',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminJobsRoute = AdminJobsRouteImport.update({
+const AuthenticatedAdminConfigRoute =
+  AuthenticatedAdminConfigRouteImport.update({
+    id: '/config',
+    path: '/config',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminIntegrationsRoute =
+  AuthenticatedAdminIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminJobsRoute = AuthenticatedAdminJobsRouteImport.update({
   id: '/jobs',
   path: '/jobs',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
-  id: '/subscriptions',
-  path: '/subscriptions',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSupportRoute = AdminSupportRouteImport.update({
-  id: '/support',
-  path: '/support',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminTenantsRoute = AdminTenantsRouteImport.update({
-  id: '/tenants',
-  path: '/tenants',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
+const AuthenticatedAdminSubscriptionsRoute =
+  AuthenticatedAdminSubscriptionsRouteImport.update({
+    id: '/subscriptions',
+    path: '/subscriptions',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSupportRoute =
+  AuthenticatedAdminSupportRouteImport.update({
+    id: '/support',
+    path: '/support',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminTenantsRoute =
+  AuthenticatedAdminTenantsRouteImport.update({
+    id: '/tenants',
+    path: '/tenants',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppAnalysisRoute = AppAnalysisRouteImport.update({
-  id: '/analysis',
-  path: '/analysis',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppAppealsRoute = AppAppealsRouteImport.update({
+const AuthenticatedAppAnalysisRoute =
+  AuthenticatedAppAnalysisRouteImport.update({
+    id: '/analysis',
+    path: '/analysis',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppAppealsRoute = AuthenticatedAppAppealsRouteImport.update({
   id: '/appeals',
   path: '/appeals',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppApprovalsRoute = AppApprovalsRouteImport.update({
-  id: '/approvals',
-  path: '/approvals',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppBillingRoute = AppBillingRouteImport.update({
+const AuthenticatedAppApprovalsRoute =
+  AuthenticatedAppApprovalsRouteImport.update({
+    id: '/approvals',
+    path: '/approvals',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppBillingRoute = AuthenticatedAppBillingRouteImport.update({
   id: '/billing',
   path: '/billing',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppBusinessesRoute = AppBusinessesRouteImport.update({
-  id: '/businesses',
-  path: '/businesses',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDiscoverRoute = AppDiscoverRouteImport.update({
-  id: '/discover',
-  path: '/discover',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppEvidenceRoute = AppEvidenceRouteImport.update({
-  id: '/evidence',
-  path: '/evidence',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppFindingsRoute = AppFindingsRouteImport.update({
-  id: '/findings',
-  path: '/findings',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
-  id: '/integrations',
-  path: '/integrations',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppNotificationsRoute = AppNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppProfileRoute = AppProfileRouteImport.update({
+const AuthenticatedAppBusinessesRoute =
+  AuthenticatedAppBusinessesRouteImport.update({
+    id: '/businesses',
+    path: '/businesses',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppDiscoverRoute =
+  AuthenticatedAppDiscoverRouteImport.update({
+    id: '/discover',
+    path: '/discover',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppEvidenceRoute =
+  AuthenticatedAppEvidenceRouteImport.update({
+    id: '/evidence',
+    path: '/evidence',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppFindingsRoute =
+  AuthenticatedAppFindingsRouteImport.update({
+    id: '/findings',
+    path: '/findings',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppIntegrationsRoute =
+  AuthenticatedAppIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppNotificationsRoute =
+  AuthenticatedAppNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppProfileRoute = AuthenticatedAppProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppRemovalsRoute = AppRemovalsRouteImport.update({
-  id: '/removals',
-  path: '/removals',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppReportsRoute = AppReportsRouteImport.update({
+const AuthenticatedAppRemovalsRoute =
+  AuthenticatedAppRemovalsRouteImport.update({
+    id: '/removals',
+    path: '/removals',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppReportsRoute = AuthenticatedAppReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppRolesRoute = AppRolesRouteImport.update({
+const AuthenticatedAppRolesRoute = AuthenticatedAppRolesRouteImport.update({
   id: '/roles',
   path: '/roles',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppSettingsRoute = AppSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppSubmissionsRoute = AppSubmissionsRouteImport.update({
-  id: '/submissions',
-  path: '/submissions',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTeamRoute = AppTeamRouteImport.update({
+const AuthenticatedAppSettingsRoute =
+  AuthenticatedAppSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppSubmissionsRoute =
+  AuthenticatedAppSubmissionsRouteImport.update({
+    id: '/submissions',
+    path: '/submissions',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppTeamRoute = AuthenticatedAppTeamRouteImport.update({
   id: '/team',
   path: '/team',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppCasesIndexRoute = AppCasesIndexRouteImport.update({
-  id: '/cases/',
-  path: '/cases/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCasesIdRoute = AppCasesIdRouteImport.update({
+const AuthenticatedAppCasesIndexRoute =
+  AuthenticatedAppCasesIndexRouteImport.update({
+    id: '/cases/',
+    path: '/cases/',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppCasesIdRoute = AuthenticatedAppCasesIdRouteImport.update({
   id: '/cases/$id',
   path: '/cases/$id',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppReviewsIndexRoute = AppReviewsIndexRouteImport.update({
-  id: '/reviews/',
-  path: '/reviews/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppReviewsIdRoute = AppReviewsIdRouteImport.update({
-  id: '/reviews/$id',
-  path: '/reviews/$id',
-  getParentRoute: () => AppRoute,
-} as any)
+const AuthenticatedAppReviewsIndexRoute =
+  AuthenticatedAppReviewsIndexRouteImport.update({
+    id: '/reviews/',
+    path: '/reviews/',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppReviewsIdRoute =
+  AuthenticatedAppReviewsIdRouteImport.update({
+    id: '/reviews/$id',
+    path: '/reviews/$id',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/app': typeof AppRouteWithChildren
   '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -275,37 +292,39 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
-  '/admin/audit': typeof AdminAuditRoute
-  '/admin/config': typeof AdminConfigRoute
-  '/admin/integrations': typeof AdminIntegrationsRoute
-  '/admin/jobs': typeof AdminJobsRoute
-  '/admin/subscriptions': typeof AdminSubscriptionsRoute
-  '/admin/support': typeof AdminSupportRoute
-  '/admin/tenants': typeof AdminTenantsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/app/analysis': typeof AppAnalysisRoute
-  '/app/appeals': typeof AppAppealsRoute
-  '/app/approvals': typeof AppApprovalsRoute
-  '/app/billing': typeof AppBillingRoute
-  '/app/businesses': typeof AppBusinessesRoute
-  '/app/discover': typeof AppDiscoverRoute
-  '/app/evidence': typeof AppEvidenceRoute
-  '/app/findings': typeof AppFindingsRoute
-  '/app/integrations': typeof AppIntegrationsRoute
-  '/app/notifications': typeof AppNotificationsRoute
-  '/app/profile': typeof AppProfileRoute
-  '/app/removals': typeof AppRemovalsRoute
-  '/app/reports': typeof AppReportsRoute
-  '/app/roles': typeof AppRolesRoute
-  '/app/settings': typeof AppSettingsRoute
-  '/app/submissions': typeof AppSubmissionsRoute
-  '/app/team': typeof AppTeamRoute
-  '/admin/': typeof AdminIndexRoute
-  '/app/': typeof AppIndexRoute
-  '/app/cases/$id': typeof AppCasesIdRoute
-  '/app/reviews/$id': typeof AppReviewsIdRoute
-  '/app/cases/': typeof AppCasesIndexRoute
-  '/app/reviews/': typeof AppReviewsIndexRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/config': typeof AuthenticatedAdminConfigRoute
+  '/admin/integrations': typeof AuthenticatedAdminIntegrationsRoute
+  '/admin/jobs': typeof AuthenticatedAdminJobsRoute
+  '/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsRoute
+  '/admin/support': typeof AuthenticatedAdminSupportRoute
+  '/admin/tenants': typeof AuthenticatedAdminTenantsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/app/analysis': typeof AuthenticatedAppAnalysisRoute
+  '/app/appeals': typeof AuthenticatedAppAppealsRoute
+  '/app/approvals': typeof AuthenticatedAppApprovalsRoute
+  '/app/billing': typeof AuthenticatedAppBillingRoute
+  '/app/businesses': typeof AuthenticatedAppBusinessesRoute
+  '/app/discover': typeof AuthenticatedAppDiscoverRoute
+  '/app/evidence': typeof AuthenticatedAppEvidenceRoute
+  '/app/findings': typeof AuthenticatedAppFindingsRoute
+  '/app/integrations': typeof AuthenticatedAppIntegrationsRoute
+  '/app/notifications': typeof AuthenticatedAppNotificationsRoute
+  '/app/profile': typeof AuthenticatedAppProfileRoute
+  '/app/removals': typeof AuthenticatedAppRemovalsRoute
+  '/app/reports': typeof AuthenticatedAppReportsRoute
+  '/app/roles': typeof AuthenticatedAppRolesRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
+  '/app/submissions': typeof AuthenticatedAppSubmissionsRoute
+  '/app/team': typeof AuthenticatedAppTeamRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
+  '/app/cases/$id': typeof AuthenticatedAppCasesIdRoute
+  '/app/reviews/$id': typeof AuthenticatedAppReviewsIdRoute
+  '/app/cases/': typeof AuthenticatedAppCasesIndexRoute
+  '/app/reviews/': typeof AuthenticatedAppReviewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -317,43 +336,41 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
-  '/admin/audit': typeof AdminAuditRoute
-  '/admin/config': typeof AdminConfigRoute
-  '/admin/integrations': typeof AdminIntegrationsRoute
-  '/admin/jobs': typeof AdminJobsRoute
-  '/admin/subscriptions': typeof AdminSubscriptionsRoute
-  '/admin/support': typeof AdminSupportRoute
-  '/admin/tenants': typeof AdminTenantsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/app/analysis': typeof AppAnalysisRoute
-  '/app/appeals': typeof AppAppealsRoute
-  '/app/approvals': typeof AppApprovalsRoute
-  '/app/billing': typeof AppBillingRoute
-  '/app/businesses': typeof AppBusinessesRoute
-  '/app/discover': typeof AppDiscoverRoute
-  '/app/evidence': typeof AppEvidenceRoute
-  '/app/findings': typeof AppFindingsRoute
-  '/app/integrations': typeof AppIntegrationsRoute
-  '/app/notifications': typeof AppNotificationsRoute
-  '/app/profile': typeof AppProfileRoute
-  '/app/removals': typeof AppRemovalsRoute
-  '/app/reports': typeof AppReportsRoute
-  '/app/roles': typeof AppRolesRoute
-  '/app/settings': typeof AppSettingsRoute
-  '/app/submissions': typeof AppSubmissionsRoute
-  '/app/team': typeof AppTeamRoute
-  '/admin': typeof AdminIndexRoute
-  '/app': typeof AppIndexRoute
-  '/app/cases/$id': typeof AppCasesIdRoute
-  '/app/reviews/$id': typeof AppReviewsIdRoute
-  '/app/cases': typeof AppCasesIndexRoute
-  '/app/reviews': typeof AppReviewsIndexRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/config': typeof AuthenticatedAdminConfigRoute
+  '/admin/integrations': typeof AuthenticatedAdminIntegrationsRoute
+  '/admin/jobs': typeof AuthenticatedAdminJobsRoute
+  '/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsRoute
+  '/admin/support': typeof AuthenticatedAdminSupportRoute
+  '/admin/tenants': typeof AuthenticatedAdminTenantsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/app/analysis': typeof AuthenticatedAppAnalysisRoute
+  '/app/appeals': typeof AuthenticatedAppAppealsRoute
+  '/app/approvals': typeof AuthenticatedAppApprovalsRoute
+  '/app/billing': typeof AuthenticatedAppBillingRoute
+  '/app/businesses': typeof AuthenticatedAppBusinessesRoute
+  '/app/discover': typeof AuthenticatedAppDiscoverRoute
+  '/app/evidence': typeof AuthenticatedAppEvidenceRoute
+  '/app/findings': typeof AuthenticatedAppFindingsRoute
+  '/app/integrations': typeof AuthenticatedAppIntegrationsRoute
+  '/app/notifications': typeof AuthenticatedAppNotificationsRoute
+  '/app/profile': typeof AuthenticatedAppProfileRoute
+  '/app/removals': typeof AuthenticatedAppRemovalsRoute
+  '/app/reports': typeof AuthenticatedAppReportsRoute
+  '/app/roles': typeof AuthenticatedAppRolesRoute
+  '/app/settings': typeof AuthenticatedAppSettingsRoute
+  '/app/submissions': typeof AuthenticatedAppSubmissionsRoute
+  '/app/team': typeof AuthenticatedAppTeamRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/app': typeof AuthenticatedAppIndexRoute
+  '/app/cases/$id': typeof AuthenticatedAppCasesIdRoute
+  '/app/reviews/$id': typeof AuthenticatedAppReviewsIdRoute
+  '/app/cases': typeof AuthenticatedAppCasesIndexRoute
+  '/app/reviews': typeof AuthenticatedAppReviewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/app': typeof AppRouteWithChildren
   '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -362,44 +379,44 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
-  '/admin/audit': typeof AdminAuditRoute
-  '/admin/config': typeof AdminConfigRoute
-  '/admin/integrations': typeof AdminIntegrationsRoute
-  '/admin/jobs': typeof AdminJobsRoute
-  '/admin/subscriptions': typeof AdminSubscriptionsRoute
-  '/admin/support': typeof AdminSupportRoute
-  '/admin/tenants': typeof AdminTenantsRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/app/analysis': typeof AppAnalysisRoute
-  '/app/appeals': typeof AppAppealsRoute
-  '/app/approvals': typeof AppApprovalsRoute
-  '/app/billing': typeof AppBillingRoute
-  '/app/businesses': typeof AppBusinessesRoute
-  '/app/discover': typeof AppDiscoverRoute
-  '/app/evidence': typeof AppEvidenceRoute
-  '/app/findings': typeof AppFindingsRoute
-  '/app/integrations': typeof AppIntegrationsRoute
-  '/app/notifications': typeof AppNotificationsRoute
-  '/app/profile': typeof AppProfileRoute
-  '/app/removals': typeof AppRemovalsRoute
-  '/app/reports': typeof AppReportsRoute
-  '/app/roles': typeof AppRolesRoute
-  '/app/settings': typeof AppSettingsRoute
-  '/app/submissions': typeof AppSubmissionsRoute
-  '/app/team': typeof AppTeamRoute
-  '/admin/': typeof AdminIndexRoute
-  '/app/': typeof AppIndexRoute
-  '/app/cases/$id': typeof AppCasesIdRoute
-  '/app/reviews/$id': typeof AppReviewsIdRoute
-  '/app/cases/': typeof AppCasesIndexRoute
-  '/app/reviews/': typeof AppReviewsIndexRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/config': typeof AuthenticatedAdminConfigRoute
+  '/_authenticated/admin/integrations': typeof AuthenticatedAdminIntegrationsRoute
+  '/_authenticated/admin/jobs': typeof AuthenticatedAdminJobsRoute
+  '/_authenticated/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsRoute
+  '/_authenticated/admin/support': typeof AuthenticatedAdminSupportRoute
+  '/_authenticated/admin/tenants': typeof AuthenticatedAdminTenantsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/app/analysis': typeof AuthenticatedAppAnalysisRoute
+  '/_authenticated/app/appeals': typeof AuthenticatedAppAppealsRoute
+  '/_authenticated/app/approvals': typeof AuthenticatedAppApprovalsRoute
+  '/_authenticated/app/billing': typeof AuthenticatedAppBillingRoute
+  '/_authenticated/app/businesses': typeof AuthenticatedAppBusinessesRoute
+  '/_authenticated/app/discover': typeof AuthenticatedAppDiscoverRoute
+  '/_authenticated/app/evidence': typeof AuthenticatedAppEvidenceRoute
+  '/_authenticated/app/findings': typeof AuthenticatedAppFindingsRoute
+  '/_authenticated/app/integrations': typeof AuthenticatedAppIntegrationsRoute
+  '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
+  '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
+  '/_authenticated/app/removals': typeof AuthenticatedAppRemovalsRoute
+  '/_authenticated/app/reports': typeof AuthenticatedAppReportsRoute
+  '/_authenticated/app/roles': typeof AuthenticatedAppRolesRoute
+  '/_authenticated/app/settings': typeof AuthenticatedAppSettingsRoute
+  '/_authenticated/app/submissions': typeof AuthenticatedAppSubmissionsRoute
+  '/_authenticated/app/team': typeof AuthenticatedAppTeamRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
+  '/_authenticated/app/cases/$id': typeof AuthenticatedAppCasesIdRoute
+  '/_authenticated/app/reviews/$id': typeof AuthenticatedAppReviewsIdRoute
+  '/_authenticated/app/cases/': typeof AuthenticatedAppCasesIndexRoute
+  '/_authenticated/app/reviews/': typeof AuthenticatedAppReviewsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
-    | '/app'
     | '/features'
     | '/forgot-password'
     | '/login'
@@ -408,6 +425,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/workflows'
+    | '/admin'
+    | '/app'
     | '/admin/audit'
     | '/admin/config'
     | '/admin/integrations'
@@ -484,8 +503,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/admin'
-    | '/app'
     | '/features'
     | '/forgot-password'
     | '/login'
@@ -494,43 +511,43 @@ export interface FileRouteTypes {
     | '/register'
     | '/terms'
     | '/workflows'
-    | '/admin/audit'
-    | '/admin/config'
-    | '/admin/integrations'
-    | '/admin/jobs'
-    | '/admin/subscriptions'
-    | '/admin/support'
-    | '/admin/tenants'
-    | '/admin/users'
-    | '/app/analysis'
-    | '/app/appeals'
-    | '/app/approvals'
-    | '/app/billing'
-    | '/app/businesses'
-    | '/app/discover'
-    | '/app/evidence'
-    | '/app/findings'
-    | '/app/integrations'
-    | '/app/notifications'
-    | '/app/profile'
-    | '/app/removals'
-    | '/app/reports'
-    | '/app/roles'
-    | '/app/settings'
-    | '/app/submissions'
-    | '/app/team'
-    | '/admin/'
-    | '/app/'
-    | '/app/cases/$id'
-    | '/app/reviews/$id'
-    | '/app/cases/'
-    | '/app/reviews/'
+    | '/_authenticated/admin'
+    | '/_authenticated/app'
+    | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/config'
+    | '/_authenticated/admin/integrations'
+    | '/_authenticated/admin/jobs'
+    | '/_authenticated/admin/subscriptions'
+    | '/_authenticated/admin/support'
+    | '/_authenticated/admin/tenants'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/app/analysis'
+    | '/_authenticated/app/appeals'
+    | '/_authenticated/app/approvals'
+    | '/_authenticated/app/billing'
+    | '/_authenticated/app/businesses'
+    | '/_authenticated/app/discover'
+    | '/_authenticated/app/evidence'
+    | '/_authenticated/app/findings'
+    | '/_authenticated/app/integrations'
+    | '/_authenticated/app/notifications'
+    | '/_authenticated/app/profile'
+    | '/_authenticated/app/removals'
+    | '/_authenticated/app/reports'
+    | '/_authenticated/app/roles'
+    | '/_authenticated/app/settings'
+    | '/_authenticated/app/submissions'
+    | '/_authenticated/app/team'
+    | '/_authenticated/admin/'
+    | '/_authenticated/app/'
+    | '/_authenticated/app/cases/$id'
+    | '/_authenticated/app/reviews/$id'
+    | '/_authenticated/app/cases/'
+    | '/_authenticated/app/reviews/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRouteWithChildren
-  AppRoute: typeof AppRouteWithChildren
   FeaturesRoute: typeof FeaturesRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
@@ -539,6 +556,8 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
   WorkflowsRoute: typeof WorkflowsRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -548,20 +567,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features': {
@@ -620,308 +625,322 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkflowsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
       path: '/'
       fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/audit': {
-      id: '/admin/audit'
+    '/_authenticated/admin/audit': {
+      id: '/_authenticated/admin/audit'
       path: '/audit'
       fullPath: '/admin/audit'
-      preLoaderRoute: typeof AdminAuditRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/config': {
-      id: '/admin/config'
+    '/_authenticated/admin/config': {
+      id: '/_authenticated/admin/config'
       path: '/config'
       fullPath: '/admin/config'
-      preLoaderRoute: typeof AdminConfigRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminConfigRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/integrations': {
-      id: '/admin/integrations'
+    '/_authenticated/admin/integrations': {
+      id: '/_authenticated/admin/integrations'
       path: '/integrations'
       fullPath: '/admin/integrations'
-      preLoaderRoute: typeof AdminIntegrationsRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/jobs': {
-      id: '/admin/jobs'
+    '/_authenticated/admin/jobs': {
+      id: '/_authenticated/admin/jobs'
       path: '/jobs'
       fullPath: '/admin/jobs'
-      preLoaderRoute: typeof AdminJobsRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminJobsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/subscriptions': {
-      id: '/admin/subscriptions'
+    '/_authenticated/admin/subscriptions': {
+      id: '/_authenticated/admin/subscriptions'
       path: '/subscriptions'
       fullPath: '/admin/subscriptions'
-      preLoaderRoute: typeof AdminSubscriptionsRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminSubscriptionsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/support': {
-      id: '/admin/support'
+    '/_authenticated/admin/support': {
+      id: '/_authenticated/admin/support'
       path: '/support'
       fullPath: '/admin/support'
-      preLoaderRoute: typeof AdminSupportRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminSupportRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/tenants': {
-      id: '/admin/tenants'
+    '/_authenticated/admin/tenants': {
+      id: '/_authenticated/admin/tenants'
       path: '/tenants'
       fullPath: '/admin/tenants'
-      preLoaderRoute: typeof AdminTenantsRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminTenantsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/admin/users': {
-      id: '/admin/users'
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
       path: '/users'
       fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof AdminRoute
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/app/': {
-      id: '/app/'
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
       path: '/'
       fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/analysis': {
-      id: '/app/analysis'
+    '/_authenticated/app/analysis': {
+      id: '/_authenticated/app/analysis'
       path: '/analysis'
       fullPath: '/app/analysis'
-      preLoaderRoute: typeof AppAnalysisRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppAnalysisRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/appeals': {
-      id: '/app/appeals'
+    '/_authenticated/app/appeals': {
+      id: '/_authenticated/app/appeals'
       path: '/appeals'
       fullPath: '/app/appeals'
-      preLoaderRoute: typeof AppAppealsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppAppealsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/approvals': {
-      id: '/app/approvals'
+    '/_authenticated/app/approvals': {
+      id: '/_authenticated/app/approvals'
       path: '/approvals'
       fullPath: '/app/approvals'
-      preLoaderRoute: typeof AppApprovalsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppApprovalsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/billing': {
-      id: '/app/billing'
+    '/_authenticated/app/billing': {
+      id: '/_authenticated/app/billing'
       path: '/billing'
       fullPath: '/app/billing'
-      preLoaderRoute: typeof AppBillingRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppBillingRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/businesses': {
-      id: '/app/businesses'
+    '/_authenticated/app/businesses': {
+      id: '/_authenticated/app/businesses'
       path: '/businesses'
       fullPath: '/app/businesses'
-      preLoaderRoute: typeof AppBusinessesRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppBusinessesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/discover': {
-      id: '/app/discover'
+    '/_authenticated/app/discover': {
+      id: '/_authenticated/app/discover'
       path: '/discover'
       fullPath: '/app/discover'
-      preLoaderRoute: typeof AppDiscoverRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppDiscoverRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/evidence': {
-      id: '/app/evidence'
+    '/_authenticated/app/evidence': {
+      id: '/_authenticated/app/evidence'
       path: '/evidence'
       fullPath: '/app/evidence'
-      preLoaderRoute: typeof AppEvidenceRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppEvidenceRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/findings': {
-      id: '/app/findings'
+    '/_authenticated/app/findings': {
+      id: '/_authenticated/app/findings'
       path: '/findings'
       fullPath: '/app/findings'
-      preLoaderRoute: typeof AppFindingsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppFindingsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/integrations': {
-      id: '/app/integrations'
+    '/_authenticated/app/integrations': {
+      id: '/_authenticated/app/integrations'
       path: '/integrations'
       fullPath: '/app/integrations'
-      preLoaderRoute: typeof AppIntegrationsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/notifications': {
-      id: '/app/notifications'
+    '/_authenticated/app/notifications': {
+      id: '/_authenticated/app/notifications'
       path: '/notifications'
       fullPath: '/app/notifications'
-      preLoaderRoute: typeof AppNotificationsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppNotificationsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/profile': {
-      id: '/app/profile'
+    '/_authenticated/app/profile': {
+      id: '/_authenticated/app/profile'
       path: '/profile'
       fullPath: '/app/profile'
-      preLoaderRoute: typeof AppProfileRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppProfileRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/removals': {
-      id: '/app/removals'
+    '/_authenticated/app/removals': {
+      id: '/_authenticated/app/removals'
       path: '/removals'
       fullPath: '/app/removals'
-      preLoaderRoute: typeof AppRemovalsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppRemovalsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/reports': {
-      id: '/app/reports'
+    '/_authenticated/app/reports': {
+      id: '/_authenticated/app/reports'
       path: '/reports'
       fullPath: '/app/reports'
-      preLoaderRoute: typeof AppReportsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppReportsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/roles': {
-      id: '/app/roles'
+    '/_authenticated/app/roles': {
+      id: '/_authenticated/app/roles'
       path: '/roles'
       fullPath: '/app/roles'
-      preLoaderRoute: typeof AppRolesRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppRolesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/settings': {
-      id: '/app/settings'
+    '/_authenticated/app/settings': {
+      id: '/_authenticated/app/settings'
       path: '/settings'
       fullPath: '/app/settings'
-      preLoaderRoute: typeof AppSettingsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppSettingsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/submissions': {
-      id: '/app/submissions'
+    '/_authenticated/app/submissions': {
+      id: '/_authenticated/app/submissions'
       path: '/submissions'
       fullPath: '/app/submissions'
-      preLoaderRoute: typeof AppSubmissionsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppSubmissionsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/team': {
-      id: '/app/team'
+    '/_authenticated/app/team': {
+      id: '/_authenticated/app/team'
       path: '/team'
       fullPath: '/app/team'
-      preLoaderRoute: typeof AppTeamRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppTeamRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/cases/': {
-      id: '/app/cases/'
+    '/_authenticated/app/cases/': {
+      id: '/_authenticated/app/cases/'
       path: '/cases'
       fullPath: '/app/cases/'
-      preLoaderRoute: typeof AppCasesIndexRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppCasesIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/cases/$id': {
-      id: '/app/cases/$id'
+    '/_authenticated/app/cases/$id': {
+      id: '/_authenticated/app/cases/$id'
       path: '/cases/$id'
       fullPath: '/app/cases/$id'
-      preLoaderRoute: typeof AppCasesIdRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppCasesIdRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/reviews/': {
-      id: '/app/reviews/'
+    '/_authenticated/app/reviews/': {
+      id: '/_authenticated/app/reviews/'
       path: '/reviews'
       fullPath: '/app/reviews/'
-      preLoaderRoute: typeof AppReviewsIndexRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppReviewsIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/reviews/$id': {
-      id: '/app/reviews/$id'
+    '/_authenticated/app/reviews/$id': {
+      id: '/_authenticated/app/reviews/$id'
       path: '/reviews/$id'
       fullPath: '/app/reviews/$id'
-      preLoaderRoute: typeof AppReviewsIdRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppReviewsIdRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
   }
 }
 
-interface AdminRouteChildren {
-  AdminAuditRoute: typeof AdminAuditRoute
-  AdminConfigRoute: typeof AdminConfigRoute
-  AdminIntegrationsRoute: typeof AdminIntegrationsRoute
-  AdminJobsRoute: typeof AdminJobsRoute
-  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
-  AdminSupportRoute: typeof AdminSupportRoute
-  AdminTenantsRoute: typeof AdminTenantsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminConfigRoute: typeof AuthenticatedAdminConfigRoute
+  AuthenticatedAdminIntegrationsRoute: typeof AuthenticatedAdminIntegrationsRoute
+  AuthenticatedAdminJobsRoute: typeof AuthenticatedAdminJobsRoute
+  AuthenticatedAdminSubscriptionsRoute: typeof AuthenticatedAdminSubscriptionsRoute
+  AuthenticatedAdminSupportRoute: typeof AuthenticatedAdminSupportRoute
+  AuthenticatedAdminTenantsRoute: typeof AuthenticatedAdminTenantsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminAuditRoute: AdminAuditRoute,
-  AdminConfigRoute: AdminConfigRoute,
-  AdminIntegrationsRoute: AdminIntegrationsRoute,
-  AdminJobsRoute: AdminJobsRoute,
-  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
-  AdminSupportRoute: AdminSupportRoute,
-  AdminTenantsRoute: AdminTenantsRoute,
-  AdminUsersRoute: AdminUsersRoute,
-  AdminIndexRoute: AdminIndexRoute,
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminConfigRoute: AuthenticatedAdminConfigRoute,
+  AuthenticatedAdminIntegrationsRoute: AuthenticatedAdminIntegrationsRoute,
+  AuthenticatedAdminJobsRoute: AuthenticatedAdminJobsRoute,
+  AuthenticatedAdminSubscriptionsRoute: AuthenticatedAdminSubscriptionsRoute,
+  AuthenticatedAdminSupportRoute: AuthenticatedAdminSupportRoute,
+  AuthenticatedAdminTenantsRoute: AuthenticatedAdminTenantsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
-interface AppRouteChildren {
-  AppAnalysisRoute: typeof AppAnalysisRoute
-  AppAppealsRoute: typeof AppAppealsRoute
-  AppApprovalsRoute: typeof AppApprovalsRoute
-  AppBillingRoute: typeof AppBillingRoute
-  AppBusinessesRoute: typeof AppBusinessesRoute
-  AppDiscoverRoute: typeof AppDiscoverRoute
-  AppEvidenceRoute: typeof AppEvidenceRoute
-  AppFindingsRoute: typeof AppFindingsRoute
-  AppIntegrationsRoute: typeof AppIntegrationsRoute
-  AppNotificationsRoute: typeof AppNotificationsRoute
-  AppProfileRoute: typeof AppProfileRoute
-  AppRemovalsRoute: typeof AppRemovalsRoute
-  AppReportsRoute: typeof AppReportsRoute
-  AppRolesRoute: typeof AppRolesRoute
-  AppSettingsRoute: typeof AppSettingsRoute
-  AppSubmissionsRoute: typeof AppSubmissionsRoute
-  AppTeamRoute: typeof AppTeamRoute
-  AppIndexRoute: typeof AppIndexRoute
-  AppCasesIdRoute: typeof AppCasesIdRoute
-  AppReviewsIdRoute: typeof AppReviewsIdRoute
-  AppCasesIndexRoute: typeof AppCasesIndexRoute
-  AppReviewsIndexRoute: typeof AppReviewsIndexRoute
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAnalysisRoute: typeof AuthenticatedAppAnalysisRoute
+  AuthenticatedAppAppealsRoute: typeof AuthenticatedAppAppealsRoute
+  AuthenticatedAppApprovalsRoute: typeof AuthenticatedAppApprovalsRoute
+  AuthenticatedAppBillingRoute: typeof AuthenticatedAppBillingRoute
+  AuthenticatedAppBusinessesRoute: typeof AuthenticatedAppBusinessesRoute
+  AuthenticatedAppDiscoverRoute: typeof AuthenticatedAppDiscoverRoute
+  AuthenticatedAppEvidenceRoute: typeof AuthenticatedAppEvidenceRoute
+  AuthenticatedAppFindingsRoute: typeof AuthenticatedAppFindingsRoute
+  AuthenticatedAppIntegrationsRoute: typeof AuthenticatedAppIntegrationsRoute
+  AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
+  AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
+  AuthenticatedAppRemovalsRoute: typeof AuthenticatedAppRemovalsRoute
+  AuthenticatedAppReportsRoute: typeof AuthenticatedAppReportsRoute
+  AuthenticatedAppRolesRoute: typeof AuthenticatedAppRolesRoute
+  AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
+  AuthenticatedAppSubmissionsRoute: typeof AuthenticatedAppSubmissionsRoute
+  AuthenticatedAppTeamRoute: typeof AuthenticatedAppTeamRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+  AuthenticatedAppCasesIdRoute: typeof AuthenticatedAppCasesIdRoute
+  AuthenticatedAppReviewsIdRoute: typeof AuthenticatedAppReviewsIdRoute
+  AuthenticatedAppCasesIndexRoute: typeof AuthenticatedAppCasesIndexRoute
+  AuthenticatedAppReviewsIndexRoute: typeof AuthenticatedAppReviewsIndexRoute
 }
 
-const AppRouteChildren: AppRouteChildren = {
-  AppAnalysisRoute: AppAnalysisRoute,
-  AppAppealsRoute: AppAppealsRoute,
-  AppApprovalsRoute: AppApprovalsRoute,
-  AppBillingRoute: AppBillingRoute,
-  AppBusinessesRoute: AppBusinessesRoute,
-  AppDiscoverRoute: AppDiscoverRoute,
-  AppEvidenceRoute: AppEvidenceRoute,
-  AppFindingsRoute: AppFindingsRoute,
-  AppIntegrationsRoute: AppIntegrationsRoute,
-  AppNotificationsRoute: AppNotificationsRoute,
-  AppProfileRoute: AppProfileRoute,
-  AppRemovalsRoute: AppRemovalsRoute,
-  AppReportsRoute: AppReportsRoute,
-  AppRolesRoute: AppRolesRoute,
-  AppSettingsRoute: AppSettingsRoute,
-  AppSubmissionsRoute: AppSubmissionsRoute,
-  AppTeamRoute: AppTeamRoute,
-  AppIndexRoute: AppIndexRoute,
-  AppCasesIdRoute: AppCasesIdRoute,
-  AppReviewsIdRoute: AppReviewsIdRoute,
-  AppCasesIndexRoute: AppCasesIndexRoute,
-  AppReviewsIndexRoute: AppReviewsIndexRoute,
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAnalysisRoute: AuthenticatedAppAnalysisRoute,
+  AuthenticatedAppAppealsRoute: AuthenticatedAppAppealsRoute,
+  AuthenticatedAppApprovalsRoute: AuthenticatedAppApprovalsRoute,
+  AuthenticatedAppBillingRoute: AuthenticatedAppBillingRoute,
+  AuthenticatedAppBusinessesRoute: AuthenticatedAppBusinessesRoute,
+  AuthenticatedAppDiscoverRoute: AuthenticatedAppDiscoverRoute,
+  AuthenticatedAppEvidenceRoute: AuthenticatedAppEvidenceRoute,
+  AuthenticatedAppFindingsRoute: AuthenticatedAppFindingsRoute,
+  AuthenticatedAppIntegrationsRoute: AuthenticatedAppIntegrationsRoute,
+  AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
+  AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
+  AuthenticatedAppRemovalsRoute: AuthenticatedAppRemovalsRoute,
+  AuthenticatedAppReportsRoute: AuthenticatedAppReportsRoute,
+  AuthenticatedAppRolesRoute: AuthenticatedAppRolesRoute,
+  AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
+  AuthenticatedAppSubmissionsRoute: AuthenticatedAppSubmissionsRoute,
+  AuthenticatedAppTeamRoute: AuthenticatedAppTeamRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+  AuthenticatedAppCasesIdRoute: AuthenticatedAppCasesIdRoute,
+  AuthenticatedAppReviewsIdRoute: AuthenticatedAppReviewsIdRoute,
+  AuthenticatedAppCasesIndexRoute: AuthenticatedAppCasesIndexRoute,
+  AuthenticatedAppReviewsIndexRoute: AuthenticatedAppReviewsIndexRoute,
 }
 
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRouteWithChildren,
-  AppRoute: AppRouteWithChildren,
   FeaturesRoute: FeaturesRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
@@ -930,6 +949,8 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   TermsRoute: TermsRoute,
   WorkflowsRoute: WorkflowsRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
