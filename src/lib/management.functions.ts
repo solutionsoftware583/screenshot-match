@@ -16,8 +16,6 @@ async function rpc<T = unknown>(ctx: Ctx, fn: string, args: Record<string, unkno
   return data as T;
 }
 
-const authed = (method: "GET" | "POST" = "POST") =>
-  createServerFn({ method }).middleware([requireSupabaseAuth]);
 
 const str = (v: unknown, label: string, max = 200) => {
   const s = typeof v === "string" ? v.trim() : "";
@@ -56,11 +54,11 @@ export interface RoleRow {
 }
 
 // ---------- Reads ----------
-export const getMyAccess = authed("GET").handler(async ({ context }) =>
+export const getMyAccess = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) =>
   rpc<MyAccess>(context, "rg_my_access"),
 );
 
-export const listResellers = authed("GET").handler(async ({ context }) => {
+export const listResellers = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   const { data, error } = await context.supabase
     .from("resellers")
     .select("id, name, created_at, organizations(count)")
@@ -74,7 +72,7 @@ export const listResellers = authed("GET").handler(async ({ context }) => {
   }));
 });
 
-export const listOrganizations = authed("GET").handler(async ({ context }) => {
+export const listOrganizations = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   const { data, error } = await context.supabase
     .from("organizations")
     .select("id, name, reseller_id, geo_hierarchy_enabled, teams_enabled, created_at, resellers(name)")
@@ -93,7 +91,7 @@ export const listOrganizations = authed("GET").handler(async ({ context }) => {
   );
 });
 
-export const listRoleCatalog = authed("GET").handler(async ({ context }) => {
+export const listRoleCatalog = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
   const [roles, rp, perms] = await Promise.all([
     context.supabase.from("role_definitions").select("key, scope, name, description"),
     context.supabase.from("role_permissions").select("role_key, permission_key"),
@@ -117,7 +115,7 @@ export const listRoleCatalog = authed("GET").handler(async ({ context }) => {
   };
 });
 
-export const getOrgDetail = authed("GET")
+export const getOrgDetail = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId: string }) => ({ orgId: uuid(d?.orgId) }))
   .handler(async ({ data, context }) => {
     const s = context.supabase;
@@ -149,14 +147,14 @@ export const getOrgDetail = authed("GET")
     };
   });
 
-export const listPlatformPeople = authed("GET").handler(async ({ context }) =>
+export const listPlatformPeople = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth]).handler(async ({ context }) =>
   rpc<{ user_id: string; email: string; full_name: string | null; created_at: string; platform_roles: string[] }[]>(
     context,
     "rg_platform_people",
   ),
 );
 
-export const getResellerDetail = authed("GET")
+export const getResellerDetail = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { resellerId: string }) => ({ resellerId: uuid(d?.resellerId) }))
   .handler(async ({ data, context }) => {
     const s = context.supabase;
@@ -176,7 +174,7 @@ export const getResellerDetail = authed("GET")
     };
   });
 
-export const getInvitationByToken = authed("GET")
+export const getInvitationByToken = createServerFn({ method: "GET" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { token: string }) => ({ token: str(d?.token, "Token", 200) }))
   .handler(async ({ data, context }) => {
     const rows = await rpc<any[]>(context, "rg_invitation_by_token", { _token: data.token });
@@ -187,25 +185,25 @@ export const getInvitationByToken = authed("GET")
   });
 
 // ---------- Writes ----------
-export const createReseller = authed()
+export const createReseller = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { name: string }) => ({ name: str(d?.name, "Name") }))
   .handler(async ({ data, context }) => rpc<string>(context, "rg_create_reseller", { _name: data.name }));
 
-export const updateReseller = authed()
+export const updateReseller = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string; name: string }) => ({ id: uuid(d?.id), name: str(d?.name, "Name") }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_update_reseller", { _id: data.id, _name: data.name });
     return true;
   });
 
-export const deleteReseller = authed()
+export const deleteReseller = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => ({ id: uuid(d?.id) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_delete_reseller", { _id: data.id });
     return true;
   });
 
-export const createOrganization = authed()
+export const createOrganization = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { name: string; resellerId?: string | null }) => ({
     name: str(d?.name, "Name"),
     resellerId: optUuid(d?.resellerId),
@@ -214,7 +212,7 @@ export const createOrganization = authed()
     rpc<string>(context, "rg_create_org", { _name: data.name, _reseller: data.resellerId }),
   );
 
-export const updateOrganization = authed()
+export const updateOrganization = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string; name: string; geo: boolean; teams: boolean }) => ({
     id: uuid(d?.id),
     name: str(d?.name, "Name"),
@@ -226,21 +224,21 @@ export const updateOrganization = authed()
     return true;
   });
 
-export const setOrganizationReseller = authed()
+export const setOrganizationReseller = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string; resellerId: string | null }) => ({ id: uuid(d?.id), resellerId: optUuid(d?.resellerId) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_set_org_reseller", { _id: data.id, _reseller: data.resellerId });
     return true;
   });
 
-export const deleteOrganization = authed()
+export const deleteOrganization = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => ({ id: uuid(d?.id) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_delete_org", { _id: data.id });
     return true;
   });
 
-export const assignResellerStaff = authed()
+export const assignResellerStaff = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId: string; userId: string; assign: boolean }) => ({
     orgId: uuid(d?.orgId),
     userId: uuid(d?.userId),
@@ -252,7 +250,7 @@ export const assignResellerStaff = authed()
   });
 
 const LEVELS = ["country", "state", "division", "district"];
-export const createRegion = authed()
+export const createRegion = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId: string; parentId?: string | null; level: string; name: string }) => {
     if (!LEVELS.includes(d?.level)) throw new Error("Invalid level");
     return { orgId: uuid(d.orgId), parentId: optUuid(d.parentId), level: d.level, name: str(d.name, "Name") };
@@ -261,21 +259,21 @@ export const createRegion = authed()
     rpc<string>(context, "rg_create_geo", { _org: data.orgId, _parent: data.parentId, _level: data.level, _name: data.name }),
   );
 
-export const renameRegion = authed()
+export const renameRegion = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string; name: string }) => ({ id: uuid(d?.id), name: str(d?.name, "Name") }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_rename_geo", { _id: data.id, _name: data.name });
     return true;
   });
 
-export const deleteRegion = authed()
+export const deleteRegion = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => ({ id: uuid(d?.id) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_delete_geo", { _id: data.id });
     return true;
   });
 
-export const saveTeam = authed()
+export const saveTeam = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId: string; id?: string | null; name: string; regionId?: string | null }) => ({
     orgId: uuid(d?.orgId),
     id: optUuid(d?.id),
@@ -286,7 +284,7 @@ export const saveTeam = authed()
     rpc<string>(context, "rg_save_team", { _org: data.orgId, _id: data.id, _name: data.name, _geo: data.regionId }),
   );
 
-export const deleteTeam = authed()
+export const deleteTeam = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => ({ id: uuid(d?.id) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_delete_team", { _id: data.id });
@@ -294,7 +292,7 @@ export const deleteTeam = authed()
   });
 
 const TEAM_ROLES = ["team_manager", "team_leader", "team_member"];
-export const setTeamMember = authed()
+export const setTeamMember = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { teamId: string; userId: string; role: string }) => {
     if (!TEAM_ROLES.includes(d?.role)) throw new Error("Invalid team role");
     return { teamId: uuid(d.teamId), userId: uuid(d.userId), role: d.role };
@@ -304,14 +302,14 @@ export const setTeamMember = authed()
     return true;
   });
 
-export const removeTeamMember = authed()
+export const removeTeamMember = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { teamId: string; userId: string }) => ({ teamId: uuid(d?.teamId), userId: uuid(d?.userId) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_remove_team_member", { _team: data.teamId, _user: data.userId });
     return true;
   });
 
-export const setOrgRole = authed()
+export const setOrgRole = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId: string; userId: string; role: string; regionId?: string | null; remove?: boolean }) => ({
     orgId: uuid(d?.orgId),
     userId: uuid(d?.userId),
@@ -326,14 +324,14 @@ export const setOrgRole = authed()
     return true;
   });
 
-export const removeOrgMember = authed()
+export const removeOrgMember = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId: string; userId: string }) => ({ orgId: uuid(d?.orgId), userId: uuid(d?.userId) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_remove_member", { _org: data.orgId, _user: data.userId });
     return true;
   });
 
-export const setPlatformRole = authed()
+export const setPlatformRole = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { email: string; role: string; remove?: boolean }) => {
     if (!["super_admin", "global_manager", "auditor"].includes(d?.role)) throw new Error("Invalid platform role");
     return { email: str(d.email, "Email", 320), role: d.role, remove: !!d.remove };
@@ -343,7 +341,7 @@ export const setPlatformRole = authed()
     return true;
   });
 
-export const createInvitation = authed()
+export const createInvitation = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { orgId?: string | null; resellerId?: string | null; teamId?: string | null; email: string; role: string }) => ({
     orgId: optUuid(d?.orgId),
     resellerId: optUuid(d?.resellerId),
@@ -357,14 +355,14 @@ export const createInvitation = authed()
     }),
   );
 
-export const revokeInvitation = authed()
+export const revokeInvitation = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { id: string }) => ({ id: uuid(d?.id) }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_revoke_invitation", { _id: data.id });
     return true;
   });
 
-export const respondInvitation = authed()
+export const respondInvitation = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
   .inputValidator((d: { token: string; accept: boolean }) => ({ token: str(d?.token, "Token", 200), accept: !!d?.accept }))
   .handler(async ({ data, context }) => {
     await rpc(context, "rg_respond_invitation", { _token: data.token, _accept: data.accept });
