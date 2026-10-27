@@ -21,7 +21,7 @@ function Overview() {
         <Section title="Recent activity"><EmptyState title="No activity yet" description="Case and review activity will be listed here." /></Section>
         <Section title="Get started" description="Steps that become available as services are connected.">
           <ol className="space-y-2 text-sm">
-            {[["Add a business", "/app/businesses"], ["Connect a review platform", "/app/integrations"], ["Invite your team", "/app/team"]].map(([t, to], i) => (
+            {([["Add a business", "/app/businesses"], ["Connect a review platform", "/app/integrations"], ["Invite your team", "/app/team"]] as const).map(([t, to], i) => (
               <li key={t} className="flex items-center justify-between rounded-md border p-3">
                 <span><span className="mr-2 text-muted-foreground">{i + 1}.</span>{t}</span>
                 <Button asChild size="sm" variant="outline"><Link to={to}>Open</Link></Button>

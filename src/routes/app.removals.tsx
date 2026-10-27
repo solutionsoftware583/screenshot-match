@@ -15,12 +15,12 @@ export const Route = createFileRoute("/app/removals")({
 
 function Removals() {
   const [v, setV] = useState({ platform: "", url: "", policy: "", statement: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"platform" | "url" | "policy" | "statement", string>>>({});
   const [checked, setChecked] = useState(false);
 
   function submit(e: FormEvent) {
     e.preventDefault();
-    const er: Record<string, string> = {};
+    const er: Partial<Record<"platform" | "url" | "policy" | "statement", string>> = {};
     if (!v.platform) er.platform = "Choose a platform.";
     try { new URL(v.url); } catch { er.url = "Enter a valid URL (https://…)."; }
     if (!v.policy.trim()) er.policy = "Name the policy this content violates.";
