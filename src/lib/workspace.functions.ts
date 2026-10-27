@@ -98,7 +98,6 @@ export interface AuditRow {
   action: string;
   target_type: string | null;
   target_id: string | null;
-  metadata: Record<string, unknown>;
 }
 
 const optUuid = (v: unknown) => {
@@ -114,7 +113,7 @@ const optDate = (v: unknown) => {
 
 export const listAudit = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { orgId?: string | null; search?: string; action?: string; from?: string; to?: string; page?: number; pageSize?: number }) => ({
+  .inputValidator((d: { orgId?: string | null | undefined; search?: string | undefined; action?: string | undefined; from?: string | undefined; to?: string | undefined; page?: number; pageSize?: number }) => ({
     orgId: optUuid(d.orgId),
     search: typeof d.search === "string" ? d.search.trim().slice(0, 100) : "",
     action: typeof d.action === "string" && d.action ? d.action.slice(0, 100) : null,
@@ -136,7 +135,7 @@ export const listAudit = createServerFn({ method: "GET" })
     fail(error);
     const list = (rows ?? []) as (AuditRow & { total: number })[];
     return {
-      rows: list.map(({ total: _t, ...r }) => r as AuditRow),
+      rows: list.map((r) => ({ id: r.id, at: r.at, actor_id: r.actor_id, actor_email: r.actor_email, organization_id: r.organization_id, org_name: r.org_name, action: r.action, target_type: r.target_type, target_id: r.target_id })),
       total: Number(list[0]?.total ?? 0),
       page: data.page,
       pageSize: data.pageSize,

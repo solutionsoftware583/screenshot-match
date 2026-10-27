@@ -11,7 +11,7 @@ import { getDashboard } from "@/lib/workspace.functions";
 import { DASHBOARDS, METRIC_LABEL, primaryRole } from "@/lib/dashboard";
 
 export const Route = createFileRoute("/_authenticated/app/")({
-  validateSearch: (s: Record<string, unknown>) => ({ denied: typeof s.denied === "string" ? s.denied : undefined }),
+  validateSearch: (s: Record<string, unknown>): { denied?: "admin" } => (s["denied"] === "admin" ? { denied: "admin" } : {}),
   head: meta("Overview", "Your role-based reputation workspace dashboard."),
   component: Overview,
 });
