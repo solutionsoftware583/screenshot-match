@@ -133,15 +133,15 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
       )}
       <NavList groups={groups} path={path} onNavigate={onNavigate} />
       {(variant === "admin" || showAdmin) && (
-      <div className="border-t border-sidebar-border p-3 text-xs">
-        <Link
-          to={variant === "app" ? "/admin" : "/app"}
-          onClick={onNavigate}
-          className="block rounded-md px-2 py-1.5 hover:bg-sidebar-accent"
-        >
-          {variant === "app" ? "Super Admin panel →" : "← Back to workspace"}
-        </Link>
-      </div>
+        <div className="border-t border-sidebar-border p-3 text-xs">
+          <Link
+            to={variant === "app" ? "/admin" : "/app"}
+            onClick={onNavigate}
+            className="block rounded-md px-2 py-1.5 hover:bg-sidebar-accent"
+          >
+            {variant === "app" ? "Super Admin panel →" : "← Back to workspace"}
+          </Link>
+        </div>
       )}
     </div>
   );
@@ -276,20 +276,20 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
             ))}
           </CommandGroup>
           {showAdmin && (
-          <CommandGroup heading="Super Admin">
-            {ADMIN_NAV.map((n) => (
-              <CommandItem
-                key={n.to}
-                onSelect={() => {
-                  setSearchOpen(false);
-                  navigate({ to: n.to });
-                }}
-              >
-                <n.icon className="mr-2 h-4 w-4" />
-                {n.title}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+            <CommandGroup heading="Super Admin">
+              {ADMIN_NAV.map((n) => (
+                <CommandItem
+                  key={n.to}
+                  onSelect={() => {
+                    setSearchOpen(false);
+                    navigate({ to: n.to });
+                  }}
+                >
+                  <n.icon className="mr-2 h-4 w-4" />
+                  {n.title}
+                </CommandItem>
+              ))}
+            </CommandGroup>
           )}
         </CommandList>
       </CommandDialog>

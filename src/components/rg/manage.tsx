@@ -3,8 +3,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getMyAccess, getOrgDetail, listOrganizations, listRoleCatalog } from "@/lib/management.functions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  getMyAccess,
+  getOrgDetail,
+  listOrganizations,
+  listRoleCatalog,
+} from "@/lib/management.functions";
 import { EmptyState } from "./primitives";
 
 export const MKEY = ["mgmt"] as const;
@@ -56,7 +67,8 @@ export function useCurrentOrg() {
 export function OrgPicker() {
   const { list, orgId, select, orgs } = useCurrentOrg();
   if (orgs.isLoading) return null;
-  if (list.length === 0) return <span className="hidden text-sm text-muted-foreground sm:inline">No organization</span>;
+  if (list.length === 0)
+    return <span className="hidden text-sm text-muted-foreground sm:inline">No organization</span>;
   return (
     <Select value={orgId ?? ""} onValueChange={select}>
       <SelectTrigger className="hidden h-8 w-56 sm:flex" aria-label="Organization">
@@ -74,7 +86,13 @@ export function OrgPicker() {
 }
 
 /** Wraps a query's loading / error state. */
-export function QueryState({ q, children }: { q: { isLoading: boolean; error: unknown; refetch: () => unknown }; children: ReactNode }) {
+export function QueryState({
+  q,
+  children,
+}: {
+  q: { isLoading: boolean; error: unknown; refetch: () => unknown };
+  children: ReactNode;
+}) {
   if (q.isLoading)
     return (
       <div className="flex items-center gap-2 py-10 text-sm text-muted-foreground" role="status">
@@ -83,9 +101,17 @@ export function QueryState({ q, children }: { q: { isLoading: boolean; error: un
     );
   if (q.error)
     return (
-      <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm">
-        <span className="flex items-center gap-2"><AlertCircle className="h-4 w-4 text-destructive" />{errMsg(q.error)}</span>
-        <Button size="sm" variant="outline" onClick={() => q.refetch()}>Retry</Button>
+      <div
+        role="alert"
+        className="flex items-center justify-between gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm"
+      >
+        <span className="flex items-center gap-2">
+          <AlertCircle className="h-4 w-4 text-destructive" />
+          {errMsg(q.error)}
+        </span>
+        <Button size="sm" variant="outline" onClick={() => q.refetch()}>
+          Retry
+        </Button>
       </div>
     );
   return <>{children}</>;
@@ -124,7 +150,10 @@ export function useAction<A, R>(fn: (a: A) => Promise<R>, success?: string) {
 export function ActionMessage({ msg }: { msg: { ok: boolean; text: string } | null }) {
   if (!msg) return null;
   return (
-    <p role={msg.ok ? "status" : "alert"} className={`flex items-center gap-1.5 text-sm ${msg.ok ? "text-success" : "text-destructive"}`}>
+    <p
+      role={msg.ok ? "status" : "alert"}
+      className={`flex items-center gap-1.5 text-sm ${msg.ok ? "text-success" : "text-destructive"}`}
+    >
       {msg.ok ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
       {msg.text}
     </p>
@@ -132,7 +161,11 @@ export function ActionMessage({ msg }: { msg: { ok: boolean; text: string } | nu
 }
 
 export function NoPermission({ what }: { what: string }) {
-  return <p className="text-sm text-muted-foreground">You don't have permission to {what} in this organization.</p>;
+  return (
+    <p className="text-sm text-muted-foreground">
+      You don't have permission to {what} in this organization.
+    </p>
+  );
 }
 
 export const LEVEL_LABEL: Record<string, string> = {
@@ -148,12 +181,20 @@ export const GEO_ROLE_LEVEL: Record<string, string> = {
   district_manager: "district",
 };
 
-export function personLabel(p: { email: string; full_name: string | null } | undefined, fallback: string) {
+export function personLabel(
+  p: { email: string; full_name: string | null } | undefined,
+  fallback: string,
+) {
   if (!p) return fallback;
   return p.full_name ? `${p.full_name} (${p.email})` : p.email;
 }
 
-export function inviteStatus(i: { accepted_at: string | null; rejected_at: string | null; revoked_at: string | null; expires_at: string }) {
+export function inviteStatus(i: {
+  accepted_at: string | null;
+  rejected_at: string | null;
+  revoked_at: string | null;
+  expires_at: string;
+}) {
   if (i.accepted_at) return "Accepted";
   if (i.revoked_at) return "Revoked";
   if (i.rejected_at) return "Declined";
@@ -162,5 +203,9 @@ export function inviteStatus(i: { accepted_at: string | null; rejected_at: strin
 }
 
 export function fmtDate(s: string) {
-  return new Date(s).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  return new Date(s).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 }

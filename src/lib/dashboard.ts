@@ -49,7 +49,14 @@ export const DASHBOARDS: Record<DashboardRole, DashboardSpec> = {
   super_admin: {
     title: "Super Admin dashboard",
     summary: "Full platform view across every reseller and organization.",
-    metrics: ["platform_users", "resellers", "organizations", "teams", "pending_invitations", "audit_7d"],
+    metrics: [
+      "platform_users",
+      "resellers",
+      "organizations",
+      "teams",
+      "pending_invitations",
+      "audit_7d",
+    ],
     links: [
       { label: "Super Admin panel", to: "/admin" },
       { label: "Resellers", to: "/admin/resellers" },

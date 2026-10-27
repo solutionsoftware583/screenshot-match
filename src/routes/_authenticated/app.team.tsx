@@ -6,14 +6,31 @@ import { EmptyState, PageHeader } from "@/components/rg/primitives";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  ActionMessage, GEO_ROLE_LEVEL, LEVEL_LABEL, NoOrg, QueryState, useAction, useCurrentOrg, useOrgDetail, useRoleCatalog,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  ActionMessage,
+  GEO_ROLE_LEVEL,
+  LEVEL_LABEL,
+  NoOrg,
+  QueryState,
+  useAction,
+  useCurrentOrg,
+  useOrgDetail,
+  useRoleCatalog,
 } from "@/components/rg/manage";
 import { removeOrgMember, setOrgRole, updateOrganization } from "@/lib/management.functions";
 
 export const Route = createFileRoute("/_authenticated/app/team")({
-  head: meta("Members & Roles", "People in your organization, their roles and geographic assignments."),
+  head: meta(
+    "Members & Roles",
+    "People in your organization, their roles and geographic assignments.",
+  ),
   component: Page,
 });
 
@@ -27,21 +44,39 @@ function Page() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Members & Roles" description="Who belongs to this organization and what they can do. Invite people from Invitations." />
+      <PageHeader
+        title="Members & Roles"
+        description="Who belongs to this organization and what they can do. Invite people from Invitations."
+      />
       <QueryState q={cur.orgs}>
-        {!cur.orgId ? <NoOrg /> : (
+        {!cur.orgId ? (
+          <NoOrg />
+        ) : (
           <QueryState q={q}>
             {d && (
               <>
                 {can("org.manage") && <OrgSettings d={d} />}
                 {!can("members.view") ? (
-                  <EmptyState title="Member list hidden" description="Your role doesn't include viewing members." />
+                  <EmptyState
+                    title="Member list hidden"
+                    description="Your role doesn't include viewing members."
+                  />
                 ) : d.people.length === 0 ? (
-                  <EmptyState title="No members yet" description="Invite people from the Invitations page." />
+                  <EmptyState
+                    title="No members yet"
+                    description="Invite people from the Invitations page."
+                  />
                 ) : (
                   <div className="space-y-3">
                     {d.people.map((p) => (
-                      <MemberCard key={p.user_id} orgId={d.org.id} person={p} d={d} roleName={roleName} canAssign={can("roles.assign")} />
+                      <MemberCard
+                        key={p.user_id}
+                        orgId={d.org.id}
+                        person={p}
+                        d={d}
+                        roleName={roleName}
+                        canAssign={can("roles.assign")}
+                      />
                     ))}
                   </div>
                 )}
@@ -63,19 +98,50 @@ function OrgSettings({ d }: { d: Detail }) {
   const save = useAction(useServerFn(updateOrganization), "Organization settings saved");
   return (
     <Section title="Organization settings">
-      <form className="flex flex-wrap items-center gap-4" onSubmit={(e) => { e.preventDefault(); save.mutate({ data: { id: d.org.id, name, geo, teams } }); }}>
-        <Input className="max-w-xs" value={name} onChange={(e) => setName(e.target.value)} required maxLength={200} aria-label="Organization name" />
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={geo} onChange={(e) => setGeo(e.target.checked)} /> Geographic hierarchy</label>
-        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={teams} onChange={(e) => setTeams(e.target.checked)} /> Teams</label>
-        <Button type="submit" disabled={save.isPending}>Save</Button>
+      <form
+        className="flex flex-wrap items-center gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          save.mutate({ data: { id: d.org.id, name, geo, teams } });
+        }}
+      >
+        <Input
+          className="max-w-xs"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          maxLength={200}
+          aria-label="Organization name"
+        />
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={geo} onChange={(e) => setGeo(e.target.checked)} />{" "}
+          Geographic hierarchy
+        </label>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={teams} onChange={(e) => setTeams(e.target.checked)} />{" "}
+          Teams
+        </label>
+        <Button type="submit" disabled={save.isPending}>
+          Save
+        </Button>
         <ActionMessage msg={save.msg} />
       </form>
     </Section>
   );
 }
 
-function MemberCard({ orgId, person, d, roleName, canAssign }: {
-  orgId: string; person: Detail["people"][number]; d: Detail; roleName: (k: string) => string; canAssign: boolean;
+function MemberCard({
+  orgId,
+  person,
+  d,
+  roleName,
+  canAssign,
+}: {
+  orgId: string;
+  person: Detail["people"][number];
+  d: Detail;
+  roleName: (k: string) => string;
+  canAssign: boolean;
 }) {
   const catalog = useRoleCatalog();
   const orgRoles = (catalog.data?.roles ?? []).filter((r) => r.scope === "organization");
@@ -97,8 +163,16 @@ function MemberCard({ orgId, person, d, roleName, canAssign }: {
           <p className="text-xs text-muted-foreground">{person.email}</p>
         </div>
         {canAssign && (
-          <Button size="sm" variant="ghost" className="text-destructive" disabled={remove.isPending}
-            onClick={() => confirm(`Remove ${person.email} from this organization and all its teams?`) && remove.mutate({ data: { orgId, userId: person.user_id } })}>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-destructive"
+            disabled={remove.isPending}
+            onClick={() =>
+              confirm(`Remove ${person.email} from this organization and all its teams?`) &&
+              remove.mutate({ data: { orgId, userId: person.user_id } })
+            }
+          >
             Remove from organization
           </Button>
         )}
@@ -106,36 +180,98 @@ function MemberCard({ orgId, person, d, roleName, canAssign }: {
       <div className="mt-3 flex flex-wrap gap-1.5">
         {mine.map((m) => (
           <Badge key={m.id} variant="secondary" className="gap-1">
-            {roleName(m.role_key)}{m.geographic_scope_id && ` · ${regionName(m.geographic_scope_id)}`}
+            {roleName(m.role_key)}
+            {m.geographic_scope_id && ` · ${regionName(m.geographic_scope_id)}`}
             {canAssign && (
-              <button type="button" aria-label={`Remove ${roleName(m.role_key)}`} className="ml-1 hover:text-destructive"
-                onClick={() => set.mutate({ data: { orgId, userId: person.user_id, role: m.role_key, remove: true } })}>×</button>
+              <button
+                type="button"
+                aria-label={`Remove ${roleName(m.role_key)}`}
+                className="ml-1 hover:text-destructive"
+                onClick={() =>
+                  set.mutate({
+                    data: { orgId, userId: person.user_id, role: m.role_key, remove: true },
+                  })
+                }
+              >
+                ×
+              </button>
             )}
           </Badge>
         ))}
         {teams.map((t) => (
-          <Badge key={t.id} variant="outline">{d.teams.find((x) => x.id === t.team_id)?.name} · {roleName(t.role_key)}</Badge>
+          <Badge key={t.id} variant="outline">
+            {d.teams.find((x) => x.id === t.team_id)?.name} · {roleName(t.role_key)}
+          </Badge>
         ))}
       </div>
       {canAssign && (
-        <form className="mt-3 flex flex-wrap gap-2" onSubmit={(e) => {
-          e.preventDefault();
-          set.mutate({ data: { orgId, userId: person.user_id, role, regionId: needLevel ? region : null } }, { onSuccess: () => { setRole(""); setRegion(""); } });
-        }}>
-          <Select value={role} onValueChange={(v) => { setRole(v); setRegion(""); }}>
-            <SelectTrigger className="w-52" aria-label="Add role"><SelectValue placeholder="Add a role…" /></SelectTrigger>
-            <SelectContent>{orgRoles.map((r) => <SelectItem key={r.key} value={r.key}>{r.name}</SelectItem>)}</SelectContent>
+        <form
+          className="mt-3 flex flex-wrap gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            set.mutate(
+              {
+                data: { orgId, userId: person.user_id, role, regionId: needLevel ? region : null },
+              },
+              {
+                onSuccess: () => {
+                  setRole("");
+                  setRegion("");
+                },
+              },
+            );
+          }}
+        >
+          <Select
+            value={role}
+            onValueChange={(v) => {
+              setRole(v);
+              setRegion("");
+            }}
+          >
+            <SelectTrigger className="w-52" aria-label="Add role">
+              <SelectValue placeholder="Add a role…" />
+            </SelectTrigger>
+            <SelectContent>
+              {orgRoles.map((r) => (
+                <SelectItem key={r.key} value={r.key}>
+                  {r.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
           </Select>
           {needLevel && (
             <Select value={region} onValueChange={setRegion}>
-              <SelectTrigger className="w-52" aria-label="Region"><SelectValue placeholder={regions.length ? `Choose ${LEVEL_LABEL[needLevel]}` : `No ${LEVEL_LABEL[needLevel]} regions yet`} /></SelectTrigger>
-              <SelectContent>{regions.map((g) => <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>)}</SelectContent>
+              <SelectTrigger className="w-52" aria-label="Region">
+                <SelectValue
+                  placeholder={
+                    regions.length
+                      ? `Choose ${LEVEL_LABEL[needLevel]}`
+                      : `No ${LEVEL_LABEL[needLevel]} regions yet`
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                {regions.map((g) => (
+                  <SelectItem key={g.id} value={g.id}>
+                    {g.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
           )}
-          <Button type="submit" size="sm" disabled={!role || (!!needLevel && !region) || set.isPending}>Assign</Button>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={!role || (!!needLevel && !region) || set.isPending}
+          >
+            Assign
+          </Button>
         </form>
       )}
-      <div className="mt-2"><ActionMessage msg={set.msg ?? remove.msg} /></div>
+      <div className="mt-2">
+        <ActionMessage msg={set.msg ?? remove.msg} />
+      </div>
     </div>
   );
 }
