@@ -48,22 +48,7 @@ export type Database = {
           target_id?: string | null
           target_type?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "audit_events_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "audit_events_reseller_id_fkey"
-            columns: ["reseller_id"]
-            isOneToOne: false
-            referencedRelation: "resellers"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       geographic_scopes: {
         Row: {
