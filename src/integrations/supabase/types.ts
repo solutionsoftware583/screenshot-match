@@ -611,6 +611,32 @@ export type Database = {
         }
         Returns: undefined
       }
+      rg_audit_actions: { Args: never; Returns: string[] }
+      rg_audit_list: {
+        Args: {
+          _action: string
+          _from: string
+          _limit: number
+          _offset: number
+          _org: string
+          _search: string
+          _to: string
+        }
+        Returns: {
+          action: string
+          actor_email: string
+          actor_id: string
+          at: string
+          id: string
+          metadata: Json
+          org_name: string
+          organization_id: string
+          reseller_id: string
+          target_id: string
+          target_type: string
+          total: number
+        }[]
+      }
       rg_create_geo: {
         Args: { _level: string; _name: string; _org: string; _parent: string }
         Returns: string
