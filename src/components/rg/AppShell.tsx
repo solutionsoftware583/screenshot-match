@@ -21,7 +21,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Brand } from "./primitives";
-import { OrgPicker } from "./manage";
+import { OrgPicker, useMyAccess } from "./manage";
 import { ADMIN_NAV, APP_NAV, APP_SECONDARY, type NavItem } from "./nav";
 import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
@@ -85,6 +85,9 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
     navigate({ to: "/login", replace: true });
   }
   const [searchOpen, setSearchOpen] = useState(false);
+  // Visibility only; the /admin route gate and the database enforce access.
+  const access = useMyAccess();
+  const showAdmin = !!access.data?.can_view_platform;
 
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
@@ -129,6 +132,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
         </div>
       )}
       <NavList groups={groups} path={path} onNavigate={onNavigate} />
+      {(variant === "admin" || showAdmin) && (
       <div className="border-t border-sidebar-border p-3 text-xs">
         <Link
           to={variant === "app" ? "/admin" : "/app"}
@@ -138,6 +142,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
           {variant === "app" ? "Super Admin panel →" : "← Back to workspace"}
         </Link>
       </div>
+      )}
     </div>
   );
 
@@ -270,6 +275,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
               </CommandItem>
             ))}
           </CommandGroup>
+          {showAdmin && (
           <CommandGroup heading="Super Admin">
             {ADMIN_NAV.map((n) => (
               <CommandItem
@@ -284,6 +290,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
               </CommandItem>
             ))}
           </CommandGroup>
+          )}
         </CommandList>
       </CommandDialog>
     </div>

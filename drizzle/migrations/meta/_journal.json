@@ -43,6 +43,13 @@
       "when": 1793132570357,
       "tag": "0005_audit_log_outlives_entities",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793133172334,
+      "tag": "0006_audit_list_rpc",
+      "breakpoints": true
     }
   ]
 }

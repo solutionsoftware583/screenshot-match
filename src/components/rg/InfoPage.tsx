@@ -23,8 +23,11 @@ export function InfoPage({
   title,
   description,
   actions,
+  connected = false,
   children,
 }: {
+  /** Set when the page reads real data, to hide the "not connected" notice. */
+  connected?: boolean;
   title: string;
   description: string;
   actions?: ReactNode;
@@ -33,7 +36,7 @@ export function InfoPage({
   return (
     <div>
       <PageHeader title={title} description={description} actions={actions} />
-      <BackendNotice feature={title} />
+      {!connected && <BackendNotice feature={title} />}
       <div className="space-y-5">{children}</div>
     </div>
   );
