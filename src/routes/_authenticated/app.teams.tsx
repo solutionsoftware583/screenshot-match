@@ -66,7 +66,7 @@ function Page() {
 function RegionSelect({ d, value, onChange }: { d: Detail; value: string; onChange: (v: string) => void }) {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-56" aria-label="Region"><SelectValue /></SelectTrigger>
+      <SelectTrigger className="w-full sm:w-56" aria-label="Region"><SelectValue /></SelectTrigger>
       <SelectContent>
         <SelectItem value={NO_REGION}>No region</SelectItem>
         {d.geo.map((g) => <SelectItem key={g.id} value={g.id}>{LEVEL_LABEL[g.level]}: {g.name}</SelectItem>)}
@@ -111,26 +111,22 @@ function TeamCard({ team, d, canManage }: { team: Detail["teams"][number]; d: De
         </div>
       )}
       {members.length === 0 ? <p className="text-sm text-muted-foreground">No members in this team.</p> : (
-        <table className="w-full text-sm">
-          <tbody>
+        <ul className="text-sm">
             {members.map((m) => (
-              <tr key={m.id} className="border-t">
-                <td className="py-2">{personLabel(person(m.user_id), "Member")}</td>
-                <td className="py-2">
+              <li key={m.id} className="flex flex-wrap items-center gap-2 border-t py-2">
+                <span className="min-w-0 flex-1 break-words">{personLabel(person(m.user_id), "Member")}</span>
+                <span className="flex shrink-0 items-center gap-1">
                   {canManage ? (
                     <Select value={m.role_key} onValueChange={(v) => setMember.mutate({ data: { teamId: team.id, userId: m.user_id, role: v } })}>
                       <SelectTrigger className="h-8 w-40" aria-label="Team role"><SelectValue /></SelectTrigger>
                       <SelectContent>{Object.entries(TEAM_ROLES).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}</SelectContent>
                     </Select>
                   ) : TEAM_ROLES[m.role_key]}
-                </td>
-                <td className="text-right">
                   {canManage && <Button size="sm" variant="ghost" onClick={() => removeMember.mutate({ data: { teamId: team.id, userId: m.user_id } })}>Remove</Button>}
-                </td>
-              </tr>
+                </span>
+              </li>
             ))}
-          </tbody>
-        </table>
+        </ul>
       )}
       {canManage && (
         <form className="mt-3 flex flex-wrap gap-2" onSubmit={(e) => {
@@ -138,7 +134,7 @@ function TeamCard({ team, d, canManage }: { team: Detail["teams"][number]; d: De
           setMember.mutate({ data: { teamId: team.id, userId: user, role } }, { onSuccess: () => setUser("") });
         }}>
           <Select value={user} onValueChange={setUser}>
-            <SelectTrigger className="w-64" aria-label="Person"><SelectValue placeholder={candidates.length ? "Add an organization member…" : "Everyone is already in this team"} /></SelectTrigger>
+            <SelectTrigger className="w-full sm:w-64" aria-label="Person"><SelectValue placeholder={candidates.length ? "Add an organization member…" : "Everyone is already in this team"} /></SelectTrigger>
             <SelectContent>{candidates.map((p) => <SelectItem key={p.user_id} value={p.user_id}>{personLabel(p, "")}</SelectItem>)}</SelectContent>
           </Select>
           <Select value={role} onValueChange={setRole}>
