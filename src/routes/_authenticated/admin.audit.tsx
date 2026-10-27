@@ -1,41 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type { AuditLog } from "@/lib/contracts";
-import { services } from "@/services";
-import { ListPage } from "@/components/rg/ListPage";
+import { InfoPage, meta } from "@/components/rg/InfoPage";
+import { AuditLogView } from "@/components/rg/AuditLogView";
 
 export const Route = createFileRoute("/_authenticated/admin/audit")({
-  head: () => ({
-    meta: [
-      { title: "Audit Logs — Super Admin" },
-      {
-        name: "description",
-        content: "Immutable record of security-relevant actions across the platform.",
-      },
-      { property: "og:title", content: "Audit Logs — Super Admin" },
-      {
-        property: "og:description",
-        content: "Immutable record of security-relevant actions across the platform.",
-      },
-    ],
-  }),
-  component: Page,
+  head: meta("Audit Logs", "Read-only record of security-relevant actions across the platform.", "Super Admin"),
+  component: () => (
+    <InfoPage title="Audit Logs" description="Read-only record of security-relevant actions across the platform.">
+      <AuditLogView scope="platform" />
+    </InfoPage>
+  ),
 });
-
-function Page() {
-  return (
-    <ListPage<AuditLog>
-      title="Audit Logs"
-      description="Immutable record of security-relevant actions across the platform."
-      queryKey="admin.audit"
-      load={services.audit.list}
-      columns={[
-        { key: "at", label: "Time" },
-        { key: "actor", label: "Actor" },
-        { key: "action", label: "Action" },
-        { key: "target", label: "Target" },
-      ]}
-      emptyTitle="No audit events"
-      emptyDescription="Audit logging starts once the backend is live."
-    />
-  );
-}
