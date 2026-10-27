@@ -15,6 +15,13 @@
       "when": 1793131125713,
       "tag": "0001_tenant_hierarchy_rbac_foundation",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793131355749,
+      "tag": "0002_harden_function_grants",
+      "breakpoints": true
     }
   ]
 }
