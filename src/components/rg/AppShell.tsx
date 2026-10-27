@@ -21,6 +21,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Brand } from "./primitives";
+import { OrgPicker } from "./manage";
 import { ADMIN_NAV, APP_NAV, APP_SECONDARY, type NavItem } from "./nav";
 import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
@@ -124,7 +125,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
       {variant === "admin" && (
         <div className="mx-3 mt-3 flex items-start gap-2 rounded-md bg-sidebar-accent p-2 text-xs">
           <ShieldAlert className="h-4 w-4 shrink-0 text-sidebar-primary" />
-          Super Admin access will be enforced server-side once authentication ships.
+          Every Super Admin action is re-checked by the database before it runs.
         </div>
       )}
       <NavList groups={groups} path={path} onNavigate={onNavigate} />
@@ -162,19 +163,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
             <Menu className="h-5 w-5" />
           </Button>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="hidden gap-2 sm:inline-flex">
-                No organization <ChevronsUpDown className="h-3.5 w-3.5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-64">
-              <DropdownMenuLabel>Organizations</DropdownMenuLabel>
-              <p className="px-2 pb-2 text-xs text-muted-foreground">
-                Organization workspaces are not available yet.
-              </p>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <OrgPicker />
 
           <ol
             className="hidden min-w-0 items-center gap-1 truncate text-sm text-muted-foreground md:flex"

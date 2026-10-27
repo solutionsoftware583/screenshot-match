@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  ActionMessage, NoOrg, OrgPicker, QueryState, fmtDate, inviteStatus, useAction, useCurrentOrg, useOrgDetail, useRoleCatalog,
+  ActionMessage, NoOrg, QueryState, fmtDate, inviteStatus, useAction, useCurrentOrg, useOrgDetail, useRoleCatalog,
 } from "@/components/rg/manage";
 import { InviteLink } from "@/components/rg/InviteLink";
 import { createInvitation, revokeInvitation } from "@/lib/management.functions";
@@ -35,7 +35,7 @@ function Page() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Invitations" description="Invitations expire after 7 days and can only be accepted by the invited email address." actions={<OrgPicker {...cur} />} />
+      <PageHeader title="Invitations" description="Invitations expire after 7 days and can only be accepted by the invited email address." />
       <QueryState q={cur.orgs}>
         {!cur.orgId ? <NoOrg /> : (
           <QueryState q={q}>

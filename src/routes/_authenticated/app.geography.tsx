@@ -6,7 +6,7 @@ import { EmptyState, PageHeader } from "@/components/rg/primitives";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  ActionMessage, GEO_ROLE_LEVEL, LEVEL_LABEL, NoOrg, OrgPicker, QueryState, personLabel, useAction, useCurrentOrg, useOrgDetail,
+  ActionMessage, GEO_ROLE_LEVEL, LEVEL_LABEL, NoOrg, QueryState, personLabel, useAction, useCurrentOrg, useOrgDetail,
 } from "@/components/rg/manage";
 import { createRegion, deleteRegion, renameRegion } from "@/lib/management.functions";
 
@@ -28,7 +28,7 @@ function Page() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Geographic Management" description="Optional hierarchy: Country → State → Division → District. Assign Country, State, Divisional and District Managers to a region from Members & Roles. Global Managers are platform-wide and set under Super Admin → Users." actions={<OrgPicker {...cur} />} />
+      <PageHeader title="Geographic Management" description="Optional hierarchy: Country → State → Division → District. Assign Country, State, Divisional and District Managers to a region from Members & Roles. Global Managers are platform-wide and set under Super Admin → Users." />
       <QueryState q={cur.orgs}>
         {!cur.orgId ? <NoOrg /> : (
           <QueryState q={q}>
