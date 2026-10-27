@@ -11,7 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "rbac:seed-sql": "bun scripts/rbac-seed.ts"
   },
   "overrides": {
     "rolldown": "1.2.1"
