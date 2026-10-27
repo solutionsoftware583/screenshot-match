@@ -27,6 +27,10 @@ import {
   Bell,
   KeyRound,
   UserCircle,
+  UsersRound,
+  MailPlus,
+  Map,
+  Handshake,
 } from "lucide-react";
 
 export interface NavItem {
@@ -47,7 +51,10 @@ export const APP_NAV: NavItem[] = [
   { title: "Appeals", to: "/app/appeals", icon: RotateCcw },
   { title: "Businesses", to: "/app/businesses", icon: Building2 },
   { title: "Integrations", to: "/app/integrations", icon: Plug },
-  { title: "Team", to: "/app/team", icon: Users },
+  { title: "Members & Roles", to: "/app/team", icon: Users },
+  { title: "Teams", to: "/app/teams", icon: UsersRound },
+  { title: "Invitations", to: "/app/invitations", icon: MailPlus },
+  { title: "Geography", to: "/app/geography", icon: Map },
   { title: "Reports", to: "/app/reports", icon: BarChart3 },
   { title: "Billing", to: "/app/billing", icon: CreditCard },
   { title: "Settings", to: "/app/settings", icon: Settings },
@@ -63,7 +70,8 @@ export const APP_SECONDARY: NavItem[] = [
 
 export const ADMIN_NAV: NavItem[] = [
   { title: "Global Dashboard", to: "/admin", icon: Globe },
-  { title: "Tenants", to: "/admin/tenants", icon: Building2 },
+  { title: "Resellers", to: "/admin/resellers", icon: Handshake },
+  { title: "Organizations", to: "/admin/tenants", icon: Building2 },
   { title: "Users", to: "/admin/users", icon: UserCog },
   { title: "Subscriptions", to: "/admin/subscriptions", icon: Receipt },
   { title: "Integration Health", to: "/admin/integrations", icon: Activity },

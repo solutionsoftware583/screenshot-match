@@ -25,7 +25,6 @@ function Page() {
   const canManage = !!d?.permissions.includes("geo.manage");
   const add = useAction(useServerFn(createRegion), "Country added");
   const [name, setName] = useState("");
-  const globals = d ? [] : [];
 
   return (
     <div className="space-y-5">
@@ -46,7 +45,6 @@ function Page() {
                     </form>
                   </Section>
                 )}
-                {globals.length === 0 && null}
                 {d.geo.filter((g) => !g.parent_id).length === 0 ? <EmptyState title="No regions yet" /> : (
                   <div className="rounded-lg border bg-card p-4">
                     <ul className="space-y-1">
