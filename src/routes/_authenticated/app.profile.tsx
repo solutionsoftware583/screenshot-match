@@ -19,11 +19,11 @@ function Page() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
             <Label htmlFor="n">Name</Label>
-            <Input id="n" disabled placeholder="Not signed in" />
+            <Input id="n" disabled placeholder="Signed-in account" />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="e">Email</Label>
-            <Input id="e" disabled placeholder="Not signed in" />
+            <Input id="e" disabled placeholder="Signed-in account" />
           </div>
         </div>
       </Section>
