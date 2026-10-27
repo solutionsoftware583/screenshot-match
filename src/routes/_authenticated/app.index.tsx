@@ -21,7 +21,7 @@ function Overview() {
   const fn = useServerFn(getDashboard);
   const q = useQuery({ queryKey: ["mgmt", "dashboard"], queryFn: () => fn() });
   const roles = useRoleCatalog();
-  const roleName = (k: string) => roles.data?.find((r) => r.key === k)?.name ?? k;
+  const roleName = (k: string) => roles.data?.roles.find((r) => r.key === k)?.name ?? k;
   const d = q.data;
   const all = d ? [...d.platform_roles, ...d.reseller_roles.map((r) => r.role_key), ...d.org_roles.map((r) => r.role_key), ...d.team_roles.map((r) => r.role_key)] : [];
   const spec = DASHBOARDS[primaryRole(all)];
