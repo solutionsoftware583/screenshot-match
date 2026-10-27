@@ -29,6 +29,13 @@
       "when": 1793131686453,
       "tag": "0003_management_rpcs",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793132068652,
+      "tag": "0004_team_delete_keeps_invite_history",
+      "breakpoints": true
     }
   ]
 }
