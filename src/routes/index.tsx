@@ -88,7 +88,13 @@ function Landing() {
             </p>
           </div>
           <div className="flex items-center">
-            <img src={BRAND_IMAGES.banner} alt="Rating Guard — We Manage Reviews & Ratings" width={1600} height={666} className="w-full rounded-2xl shadow-glow ring-1 ring-primary-foreground/20" />
+            <img
+              src={BRAND_IMAGES.banner}
+              alt="Rating Guard — We Manage Reviews & Ratings"
+              width={1600}
+              height={666}
+              className="w-full rounded-2xl shadow-glow ring-1 ring-primary-foreground/20"
+            />
           </div>
         </div>
       </section>

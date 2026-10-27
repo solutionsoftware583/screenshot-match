@@ -26,7 +26,13 @@ export function Brand({
 }) {
   return (
     <Link to="/" className="flex items-center gap-2" aria-label="Rating Guard home">
-      <img src={roundLogo.url} alt="Rating Guard logo" width={36} height={36} className="h-9 w-9 rounded-full shadow-glow" />
+      <img
+        src={roundLogo.url}
+        alt="Rating Guard logo"
+        width={36}
+        height={36}
+        className="h-9 w-9 rounded-full shadow-glow"
+      />
       {!compact && (
         <span className="leading-tight">
           <span

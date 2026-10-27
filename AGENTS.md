@@ -16,3 +16,4 @@
 - Admin access must be enforced server-side once auth exists; hidden navigation is not authorization.
 - Signed-in pages live in `src/routes/_authenticated/` (client-only gate redirecting to `/login?redirect=`); public pages stay top-level. Post-login redirects go through `safeRedirect` in `src/lib/auth.ts` to block off-site redirects.
 - Profile data (name, organization) lives in `public.profiles`, filled by a signup trigger; roles must go in a separate table when added.
+- Tenancy/RBAC lives in the database: roles and permissions are rows (seeded from `src/lib/rbac.ts` via `bun run rbac:seed-sql`), and access is decided by `has_org_permission` / `can_access_reseller` in RLS. Tables are read-only to clients; every write must be a server function that checks permission and writes `audit_events`. See `docs/ARCHITECTURE.md`.
