@@ -32,9 +32,12 @@ import { Route as AppBusinessesRouteImport } from './routes/app.businesses'
 import { Route as AppDiscoverRouteImport } from './routes/app.discover'
 import { Route as AppEvidenceRouteImport } from './routes/app.evidence'
 import { Route as AppFindingsRouteImport } from './routes/app.findings'
+import { Route as AppIntegrationsRouteImport } from './routes/app.integrations'
+import { Route as AppRemovalsRouteImport } from './routes/app.removals'
 import { Route as AppSubmissionsRouteImport } from './routes/app.submissions'
 import { Route as AppTeamRouteImport } from './routes/app.team'
 import { Route as AppCasesIndexRouteImport } from './routes/app.cases.index'
+import { Route as AppCasesIdRouteImport } from './routes/app.cases.$id'
 import { Route as AppReviewsIndexRouteImport } from './routes/app.reviews.index'
 import { Route as AppReviewsIdRouteImport } from './routes/app.reviews.$id'
 
@@ -153,6 +156,16 @@ const AppFindingsRoute = AppFindingsRouteImport.update({
   path: '/findings',
   getParentRoute: () => AppRoute,
 } as any)
+const AppIntegrationsRoute = AppIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRemovalsRoute = AppRemovalsRouteImport.update({
+  id: '/removals',
+  path: '/removals',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSubmissionsRoute = AppSubmissionsRouteImport.update({
   id: '/submissions',
   path: '/submissions',
@@ -166,6 +179,11 @@ const AppTeamRoute = AppTeamRouteImport.update({
 const AppCasesIndexRoute = AppCasesIndexRouteImport.update({
   id: '/cases/',
   path: '/cases/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCasesIdRoute = AppCasesIdRouteImport.update({
+  id: '/cases/$id',
+  path: '/cases/$id',
   getParentRoute: () => AppRoute,
 } as any)
 const AppReviewsIndexRoute = AppReviewsIndexRouteImport.update({
@@ -202,9 +220,12 @@ export interface FileRoutesByFullPath {
   '/app/discover': typeof AppDiscoverRoute
   '/app/evidence': typeof AppEvidenceRoute
   '/app/findings': typeof AppFindingsRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/removals': typeof AppRemovalsRoute
   '/app/submissions': typeof AppSubmissionsRoute
   '/app/team': typeof AppTeamRoute
   '/app/': typeof AppIndexRoute
+  '/app/cases/$id': typeof AppCasesIdRoute
   '/app/reviews/$id': typeof AppReviewsIdRoute
   '/app/cases/': typeof AppCasesIndexRoute
   '/app/reviews/': typeof AppReviewsIndexRoute
@@ -231,9 +252,12 @@ export interface FileRoutesByTo {
   '/app/discover': typeof AppDiscoverRoute
   '/app/evidence': typeof AppEvidenceRoute
   '/app/findings': typeof AppFindingsRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/removals': typeof AppRemovalsRoute
   '/app/submissions': typeof AppSubmissionsRoute
   '/app/team': typeof AppTeamRoute
   '/app': typeof AppIndexRoute
+  '/app/cases/$id': typeof AppCasesIdRoute
   '/app/reviews/$id': typeof AppReviewsIdRoute
   '/app/cases': typeof AppCasesIndexRoute
   '/app/reviews': typeof AppReviewsIndexRoute
@@ -262,9 +286,12 @@ export interface FileRoutesById {
   '/app/discover': typeof AppDiscoverRoute
   '/app/evidence': typeof AppEvidenceRoute
   '/app/findings': typeof AppFindingsRoute
+  '/app/integrations': typeof AppIntegrationsRoute
+  '/app/removals': typeof AppRemovalsRoute
   '/app/submissions': typeof AppSubmissionsRoute
   '/app/team': typeof AppTeamRoute
   '/app/': typeof AppIndexRoute
+  '/app/cases/$id': typeof AppCasesIdRoute
   '/app/reviews/$id': typeof AppReviewsIdRoute
   '/app/cases/': typeof AppCasesIndexRoute
   '/app/reviews/': typeof AppReviewsIndexRoute
@@ -294,9 +321,12 @@ export interface FileRouteTypes {
     | '/app/discover'
     | '/app/evidence'
     | '/app/findings'
+    | '/app/integrations'
+    | '/app/removals'
     | '/app/submissions'
     | '/app/team'
     | '/app/'
+    | '/app/cases/$id'
     | '/app/reviews/$id'
     | '/app/cases/'
     | '/app/reviews/'
@@ -323,9 +353,12 @@ export interface FileRouteTypes {
     | '/app/discover'
     | '/app/evidence'
     | '/app/findings'
+    | '/app/integrations'
+    | '/app/removals'
     | '/app/submissions'
     | '/app/team'
     | '/app'
+    | '/app/cases/$id'
     | '/app/reviews/$id'
     | '/app/cases'
     | '/app/reviews'
@@ -353,9 +386,12 @@ export interface FileRouteTypes {
     | '/app/discover'
     | '/app/evidence'
     | '/app/findings'
+    | '/app/integrations'
+    | '/app/removals'
     | '/app/submissions'
     | '/app/team'
     | '/app/'
+    | '/app/cases/$id'
     | '/app/reviews/$id'
     | '/app/cases/'
     | '/app/reviews/'
@@ -538,6 +574,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFindingsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/integrations': {
+      id: '/app/integrations'
+      path: '/integrations'
+      fullPath: '/app/integrations'
+      preLoaderRoute: typeof AppIntegrationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/removals': {
+      id: '/app/removals'
+      path: '/removals'
+      fullPath: '/app/removals'
+      preLoaderRoute: typeof AppRemovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/submissions': {
       id: '/app/submissions'
       path: '/submissions'
@@ -557,6 +607,13 @@ declare module '@tanstack/react-router' {
       path: '/cases'
       fullPath: '/app/cases/'
       preLoaderRoute: typeof AppCasesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cases/$id': {
+      id: '/app/cases/$id'
+      path: '/cases/$id'
+      fullPath: '/app/cases/$id'
+      preLoaderRoute: typeof AppCasesIdRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/reviews/': {
@@ -601,9 +658,12 @@ interface AppRouteChildren {
   AppDiscoverRoute: typeof AppDiscoverRoute
   AppEvidenceRoute: typeof AppEvidenceRoute
   AppFindingsRoute: typeof AppFindingsRoute
+  AppIntegrationsRoute: typeof AppIntegrationsRoute
+  AppRemovalsRoute: typeof AppRemovalsRoute
   AppSubmissionsRoute: typeof AppSubmissionsRoute
   AppTeamRoute: typeof AppTeamRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppCasesIdRoute: typeof AppCasesIdRoute
   AppReviewsIdRoute: typeof AppReviewsIdRoute
   AppCasesIndexRoute: typeof AppCasesIndexRoute
   AppReviewsIndexRoute: typeof AppReviewsIndexRoute
@@ -616,9 +676,12 @@ const AppRouteChildren: AppRouteChildren = {
   AppDiscoverRoute: AppDiscoverRoute,
   AppEvidenceRoute: AppEvidenceRoute,
   AppFindingsRoute: AppFindingsRoute,
+  AppIntegrationsRoute: AppIntegrationsRoute,
+  AppRemovalsRoute: AppRemovalsRoute,
   AppSubmissionsRoute: AppSubmissionsRoute,
   AppTeamRoute: AppTeamRoute,
   AppIndexRoute: AppIndexRoute,
+  AppCasesIdRoute: AppCasesIdRoute,
   AppReviewsIdRoute: AppReviewsIdRoute,
   AppCasesIndexRoute: AppCasesIndexRoute,
   AppReviewsIndexRoute: AppReviewsIndexRoute,
