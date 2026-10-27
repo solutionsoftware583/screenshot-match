@@ -1,745 +1,733 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.18"
-  }
+    PostgrestVersion: "14.18";
+  };
   public: {
     Tables: {
       audit_events: {
         Row: {
-          action: string
-          actor_id: string | null
-          at: string
-          id: string
-          metadata: Json
-          organization_id: string | null
-          reseller_id: string | null
-          target_id: string | null
-          target_type: string | null
-        }
+          action: string;
+          actor_id: string | null;
+          at: string;
+          id: string;
+          metadata: Json;
+          organization_id: string | null;
+          reseller_id: string | null;
+          target_id: string | null;
+          target_type: string | null;
+        };
         Insert: {
-          action: string
-          actor_id?: string | null
-          at?: string
-          id?: string
-          metadata?: Json
-          organization_id?: string | null
-          reseller_id?: string | null
-          target_id?: string | null
-          target_type?: string | null
-        }
+          action: string;
+          actor_id?: string | null;
+          at?: string;
+          id?: string;
+          metadata?: Json;
+          organization_id?: string | null;
+          reseller_id?: string | null;
+          target_id?: string | null;
+          target_type?: string | null;
+        };
         Update: {
-          action?: string
-          actor_id?: string | null
-          at?: string
-          id?: string
-          metadata?: Json
-          organization_id?: string | null
-          reseller_id?: string | null
-          target_id?: string | null
-          target_type?: string | null
-        }
+          action?: string;
+          actor_id?: string | null;
+          at?: string;
+          id?: string;
+          metadata?: Json;
+          organization_id?: string | null;
+          reseller_id?: string | null;
+          target_id?: string | null;
+          target_type?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "audit_events_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "audit_events_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "audit_events_reseller_id_fkey"
-            columns: ["reseller_id"]
-            isOneToOne: false
-            referencedRelation: "resellers"
-            referencedColumns: ["id"]
+            foreignKeyName: "audit_events_reseller_id_fkey";
+            columns: ["reseller_id"];
+            isOneToOne: false;
+            referencedRelation: "resellers";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       geographic_scopes: {
         Row: {
-          created_at: string
-          id: string
-          level: string
-          name: string
-          organization_id: string
-          parent_id: string | null
-        }
+          created_at: string;
+          id: string;
+          level: string;
+          name: string;
+          organization_id: string;
+          parent_id: string | null;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          level: string
-          name: string
-          organization_id: string
-          parent_id?: string | null
-        }
+          created_at?: string;
+          id?: string;
+          level: string;
+          name: string;
+          organization_id: string;
+          parent_id?: string | null;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          level?: string
-          name?: string
-          organization_id?: string
-          parent_id?: string | null
-        }
+          created_at?: string;
+          id?: string;
+          level?: string;
+          name?: string;
+          organization_id?: string;
+          parent_id?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "geographic_scopes_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "geographic_scopes_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "geographic_scopes_parent_id_fkey"
-            columns: ["parent_id"]
-            isOneToOne: false
-            referencedRelation: "geographic_scopes"
-            referencedColumns: ["id"]
+            foreignKeyName: "geographic_scopes_parent_id_fkey";
+            columns: ["parent_id"];
+            isOneToOne: false;
+            referencedRelation: "geographic_scopes";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       invitations: {
         Row: {
-          accepted_at: string | null
-          created_at: string
-          email: string
-          expires_at: string
-          id: string
-          invited_by: string
-          organization_id: string | null
-          rejected_at: string | null
-          reseller_id: string | null
-          revoked_at: string | null
-          role_key: string
-          team_id: string | null
-          token_hash: string
-        }
+          accepted_at: string | null;
+          created_at: string;
+          email: string;
+          expires_at: string;
+          id: string;
+          invited_by: string;
+          organization_id: string | null;
+          rejected_at: string | null;
+          reseller_id: string | null;
+          revoked_at: string | null;
+          role_key: string;
+          team_id: string | null;
+          token_hash: string;
+        };
         Insert: {
-          accepted_at?: string | null
-          created_at?: string
-          email: string
-          expires_at: string
-          id?: string
-          invited_by: string
-          organization_id?: string | null
-          rejected_at?: string | null
-          reseller_id?: string | null
-          revoked_at?: string | null
-          role_key: string
-          team_id?: string | null
-          token_hash: string
-        }
+          accepted_at?: string | null;
+          created_at?: string;
+          email: string;
+          expires_at: string;
+          id?: string;
+          invited_by: string;
+          organization_id?: string | null;
+          rejected_at?: string | null;
+          reseller_id?: string | null;
+          revoked_at?: string | null;
+          role_key: string;
+          team_id?: string | null;
+          token_hash: string;
+        };
         Update: {
-          accepted_at?: string | null
-          created_at?: string
-          email?: string
-          expires_at?: string
-          id?: string
-          invited_by?: string
-          organization_id?: string | null
-          rejected_at?: string | null
-          reseller_id?: string | null
-          revoked_at?: string | null
-          role_key?: string
-          team_id?: string | null
-          token_hash?: string
-        }
+          accepted_at?: string | null;
+          created_at?: string;
+          email?: string;
+          expires_at?: string;
+          id?: string;
+          invited_by?: string;
+          organization_id?: string | null;
+          rejected_at?: string | null;
+          reseller_id?: string | null;
+          revoked_at?: string | null;
+          role_key?: string;
+          team_id?: string | null;
+          token_hash?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "invitations_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "invitations_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "invitations_reseller_id_fkey"
-            columns: ["reseller_id"]
-            isOneToOne: false
-            referencedRelation: "resellers"
-            referencedColumns: ["id"]
+            foreignKeyName: "invitations_reseller_id_fkey";
+            columns: ["reseller_id"];
+            isOneToOne: false;
+            referencedRelation: "resellers";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "invitations_role_key_fkey"
-            columns: ["role_key"]
-            isOneToOne: false
-            referencedRelation: "role_definitions"
-            referencedColumns: ["key"]
+            foreignKeyName: "invitations_role_key_fkey";
+            columns: ["role_key"];
+            isOneToOne: false;
+            referencedRelation: "role_definitions";
+            referencedColumns: ["key"];
           },
           {
-            foreignKeyName: "invitations_team_id_fkey"
-            columns: ["team_id"]
-            isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["id"]
+            foreignKeyName: "invitations_team_id_fkey";
+            columns: ["team_id"];
+            isOneToOne: false;
+            referencedRelation: "teams";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       organization_memberships: {
         Row: {
-          created_at: string
-          geographic_scope_id: string | null
-          id: string
-          organization_id: string
-          role_key: string
-          user_id: string
-        }
+          created_at: string;
+          geographic_scope_id: string | null;
+          id: string;
+          organization_id: string;
+          role_key: string;
+          user_id: string;
+        };
         Insert: {
-          created_at?: string
-          geographic_scope_id?: string | null
-          id?: string
-          organization_id: string
-          role_key: string
-          user_id: string
-        }
+          created_at?: string;
+          geographic_scope_id?: string | null;
+          id?: string;
+          organization_id: string;
+          role_key: string;
+          user_id: string;
+        };
         Update: {
-          created_at?: string
-          geographic_scope_id?: string | null
-          id?: string
-          organization_id?: string
-          role_key?: string
-          user_id?: string
-        }
+          created_at?: string;
+          geographic_scope_id?: string | null;
+          id?: string;
+          organization_id?: string;
+          role_key?: string;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "organization_memberships_geographic_scope_id_fkey"
-            columns: ["geographic_scope_id"]
-            isOneToOne: false
-            referencedRelation: "geographic_scopes"
-            referencedColumns: ["id"]
+            foreignKeyName: "organization_memberships_geographic_scope_id_fkey";
+            columns: ["geographic_scope_id"];
+            isOneToOne: false;
+            referencedRelation: "geographic_scopes";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "organization_memberships_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "organization_memberships_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "organization_memberships_role_key_fkey"
-            columns: ["role_key"]
-            isOneToOne: false
-            referencedRelation: "role_definitions"
-            referencedColumns: ["key"]
+            foreignKeyName: "organization_memberships_role_key_fkey";
+            columns: ["role_key"];
+            isOneToOne: false;
+            referencedRelation: "role_definitions";
+            referencedColumns: ["key"];
           },
-        ]
-      }
+        ];
+      };
       organizations: {
         Row: {
-          created_at: string
-          created_by: string | null
-          geo_hierarchy_enabled: boolean
-          id: string
-          name: string
-          reseller_id: string | null
-          teams_enabled: boolean
-          updated_at: string
-        }
+          created_at: string;
+          created_by: string | null;
+          geo_hierarchy_enabled: boolean;
+          id: string;
+          name: string;
+          reseller_id: string | null;
+          teams_enabled: boolean;
+          updated_at: string;
+        };
         Insert: {
-          created_at?: string
-          created_by?: string | null
-          geo_hierarchy_enabled?: boolean
-          id?: string
-          name: string
-          reseller_id?: string | null
-          teams_enabled?: boolean
-          updated_at?: string
-        }
+          created_at?: string;
+          created_by?: string | null;
+          geo_hierarchy_enabled?: boolean;
+          id?: string;
+          name: string;
+          reseller_id?: string | null;
+          teams_enabled?: boolean;
+          updated_at?: string;
+        };
         Update: {
-          created_at?: string
-          created_by?: string | null
-          geo_hierarchy_enabled?: boolean
-          id?: string
-          name?: string
-          reseller_id?: string | null
-          teams_enabled?: boolean
-          updated_at?: string
-        }
+          created_at?: string;
+          created_by?: string | null;
+          geo_hierarchy_enabled?: boolean;
+          id?: string;
+          name?: string;
+          reseller_id?: string | null;
+          teams_enabled?: boolean;
+          updated_at?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "organizations_reseller_id_fkey"
-            columns: ["reseller_id"]
-            isOneToOne: false
-            referencedRelation: "resellers"
-            referencedColumns: ["id"]
+            foreignKeyName: "organizations_reseller_id_fkey";
+            columns: ["reseller_id"];
+            isOneToOne: false;
+            referencedRelation: "resellers";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       permissions: {
         Row: {
-          description: string
-          key: string
-        }
+          description: string;
+          key: string;
+        };
         Insert: {
-          description: string
-          key: string
-        }
+          description: string;
+          key: string;
+        };
         Update: {
-          description?: string
-          key?: string
-        }
-        Relationships: []
-      }
+          description?: string;
+          key?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
-          created_at: string
-          full_name: string | null
-          id: string
-          organization: string | null
-          updated_at: string
-        }
+          created_at: string;
+          full_name: string | null;
+          id: string;
+          organization: string | null;
+          updated_at: string;
+        };
         Insert: {
-          created_at?: string
-          full_name?: string | null
-          id: string
-          organization?: string | null
-          updated_at?: string
-        }
+          created_at?: string;
+          full_name?: string | null;
+          id: string;
+          organization?: string | null;
+          updated_at?: string;
+        };
         Update: {
-          created_at?: string
-          full_name?: string | null
-          id?: string
-          organization?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          full_name?: string | null;
+          id?: string;
+          organization?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       reseller_client_assignments: {
         Row: {
-          created_at: string
-          id: string
-          organization_id: string
-          reseller_id: string
-          user_id: string
-        }
+          created_at: string;
+          id: string;
+          organization_id: string;
+          reseller_id: string;
+          user_id: string;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          organization_id: string
-          reseller_id: string
-          user_id: string
-        }
+          created_at?: string;
+          id?: string;
+          organization_id: string;
+          reseller_id: string;
+          user_id: string;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          organization_id?: string
-          reseller_id?: string
-          user_id?: string
-        }
+          created_at?: string;
+          id?: string;
+          organization_id?: string;
+          reseller_id?: string;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "reseller_client_assignments_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "reseller_client_assignments_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "reseller_client_assignments_reseller_id_fkey"
-            columns: ["reseller_id"]
-            isOneToOne: false
-            referencedRelation: "resellers"
-            referencedColumns: ["id"]
+            foreignKeyName: "reseller_client_assignments_reseller_id_fkey";
+            columns: ["reseller_id"];
+            isOneToOne: false;
+            referencedRelation: "resellers";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       reseller_memberships: {
         Row: {
-          created_at: string
-          id: string
-          reseller_id: string
-          role_key: string
-          user_id: string
-        }
+          created_at: string;
+          id: string;
+          reseller_id: string;
+          role_key: string;
+          user_id: string;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          reseller_id: string
-          role_key: string
-          user_id: string
-        }
+          created_at?: string;
+          id?: string;
+          reseller_id: string;
+          role_key: string;
+          user_id: string;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          reseller_id?: string
-          role_key?: string
-          user_id?: string
-        }
+          created_at?: string;
+          id?: string;
+          reseller_id?: string;
+          role_key?: string;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "reseller_memberships_reseller_id_fkey"
-            columns: ["reseller_id"]
-            isOneToOne: false
-            referencedRelation: "resellers"
-            referencedColumns: ["id"]
+            foreignKeyName: "reseller_memberships_reseller_id_fkey";
+            columns: ["reseller_id"];
+            isOneToOne: false;
+            referencedRelation: "resellers";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "reseller_memberships_role_key_fkey"
-            columns: ["role_key"]
-            isOneToOne: false
-            referencedRelation: "role_definitions"
-            referencedColumns: ["key"]
+            foreignKeyName: "reseller_memberships_role_key_fkey";
+            columns: ["role_key"];
+            isOneToOne: false;
+            referencedRelation: "role_definitions";
+            referencedColumns: ["key"];
           },
-        ]
-      }
+        ];
+      };
       resellers: {
         Row: {
-          created_at: string
-          created_by: string | null
-          id: string
-          name: string
-          updated_at: string
-        }
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          name: string;
+          updated_at: string;
+        };
         Insert: {
-          created_at?: string
-          created_by?: string | null
-          id?: string
-          name: string
-          updated_at?: string
-        }
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name: string;
+          updated_at?: string;
+        };
         Update: {
-          created_at?: string
-          created_by?: string | null
-          id?: string
-          name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          name?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       role_definitions: {
         Row: {
-          created_at: string
-          description: string | null
-          key: string
-          name: string
-          scope: string
-        }
+          created_at: string;
+          description: string | null;
+          key: string;
+          name: string;
+          scope: string;
+        };
         Insert: {
-          created_at?: string
-          description?: string | null
-          key: string
-          name: string
-          scope: string
-        }
+          created_at?: string;
+          description?: string | null;
+          key: string;
+          name: string;
+          scope: string;
+        };
         Update: {
-          created_at?: string
-          description?: string | null
-          key?: string
-          name?: string
-          scope?: string
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          description?: string | null;
+          key?: string;
+          name?: string;
+          scope?: string;
+        };
+        Relationships: [];
+      };
       role_permissions: {
         Row: {
-          permission_key: string
-          role_key: string
-        }
+          permission_key: string;
+          role_key: string;
+        };
         Insert: {
-          permission_key: string
-          role_key: string
-        }
+          permission_key: string;
+          role_key: string;
+        };
         Update: {
-          permission_key?: string
-          role_key?: string
-        }
+          permission_key?: string;
+          role_key?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "role_permissions_permission_key_fkey"
-            columns: ["permission_key"]
-            isOneToOne: false
-            referencedRelation: "permissions"
-            referencedColumns: ["key"]
+            foreignKeyName: "role_permissions_permission_key_fkey";
+            columns: ["permission_key"];
+            isOneToOne: false;
+            referencedRelation: "permissions";
+            referencedColumns: ["key"];
           },
           {
-            foreignKeyName: "role_permissions_role_key_fkey"
-            columns: ["role_key"]
-            isOneToOne: false
-            referencedRelation: "role_definitions"
-            referencedColumns: ["key"]
+            foreignKeyName: "role_permissions_role_key_fkey";
+            columns: ["role_key"];
+            isOneToOne: false;
+            referencedRelation: "role_definitions";
+            referencedColumns: ["key"];
           },
-        ]
-      }
+        ];
+      };
       team_memberships: {
         Row: {
-          created_at: string
-          id: string
-          organization_id: string
-          role_key: string
-          team_id: string
-          user_id: string
-        }
+          created_at: string;
+          id: string;
+          organization_id: string;
+          role_key: string;
+          team_id: string;
+          user_id: string;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          organization_id: string
-          role_key: string
-          team_id: string
-          user_id: string
-        }
+          created_at?: string;
+          id?: string;
+          organization_id: string;
+          role_key: string;
+          team_id: string;
+          user_id: string;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          organization_id?: string
-          role_key?: string
-          team_id?: string
-          user_id?: string
-        }
+          created_at?: string;
+          id?: string;
+          organization_id?: string;
+          role_key?: string;
+          team_id?: string;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "team_memberships_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "team_memberships_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "team_memberships_role_key_fkey"
-            columns: ["role_key"]
-            isOneToOne: false
-            referencedRelation: "role_definitions"
-            referencedColumns: ["key"]
+            foreignKeyName: "team_memberships_role_key_fkey";
+            columns: ["role_key"];
+            isOneToOne: false;
+            referencedRelation: "role_definitions";
+            referencedColumns: ["key"];
           },
           {
-            foreignKeyName: "team_memberships_team_id_fkey"
-            columns: ["team_id"]
-            isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["id"]
+            foreignKeyName: "team_memberships_team_id_fkey";
+            columns: ["team_id"];
+            isOneToOne: false;
+            referencedRelation: "teams";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       teams: {
         Row: {
-          created_at: string
-          geographic_scope_id: string | null
-          id: string
-          name: string
-          organization_id: string
-        }
+          created_at: string;
+          geographic_scope_id: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+        };
         Insert: {
-          created_at?: string
-          geographic_scope_id?: string | null
-          id?: string
-          name: string
-          organization_id: string
-        }
+          created_at?: string;
+          geographic_scope_id?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+        };
         Update: {
-          created_at?: string
-          geographic_scope_id?: string | null
-          id?: string
-          name?: string
-          organization_id?: string
-        }
+          created_at?: string;
+          geographic_scope_id?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "teams_geographic_scope_id_fkey"
-            columns: ["geographic_scope_id"]
-            isOneToOne: false
-            referencedRelation: "geographic_scopes"
-            referencedColumns: ["id"]
+            foreignKeyName: "teams_geographic_scope_id_fkey";
+            columns: ["geographic_scope_id"];
+            isOneToOne: false;
+            referencedRelation: "geographic_scopes";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "teams_organization_id_fkey"
-            columns: ["organization_id"]
-            isOneToOne: false
-            referencedRelation: "organizations"
-            referencedColumns: ["id"]
+            foreignKeyName: "teams_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       user_roles: {
         Row: {
-          created_at: string
-          granted_by: string | null
-          id: string
-          role_key: string
-          user_id: string
-        }
+          created_at: string;
+          granted_by: string | null;
+          id: string;
+          role_key: string;
+          user_id: string;
+        };
         Insert: {
-          created_at?: string
-          granted_by?: string | null
-          id?: string
-          role_key: string
-          user_id: string
-        }
+          created_at?: string;
+          granted_by?: string | null;
+          id?: string;
+          role_key: string;
+          user_id: string;
+        };
         Update: {
-          created_at?: string
-          granted_by?: string | null
-          id?: string
-          role_key?: string
-          user_id?: string
-        }
+          created_at?: string;
+          granted_by?: string | null;
+          id?: string;
+          role_key?: string;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "user_roles_role_key_fkey"
-            columns: ["role_key"]
-            isOneToOne: false
-            referencedRelation: "role_definitions"
-            referencedColumns: ["key"]
+            foreignKeyName: "user_roles_role_key_fkey";
+            columns: ["role_key"];
+            isOneToOne: false;
+            referencedRelation: "role_definitions";
+            referencedColumns: ["key"];
           },
-        ]
-      }
-    }
+        ];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      can_access_org: { Args: { _org: string; _uid: string }; Returns: boolean }
+      can_access_org: { Args: { _org: string; _uid: string }; Returns: boolean };
       can_access_reseller: {
-        Args: { _reseller: string; _uid: string }
-        Returns: boolean
-      }
+        Args: { _reseller: string; _uid: string };
+        Returns: boolean;
+      };
       has_org_permission: {
-        Args: { _org: string; _perm: string; _uid: string }
-        Returns: boolean
-      }
+        Args: { _org: string; _perm: string; _uid: string };
+        Returns: boolean;
+      };
       has_platform_permission: {
-        Args: { _perm: string; _uid: string }
-        Returns: boolean
-      }
+        Args: { _perm: string; _uid: string };
+        Returns: boolean;
+      };
       has_platform_role: {
-        Args: { _role: string; _uid: string }
-        Returns: boolean
-      }
-    }
+        Args: { _role: string; _uid: string };
+        Returns: boolean;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">];
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends (DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
       DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] & DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
   TableName extends (DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
   TableName extends (DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
   EnumName extends (DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
+    : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["CompositeTypes"] | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+    : never;
 
 export const Constants = {
   public: {
     Enums: {},
   },
-} as const
+} as const;

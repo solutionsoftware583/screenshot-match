@@ -37,25 +37,183 @@ export interface RoleDef {
   permissions: readonly Permission[];
 }
 
-const READ_ONLY: Permission[] = ["org.view", "members.view", "cases.view", "reviews.view", "evidence.view", "reports.view", "audit.read"];
-const GEO_MANAGER: Permission[] = ["org.view", "members.view", "cases.view", "cases.edit", "cases.approve", "reviews.view", "evidence.view", "reports.view"];
+const READ_ONLY: Permission[] = [
+  "org.view",
+  "members.view",
+  "cases.view",
+  "reviews.view",
+  "evidence.view",
+  "reports.view",
+  "audit.read",
+];
+const GEO_MANAGER: Permission[] = [
+  "org.view",
+  "members.view",
+  "cases.view",
+  "cases.edit",
+  "cases.approve",
+  "reviews.view",
+  "evidence.view",
+  "reports.view",
+];
 
 export const ROLES = {
-  super_admin: { scope: "platform", name: "Super Admin", description: "Full platform control", permissions: Object.keys(PERMISSIONS) as Permission[] },
-  global_manager: { scope: "platform", name: "Global Manager", description: "Oversees work across all organizations", permissions: ["platform.view_all", ...GEO_MANAGER, "teams.manage", "audit.read"] },
-  auditor: { scope: "platform", name: "Read-only Auditor", description: "Read-only access across the platform", permissions: ["platform.view_all", ...READ_ONLY] },
-  reseller_admin: { scope: "reseller", name: "Reseller Admin", description: "Manages the reseller and all its client organizations", permissions: ["org.view", "org.manage", "members.view", "members.invite", "roles.assign", "teams.manage", "cases.view", "cases.edit", "reviews.view", "evidence.view", "reports.view", "billing.manage", "audit.read"] },
-  reseller_staff: { scope: "reseller", name: "Reseller Staff", description: "Works only on assigned client organizations", permissions: ["org.view", "members.view", "cases.view", "cases.edit", "reviews.view", "evidence.view", "evidence.upload", "reports.view"] },
-  org_admin: { scope: "organization", name: "Organization Admin", description: "Administers one client organization", permissions: ["org.view", "org.manage", "members.view", "members.invite", "roles.assign", "teams.manage", "geo.manage", "cases.view", "cases.edit", "cases.approve", "reviews.view", "evidence.view", "evidence.upload", "reports.view", "billing.manage", "audit.read"] },
-  country_manager: { scope: "organization", name: "Country Manager", description: "Manages work within a country scope", permissions: GEO_MANAGER },
-  state_manager: { scope: "organization", name: "State Manager", description: "Manages work within a state scope", permissions: GEO_MANAGER },
-  divisional_manager: { scope: "organization", name: "Divisional Manager", description: "Manages work within a division scope", permissions: GEO_MANAGER },
-  district_manager: { scope: "organization", name: "District Manager", description: "Manages work within a district scope", permissions: GEO_MANAGER },
-  org_auditor: { scope: "organization", name: "Organization Auditor", description: "Read-only access to one organization", permissions: READ_ONLY },
-  client_user: { scope: "organization", name: "Client User", description: "Client portal access only", permissions: ["org.view", "client_portal.view", "reports.view"] },
-  team_manager: { scope: "team", name: "Team Manager", description: "Manages a team and approves its work", permissions: ["org.view", "members.view", "teams.manage", "cases.view", "cases.edit", "cases.approve", "reviews.view", "evidence.view", "evidence.upload", "reports.view"] },
-  team_leader: { scope: "team", name: "Team Leader", description: "Leads members and assigned work", permissions: ["org.view", "members.view", "cases.view", "cases.edit", "reviews.view", "evidence.view", "evidence.upload"] },
-  team_member: { scope: "team", name: "Team Member", description: "Works on assigned cases", permissions: ["org.view", "cases.view", "cases.edit", "reviews.view", "evidence.view", "evidence.upload"] },
+  super_admin: {
+    scope: "platform",
+    name: "Super Admin",
+    description: "Full platform control",
+    permissions: Object.keys(PERMISSIONS) as Permission[],
+  },
+  global_manager: {
+    scope: "platform",
+    name: "Global Manager",
+    description: "Oversees work across all organizations",
+    permissions: ["platform.view_all", ...GEO_MANAGER, "teams.manage", "audit.read"],
+  },
+  auditor: {
+    scope: "platform",
+    name: "Read-only Auditor",
+    description: "Read-only access across the platform",
+    permissions: ["platform.view_all", ...READ_ONLY],
+  },
+  reseller_admin: {
+    scope: "reseller",
+    name: "Reseller Admin",
+    description: "Manages the reseller and all its client organizations",
+    permissions: [
+      "org.view",
+      "org.manage",
+      "members.view",
+      "members.invite",
+      "roles.assign",
+      "teams.manage",
+      "cases.view",
+      "cases.edit",
+      "reviews.view",
+      "evidence.view",
+      "reports.view",
+      "billing.manage",
+      "audit.read",
+    ],
+  },
+  reseller_staff: {
+    scope: "reseller",
+    name: "Reseller Staff",
+    description: "Works only on assigned client organizations",
+    permissions: [
+      "org.view",
+      "members.view",
+      "cases.view",
+      "cases.edit",
+      "reviews.view",
+      "evidence.view",
+      "evidence.upload",
+      "reports.view",
+    ],
+  },
+  org_admin: {
+    scope: "organization",
+    name: "Organization Admin",
+    description: "Administers one client organization",
+    permissions: [
+      "org.view",
+      "org.manage",
+      "members.view",
+      "members.invite",
+      "roles.assign",
+      "teams.manage",
+      "geo.manage",
+      "cases.view",
+      "cases.edit",
+      "cases.approve",
+      "reviews.view",
+      "evidence.view",
+      "evidence.upload",
+      "reports.view",
+      "billing.manage",
+      "audit.read",
+    ],
+  },
+  country_manager: {
+    scope: "organization",
+    name: "Country Manager",
+    description: "Manages work within a country scope",
+    permissions: GEO_MANAGER,
+  },
+  state_manager: {
+    scope: "organization",
+    name: "State Manager",
+    description: "Manages work within a state scope",
+    permissions: GEO_MANAGER,
+  },
+  divisional_manager: {
+    scope: "organization",
+    name: "Divisional Manager",
+    description: "Manages work within a division scope",
+    permissions: GEO_MANAGER,
+  },
+  district_manager: {
+    scope: "organization",
+    name: "District Manager",
+    description: "Manages work within a district scope",
+    permissions: GEO_MANAGER,
+  },
+  org_auditor: {
+    scope: "organization",
+    name: "Organization Auditor",
+    description: "Read-only access to one organization",
+    permissions: READ_ONLY,
+  },
+  client_user: {
+    scope: "organization",
+    name: "Client User",
+    description: "Client portal access only",
+    permissions: ["org.view", "client_portal.view", "reports.view"],
+  },
+  team_manager: {
+    scope: "team",
+    name: "Team Manager",
+    description: "Manages a team and approves its work",
+    permissions: [
+      "org.view",
+      "members.view",
+      "teams.manage",
+      "cases.view",
+      "cases.edit",
+      "cases.approve",
+      "reviews.view",
+      "evidence.view",
+      "evidence.upload",
+      "reports.view",
+    ],
+  },
+  team_leader: {
+    scope: "team",
+    name: "Team Leader",
+    description: "Leads members and assigned work",
+    permissions: [
+      "org.view",
+      "members.view",
+      "cases.view",
+      "cases.edit",
+      "reviews.view",
+      "evidence.view",
+      "evidence.upload",
+    ],
+  },
+  team_member: {
+    scope: "team",
+    name: "Team Member",
+    description: "Works on assigned cases",
+    permissions: [
+      "org.view",
+      "cases.view",
+      "cases.edit",
+      "reviews.view",
+      "evidence.view",
+      "evidence.upload",
+    ],
+  },
 } as const satisfies Record<string, RoleDef>;
 
 export type RoleKey = keyof typeof ROLES;
@@ -68,9 +226,15 @@ export function roleHas(role: string, perm: string): boolean {
 
 export function seedSql(): string {
   const esc = (s: string) => s.replace(/'/g, "''");
-  const perms = Object.entries(PERMISSIONS).map(([k, d]) => `('${k}','${esc(d)}')`).join(",");
-  const roles = Object.entries(ROLES).map(([k, r]) => `('${k}','${r.scope}','${esc(r.name)}','${esc(r.description)}')`).join(",");
-  const rp = Object.entries(ROLES).flatMap(([k, r]) => [...new Set(r.permissions)].map((p) => `('${k}','${p}')`)).join(",");
+  const perms = Object.entries(PERMISSIONS)
+    .map(([k, d]) => `('${k}','${esc(d)}')`)
+    .join(",");
+  const roles = Object.entries(ROLES)
+    .map(([k, r]) => `('${k}','${r.scope}','${esc(r.name)}','${esc(r.description)}')`)
+    .join(",");
+  const rp = Object.entries(ROLES)
+    .flatMap(([k, r]) => [...new Set(r.permissions)].map((p) => `('${k}','${p}')`))
+    .join(",");
   return [
     `INSERT INTO public.permissions(key, description) VALUES ${perms} ON CONFLICT (key) DO UPDATE SET description = EXCLUDED.description;`,
     `INSERT INTO public.role_definitions(key, scope, name, description) VALUES ${roles} ON CONFLICT (key) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description;`,

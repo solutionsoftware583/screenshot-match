@@ -8,19 +8,30 @@ describe("role-permission matrix", () => {
   });
 
   it("only references permissions that exist", () => {
-    for (const r of Object.values(ROLES)) for (const p of r.permissions) expect(PERMISSIONS).toHaveProperty(p);
+    for (const r of Object.values(ROLES))
+      for (const p of r.permissions) expect(PERMISSIONS).toHaveProperty(p);
   });
 
   it("keeps auditors read-only", () => {
     for (const role of ["auditor", "org_auditor"]) {
-      for (const p of ["cases.edit", "cases.approve", "members.invite", "roles.assign", "org.manage", "billing.manage", "evidence.upload"]) {
+      for (const p of [
+        "cases.edit",
+        "cases.approve",
+        "members.invite",
+        "roles.assign",
+        "org.manage",
+        "billing.manage",
+        "evidence.upload",
+      ]) {
         expect(roleHas(role, p)).toBe(false);
       }
     }
   });
 
   it("limits role assignment to super admin, reseller admin and org admin", () => {
-    const assigners = Object.keys(ROLES).filter((r) => roleHas(r, "roles.assign")).sort();
+    const assigners = Object.keys(ROLES)
+      .filter((r) => roleHas(r, "roles.assign"))
+      .sort();
     expect(assigners).toEqual(["org_admin", "reseller_admin", "super_admin"]);
   });
 

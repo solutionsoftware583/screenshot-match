@@ -101,11 +101,17 @@ export function AuthCard({
     <PublicLayout>
       <div className="mx-auto flex max-w-md flex-col px-4 py-16">
         <div className="overflow-hidden rounded-xl border bg-card shadow-glow">
-          <img src={BRAND_IMAGES.banner} alt="Rating Guard — We Manage Reviews & Ratings" width={1600} height={666} className="w-full" />
+          <img
+            src={BRAND_IMAGES.banner}
+            alt="Rating Guard — We Manage Reviews & Ratings"
+            width={1600}
+            height={666}
+            className="w-full"
+          />
           <div className="p-6 sm:p-8">
-          <h1 className="text-2xl font-semibold">{title}</h1>
-          {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
-          <div className="mt-6">{children}</div>
+            <h1 className="text-2xl font-semibold">{title}</h1>
+            {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+            <div className="mt-6">{children}</div>
           </div>
         </div>
       </div>
