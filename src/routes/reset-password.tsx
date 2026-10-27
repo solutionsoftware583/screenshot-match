@@ -19,16 +19,32 @@ export const Route = createFileRoute("/reset-password")({
 function Reset() {
   const navigate = useNavigate();
   return (
-    <AuthCard title="Choose a new password" subtitle="Open this page from the link in your reset email.">
+    <AuthCard
+      title="Choose a new password"
+      subtitle="Open this page from the link in your reset email."
+    >
       <AuthForm
         submitLabel="Update password"
         fields={[
-          { name: "password", label: "New password", type: "password", autoComplete: "new-password", validate: rules.password },
-          { name: "confirm", label: "Confirm password", type: "password", autoComplete: "new-password", validate: (v, all) => (v && v === all["password"] ? null : "Passwords must match.") },
+          {
+            name: "password",
+            label: "New password",
+            type: "password",
+            autoComplete: "new-password",
+            validate: rules.password,
+          },
+          {
+            name: "confirm",
+            label: "Confirm password",
+            type: "password",
+            autoComplete: "new-password",
+            validate: (v, all) => (v && v === all["password"] ? null : "Passwords must match."),
+          },
         ]}
         onSubmit={async (v) => {
           const { error } = await supabase.auth.updateUser({ password: v["password"] ?? "" });
-          if (error) return { error: "This reset link is invalid or has expired. Request a new one." };
+          if (error)
+            return { error: "This reset link is invalid or has expired. Request a new one." };
           navigate({ to: "/app", replace: true });
         }}
       />

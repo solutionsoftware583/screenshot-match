@@ -44,20 +44,43 @@ function Login() {
       <AuthForm
         submitLabel="Sign in"
         fields={[
-          { name: "email", label: "Email", type: "email", autoComplete: "email", validate: rules.email },
-          { name: "password", label: "Password", type: "password", autoComplete: "current-password", validate: rules.required("Password") },
+          {
+            name: "email",
+            label: "Email",
+            type: "email",
+            autoComplete: "email",
+            validate: rules.email,
+          },
+          {
+            name: "password",
+            label: "Password",
+            type: "password",
+            autoComplete: "current-password",
+            validate: rules.required("Password"),
+          },
         ]}
         onSubmit={async (v) => {
-          const { error } = await supabase.auth.signInWithPassword({ email: (v["email"] ?? "").trim(), password: v["password"] ?? "" });
+          const { error } = await supabase.auth.signInWithPassword({
+            email: (v["email"] ?? "").trim(),
+            password: v["password"] ?? "",
+          });
           if (error) {
-            return { error: /confirm/i.test(error.message) ? "Please confirm your email first — check your inbox for the link." : "Email or password is incorrect." };
+            return {
+              error: /confirm/i.test(error.message)
+                ? "Please confirm your email first — check your inbox for the link."
+                : "Email or password is incorrect.",
+            };
           }
           navigate({ to: target, replace: true });
         }}
       />
       <div className="mt-4 flex justify-between text-sm">
-        <Link to="/forgot-password" className="text-muted-foreground hover:text-foreground">Forgot password?</Link>
-        <Link to="/register" className="font-medium text-primary">Create account</Link>
+        <Link to="/forgot-password" className="text-muted-foreground hover:text-foreground">
+          Forgot password?
+        </Link>
+        <Link to="/register" className="font-medium text-primary">
+          Create account
+        </Link>
       </div>
     </AuthCard>
   );

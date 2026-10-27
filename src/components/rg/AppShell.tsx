@@ -171,7 +171,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
             <DropdownMenuContent align="start" className="w-64">
               <DropdownMenuLabel>Organizations</DropdownMenuLabel>
               <p className="px-2 pb-2 text-xs text-muted-foreground">
-                No organizations available — accounts and tenants are not connected yet.
+                Organization workspaces are not available yet.
               </p>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -236,7 +236,9 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel className="max-w-56 truncate">{user?.email ?? "Signed in"}</DropdownMenuLabel>
+                <DropdownMenuLabel className="max-w-56 truncate">
+                  {user?.email ?? "Signed in"}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={() => navigate({ to: "/app/profile" })}>
                   Profile & security

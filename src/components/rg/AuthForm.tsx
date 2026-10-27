@@ -12,7 +12,8 @@ export interface Field {
 }
 
 export const rules = {
-  email: (v: string) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : "Enter a valid email address."),
+  email: (v: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : "Enter a valid email address.",
   required: (label: string) => (v: string) => (v.trim() ? null : `${label} is required.`),
   password: (v: string) => (v.length >= 8 ? null : "Password must be at least 8 characters."),
 };
@@ -64,12 +65,29 @@ export function AuthForm({
             value={values[f.name] ?? ""}
             onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
           />
-          {errors[f.name] && <p id={`${f.name}-err`} className="text-xs text-destructive">{errors[f.name]}</p>}
+          {errors[f.name] && (
+            <p id={`${f.name}-err`} className="text-xs text-destructive">
+              {errors[f.name]}
+            </p>
+          )}
         </div>
       ))}
-      <Button type="submit" className="w-full" disabled={busy}>{busy ? "Please wait…" : submitLabel}</Button>
-      {result?.error && <p role="alert" className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm">{result.error}</p>}
-      {result?.success && <p role="status" className="rounded-md border border-success/40 bg-success/10 p-3 text-sm">{result.success}</p>}
+      <Button type="submit" className="w-full" disabled={busy}>
+        {busy ? "Please wait…" : submitLabel}
+      </Button>
+      {result?.error && (
+        <p
+          role="alert"
+          className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm"
+        >
+          {result.error}
+        </p>
+      )}
+      {result?.success && (
+        <p role="status" className="rounded-md border border-success/40 bg-success/10 p-3 text-sm">
+          {result.success}
+        </p>
+      )}
     </form>
   );
 }

@@ -8,7 +8,8 @@ export function safeRedirect(value: unknown, fallback = "/app"): string {
   try {
     const url = new URL(value, "http://x");
     if (value.startsWith("//") || (/^[a-z]+:/i.test(value) && url.origin !== "http://x")) {
-      if (typeof window !== "undefined" && new URL(value).origin === window.location.origin) return url.pathname + url.search;
+      if (typeof window !== "undefined" && new URL(value).origin === window.location.origin)
+        return url.pathname + url.search;
       return fallback;
     }
     return value.startsWith("/") ? value : fallback;
@@ -21,8 +22,13 @@ export function useSessionUser() {
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => { setUser(data.user); setReady(true); });
-    const { data } = supabase.auth.onAuthStateChange((_e, session) => setUser(session?.user ?? null));
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+      setReady(true);
+    });
+    const { data } = supabase.auth.onAuthStateChange((_e, session) =>
+      setUser(session?.user ?? null),
+    );
     return () => data.subscription.unsubscribe();
   }, []);
   return { user, ready };
