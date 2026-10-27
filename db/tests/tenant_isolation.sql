@@ -1,0 +1,4 @@
+-- Tenant-isolation check. Creates temporary records, asserts access rules,
+-- then ALWAYS raises to roll everything back. Expected output:
+--   ERROR: ISOLATION_RESULT:ALL_PASSED
+-- Any other suffix lists the failed checks.
