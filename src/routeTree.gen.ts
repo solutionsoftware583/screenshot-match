@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
@@ -23,6 +25,7 @@ import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscript
 import { Route as AdminSupportRouteImport } from './routes/admin.support'
 import { Route as AdminTenantsRouteImport } from './routes/admin.tenants'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAppealsRouteImport } from './routes/app.appeals'
 import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
 import { Route as AppBusinessesRouteImport } from './routes/app.businesses'
@@ -33,10 +36,21 @@ import { Route as AppSubmissionsRouteImport } from './routes/app.submissions'
 import { Route as AppTeamRouteImport } from './routes/app.team'
 import { Route as AppCasesIndexRouteImport } from './routes/app.cases.index'
 import { Route as AppReviewsIndexRouteImport } from './routes/app.reviews.index'
+import { Route as AppReviewsIdRouteImport } from './routes/app.reviews.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FeaturesRoute = FeaturesRouteImport.update({
@@ -80,83 +94,95 @@ const WorkflowsRoute = WorkflowsRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminAuditRoute = AdminAuditRouteImport.update({
-  id: '/admin/audit',
-  path: '/admin/audit',
-  getParentRoute: () => rootRouteImport,
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
-  id: '/admin/subscriptions',
-  path: '/admin/subscriptions',
-  getParentRoute: () => rootRouteImport,
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminSupportRoute = AdminSupportRouteImport.update({
-  id: '/admin/support',
-  path: '/admin/support',
-  getParentRoute: () => rootRouteImport,
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminTenantsRoute = AdminTenantsRouteImport.update({
-  id: '/admin/tenants',
-  path: '/admin/tenants',
-  getParentRoute: () => rootRouteImport,
+  id: '/tenants',
+  path: '/tenants',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => rootRouteImport,
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppAppealsRoute = AppAppealsRouteImport.update({
-  id: '/app/appeals',
-  path: '/app/appeals',
-  getParentRoute: () => rootRouteImport,
+  id: '/appeals',
+  path: '/appeals',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppApprovalsRoute = AppApprovalsRouteImport.update({
-  id: '/app/approvals',
-  path: '/app/approvals',
-  getParentRoute: () => rootRouteImport,
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppBusinessesRoute = AppBusinessesRouteImport.update({
-  id: '/app/businesses',
-  path: '/app/businesses',
-  getParentRoute: () => rootRouteImport,
+  id: '/businesses',
+  path: '/businesses',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppDiscoverRoute = AppDiscoverRouteImport.update({
-  id: '/app/discover',
-  path: '/app/discover',
-  getParentRoute: () => rootRouteImport,
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppEvidenceRoute = AppEvidenceRouteImport.update({
-  id: '/app/evidence',
-  path: '/app/evidence',
-  getParentRoute: () => rootRouteImport,
+  id: '/evidence',
+  path: '/evidence',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppFindingsRoute = AppFindingsRouteImport.update({
-  id: '/app/findings',
-  path: '/app/findings',
-  getParentRoute: () => rootRouteImport,
+  id: '/findings',
+  path: '/findings',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppSubmissionsRoute = AppSubmissionsRouteImport.update({
-  id: '/app/submissions',
-  path: '/app/submissions',
-  getParentRoute: () => rootRouteImport,
+  id: '/submissions',
+  path: '/submissions',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppTeamRoute = AppTeamRouteImport.update({
-  id: '/app/team',
-  path: '/app/team',
-  getParentRoute: () => rootRouteImport,
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppCasesIndexRoute = AppCasesIndexRouteImport.update({
-  id: '/app/cases/',
-  path: '/app/cases/',
-  getParentRoute: () => rootRouteImport,
+  id: '/cases/',
+  path: '/cases/',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppReviewsIndexRoute = AppReviewsIndexRouteImport.update({
-  id: '/app/reviews/',
-  path: '/app/reviews/',
-  getParentRoute: () => rootRouteImport,
+  id: '/reviews/',
+  path: '/reviews/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReviewsIdRoute = AppReviewsIdRouteImport.update({
+  id: '/reviews/$id',
+  path: '/reviews/$id',
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/app': typeof AppRouteWithChildren
   '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -178,11 +204,14 @@ export interface FileRoutesByFullPath {
   '/app/findings': typeof AppFindingsRoute
   '/app/submissions': typeof AppSubmissionsRoute
   '/app/team': typeof AppTeamRoute
+  '/app/': typeof AppIndexRoute
+  '/app/reviews/$id': typeof AppReviewsIdRoute
   '/app/cases/': typeof AppCasesIndexRoute
   '/app/reviews/': typeof AppReviewsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -204,12 +233,16 @@ export interface FileRoutesByTo {
   '/app/findings': typeof AppFindingsRoute
   '/app/submissions': typeof AppSubmissionsRoute
   '/app/team': typeof AppTeamRoute
+  '/app': typeof AppIndexRoute
+  '/app/reviews/$id': typeof AppReviewsIdRoute
   '/app/cases': typeof AppCasesIndexRoute
   '/app/reviews': typeof AppReviewsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/app': typeof AppRouteWithChildren
   '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
@@ -231,6 +264,8 @@ export interface FileRoutesById {
   '/app/findings': typeof AppFindingsRoute
   '/app/submissions': typeof AppSubmissionsRoute
   '/app/team': typeof AppTeamRoute
+  '/app/': typeof AppIndexRoute
+  '/app/reviews/$id': typeof AppReviewsIdRoute
   '/app/cases/': typeof AppCasesIndexRoute
   '/app/reviews/': typeof AppReviewsIndexRoute
 }
@@ -238,6 +273,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/app'
     | '/features'
     | '/forgot-password'
     | '/login'
@@ -259,11 +296,14 @@ export interface FileRouteTypes {
     | '/app/findings'
     | '/app/submissions'
     | '/app/team'
+    | '/app/'
+    | '/app/reviews/$id'
     | '/app/cases/'
     | '/app/reviews/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/features'
     | '/forgot-password'
     | '/login'
@@ -285,11 +325,15 @@ export interface FileRouteTypes {
     | '/app/findings'
     | '/app/submissions'
     | '/app/team'
+    | '/app'
+    | '/app/reviews/$id'
     | '/app/cases'
     | '/app/reviews'
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/app'
     | '/features'
     | '/forgot-password'
     | '/login'
@@ -311,12 +355,16 @@ export interface FileRouteTypes {
     | '/app/findings'
     | '/app/submissions'
     | '/app/team'
+    | '/app/'
+    | '/app/reviews/$id'
     | '/app/cases/'
     | '/app/reviews/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AppRoute: typeof AppRouteWithChildren
   FeaturesRoute: typeof FeaturesRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
@@ -325,21 +373,6 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   TermsRoute: typeof TermsRoute
   WorkflowsRoute: typeof WorkflowsRoute
-  AdminAuditRoute: typeof AdminAuditRoute
-  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
-  AdminSupportRoute: typeof AdminSupportRoute
-  AdminTenantsRoute: typeof AdminTenantsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
-  AppAppealsRoute: typeof AppAppealsRoute
-  AppApprovalsRoute: typeof AppApprovalsRoute
-  AppBusinessesRoute: typeof AppBusinessesRoute
-  AppDiscoverRoute: typeof AppDiscoverRoute
-  AppEvidenceRoute: typeof AppEvidenceRoute
-  AppFindingsRoute: typeof AppFindingsRoute
-  AppSubmissionsRoute: typeof AppSubmissionsRoute
-  AppTeamRoute: typeof AppTeamRoute
-  AppCasesIndexRoute: typeof AppCasesIndexRoute
-  AppReviewsIndexRoute: typeof AppReviewsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -349,6 +382,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/features': {
@@ -409,127 +456,160 @@ declare module '@tanstack/react-router' {
     }
     '/admin/audit': {
       id: '/admin/audit'
-      path: '/admin/audit'
+      path: '/audit'
       fullPath: '/admin/audit'
       preLoaderRoute: typeof AdminAuditRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/subscriptions': {
       id: '/admin/subscriptions'
-      path: '/admin/subscriptions'
+      path: '/subscriptions'
       fullPath: '/admin/subscriptions'
       preLoaderRoute: typeof AdminSubscriptionsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/support': {
       id: '/admin/support'
-      path: '/admin/support'
+      path: '/support'
       fullPath: '/admin/support'
       preLoaderRoute: typeof AdminSupportRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/tenants': {
       id: '/admin/tenants'
-      path: '/admin/tenants'
+      path: '/tenants'
       fullPath: '/admin/tenants'
       preLoaderRoute: typeof AdminTenantsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/users': {
       id: '/admin/users'
-      path: '/admin/users'
+      path: '/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/appeals': {
       id: '/app/appeals'
-      path: '/app/appeals'
+      path: '/appeals'
       fullPath: '/app/appeals'
       preLoaderRoute: typeof AppAppealsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/approvals': {
       id: '/app/approvals'
-      path: '/app/approvals'
+      path: '/approvals'
       fullPath: '/app/approvals'
       preLoaderRoute: typeof AppApprovalsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/businesses': {
       id: '/app/businesses'
-      path: '/app/businesses'
+      path: '/businesses'
       fullPath: '/app/businesses'
       preLoaderRoute: typeof AppBusinessesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/discover': {
       id: '/app/discover'
-      path: '/app/discover'
+      path: '/discover'
       fullPath: '/app/discover'
       preLoaderRoute: typeof AppDiscoverRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/evidence': {
       id: '/app/evidence'
-      path: '/app/evidence'
+      path: '/evidence'
       fullPath: '/app/evidence'
       preLoaderRoute: typeof AppEvidenceRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/findings': {
       id: '/app/findings'
-      path: '/app/findings'
+      path: '/findings'
       fullPath: '/app/findings'
       preLoaderRoute: typeof AppFindingsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/submissions': {
       id: '/app/submissions'
-      path: '/app/submissions'
+      path: '/submissions'
       fullPath: '/app/submissions'
       preLoaderRoute: typeof AppSubmissionsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/team': {
       id: '/app/team'
-      path: '/app/team'
+      path: '/team'
       fullPath: '/app/team'
       preLoaderRoute: typeof AppTeamRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/cases/': {
       id: '/app/cases/'
-      path: '/app/cases'
+      path: '/cases'
       fullPath: '/app/cases/'
       preLoaderRoute: typeof AppCasesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
     }
     '/app/reviews/': {
       id: '/app/reviews/'
-      path: '/app/reviews'
+      path: '/reviews'
       fullPath: '/app/reviews/'
       preLoaderRoute: typeof AppReviewsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/reviews/$id': {
+      id: '/app/reviews/$id'
+      path: '/reviews/$id'
+      fullPath: '/app/reviews/$id'
+      preLoaderRoute: typeof AppReviewsIdRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  FeaturesRoute: FeaturesRoute,
-  ForgotPasswordRoute: ForgotPasswordRoute,
-  LoginRoute: LoginRoute,
-  PricingRoute: PricingRoute,
-  PrivacyRoute: PrivacyRoute,
-  RegisterRoute: RegisterRoute,
-  TermsRoute: TermsRoute,
-  WorkflowsRoute: WorkflowsRoute,
+interface AdminRouteChildren {
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminTenantsRoute: typeof AdminTenantsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
   AdminAuditRoute: AdminAuditRoute,
   AdminSubscriptionsRoute: AdminSubscriptionsRoute,
   AdminSupportRoute: AdminSupportRoute,
   AdminTenantsRoute: AdminTenantsRoute,
   AdminUsersRoute: AdminUsersRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface AppRouteChildren {
+  AppAppealsRoute: typeof AppAppealsRoute
+  AppApprovalsRoute: typeof AppApprovalsRoute
+  AppBusinessesRoute: typeof AppBusinessesRoute
+  AppDiscoverRoute: typeof AppDiscoverRoute
+  AppEvidenceRoute: typeof AppEvidenceRoute
+  AppFindingsRoute: typeof AppFindingsRoute
+  AppSubmissionsRoute: typeof AppSubmissionsRoute
+  AppTeamRoute: typeof AppTeamRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppReviewsIdRoute: typeof AppReviewsIdRoute
+  AppCasesIndexRoute: typeof AppCasesIndexRoute
+  AppReviewsIndexRoute: typeof AppReviewsIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
   AppAppealsRoute: AppAppealsRoute,
   AppApprovalsRoute: AppApprovalsRoute,
   AppBusinessesRoute: AppBusinessesRoute,
@@ -538,8 +618,26 @@ const rootRouteChildren: RootRouteChildren = {
   AppFindingsRoute: AppFindingsRoute,
   AppSubmissionsRoute: AppSubmissionsRoute,
   AppTeamRoute: AppTeamRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppReviewsIdRoute: AppReviewsIdRoute,
   AppCasesIndexRoute: AppCasesIndexRoute,
   AppReviewsIndexRoute: AppReviewsIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AppRoute: AppRouteWithChildren,
+  FeaturesRoute: FeaturesRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  RegisterRoute: RegisterRoute,
+  TermsRoute: TermsRoute,
+  WorkflowsRoute: WorkflowsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
