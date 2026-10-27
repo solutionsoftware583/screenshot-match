@@ -46,6 +46,7 @@ function Reset() {
           if (error)
             return { error: "This reset link is invalid or has expired. Request a new one." };
           navigate({ to: "/app", replace: true });
+          return undefined;
         }}
       />
     </AuthCard>

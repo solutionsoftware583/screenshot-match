@@ -72,6 +72,7 @@ function Login() {
             };
           }
           navigate({ to: target, replace: true });
+          return undefined;
         }}
       />
       <div className="mt-4 flex justify-between text-sm">
