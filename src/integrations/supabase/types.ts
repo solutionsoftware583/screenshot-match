@@ -50,6 +50,171 @@ export type Database = {
         }
         Relationships: []
       }
+      case_events: {
+        Row: {
+          actor_id: string | null
+          at: string
+          case_id: string
+          channel: string | null
+          external_ref: string | null
+          from_status: string | null
+          id: string
+          kind: string
+          note: string | null
+          organization_id: string
+          to_status: string | null
+        }
+        Insert: {
+          actor_id?: string | null
+          at?: string
+          case_id: string
+          channel?: string | null
+          external_ref?: string | null
+          from_status?: string | null
+          id?: string
+          kind: string
+          note?: string | null
+          organization_id: string
+          to_status?: string | null
+        }
+        Update: {
+          actor_id?: string | null
+          at?: string
+          case_id?: string
+          channel?: string | null
+          external_ref?: string | null
+          from_status?: string | null
+          id?: string
+          kind?: string
+          note?: string | null
+          organization_id?: string
+          to_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_events_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_evidence: {
+        Row: {
+          captured_at: string
+          captured_by: string
+          case_id: string
+          file_name: string | null
+          file_size: number | null
+          id: string
+          kind: string
+          notes: string | null
+          organization_id: string
+          sha256: string | null
+          source_url: string | null
+          title: string
+        }
+        Insert: {
+          captured_at?: string
+          captured_by: string
+          case_id: string
+          file_name?: string | null
+          file_size?: number | null
+          id?: string
+          kind: string
+          notes?: string | null
+          organization_id: string
+          sha256?: string | null
+          source_url?: string | null
+          title: string
+        }
+        Update: {
+          captured_at?: string
+          captured_by?: string
+          case_id?: string
+          file_name?: string | null
+          file_size?: number | null
+          id?: string
+          kind?: string
+          notes?: string | null
+          organization_id?: string
+          sha256?: string | null
+          source_url?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_evidence_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cases: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          last_checked_at: string | null
+          organization_id: string
+          platform: string
+          priority: string
+          reason: string
+          recheck_days: number
+          reference: string
+          removed_at: string | null
+          review_url: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          last_checked_at?: string | null
+          organization_id: string
+          platform: string
+          priority?: string
+          reason: string
+          recheck_days?: number
+          reference: string
+          removed_at?: string | null
+          review_url?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          last_checked_at?: string | null
+          organization_id?: string
+          platform?: string
+          priority?: string
+          reason?: string
+          recheck_days?: number
+          reference?: string
+          removed_at?: string | null
+          review_url?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cases_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       geographic_scopes: {
         Row: {
           created_at: string
@@ -596,6 +761,19 @@ export type Database = {
         Args: { _role: string; _uid: string }
         Returns: boolean
       }
+      rg_add_evidence: {
+        Args: {
+          _case: string
+          _file: string
+          _kind: string
+          _notes: string
+          _sha: string
+          _size: number
+          _title: string
+          _url: string
+        }
+        Returns: string
+      }
       rg_assign_reseller_staff: {
         Args: { _assign: boolean; _org: string; _user: string }
         Returns: undefined
@@ -636,6 +814,22 @@ export type Database = {
           target_type: string
           total: number
         }[]
+      }
+      rg_case_transition_perm: {
+        Args: { _from: string; _to: string }
+        Returns: string
+      }
+      rg_create_case: {
+        Args: {
+          _org: string
+          _platform: string
+          _priority: string
+          _reason: string
+          _recheck: number
+          _title: string
+          _url: string
+        }
+        Returns: string
       }
       rg_create_geo: {
         Args: { _level: string; _name: string; _org: string; _parent: string }
@@ -693,6 +887,10 @@ export type Database = {
           user_id: string
         }[]
       }
+      rg_record_recheck: {
+        Args: { _id: string; _note: string; _still_removed: boolean }
+        Returns: undefined
+      }
       rg_remove_member: {
         Args: { _org: string; _user: string }
         Returns: undefined
@@ -744,6 +942,28 @@ export type Database = {
       }
       rg_set_team_member: {
         Args: { _role: string; _team: string; _user: string }
+        Returns: undefined
+      }
+      rg_transition_case: {
+        Args: {
+          _channel: string
+          _id: string
+          _note: string
+          _ref: string
+          _to: string
+        }
+        Returns: undefined
+      }
+      rg_update_case: {
+        Args: {
+          _id: string
+          _platform: string
+          _priority: string
+          _reason: string
+          _recheck: number
+          _title: string
+          _url: string
+        }
         Returns: undefined
       }
       rg_update_org: {
