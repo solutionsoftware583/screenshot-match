@@ -41,7 +41,7 @@ function Page() {
   const nameError = name.trim().length > 0 && name.trim().length < 2 ? "At least 2 characters" : null;
 
   return (
-    <InfoPage title="Profile & Security" description="Your personal details, password and sessions.">
+    <InfoPage connected title="Profile & Security" description="Your personal details, password and sessions.">
       <Section title="Profile" description="Your name and organization label. Roles and permissions are managed by administrators and can't be changed here.">
         <QueryState q={q}>
           <form

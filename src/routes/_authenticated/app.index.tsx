@@ -27,7 +27,7 @@ function Overview() {
   const spec = DASHBOARDS[primaryRole(all)];
 
   return (
-    <InfoPage title={d ? spec.title : "Overview"} description={d ? spec.summary : "Loading your dashboard…"}>
+    <InfoPage connected title={d ? spec.title : "Overview"} description={d ? spec.summary : "Loading your dashboard…"}>
       {denied === "admin" && (
         <div role="alert" className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm">
           <ShieldAlert className="h-4 w-4 text-destructive" /> You don't have access to the Super Admin area.
