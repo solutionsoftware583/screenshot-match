@@ -10,7 +10,12 @@ export const Route = createFileRoute("/admin/jobs")({
 function Page() {
   return (
     <InfoPage title="Background Jobs" description="Scheduled scans, analysis and submission jobs.">
-      <Section title="Job queue"><EmptyState title="No job runner" description="Background processing is not implemented yet." /></Section>
+      <Section title="Job queue">
+        <EmptyState
+          title="No job runner"
+          description="Background processing is not implemented yet."
+        />
+      </Section>
     </InfoPage>
   );
 }

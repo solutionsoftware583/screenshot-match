@@ -14,9 +14,27 @@ export const Route = createFileRoute("/forgot-password")({
     ],
   }),
   component: () => (
-    <AuthCard title="Reset your password" subtitle="We'll email you a reset link once email delivery is connected.">
-      <AuthForm submitLabel="Send reset link" fields={[{ name: "email", label: "Email", type: "email", autoComplete: "email", validate: rules.email }]} />
-      <p className="mt-4 text-center text-sm"><Link to="/login" className="text-muted-foreground hover:text-foreground">Back to sign in</Link></p>
+    <AuthCard
+      title="Reset your password"
+      subtitle="We'll email you a reset link once email delivery is connected."
+    >
+      <AuthForm
+        submitLabel="Send reset link"
+        fields={[
+          {
+            name: "email",
+            label: "Email",
+            type: "email",
+            autoComplete: "email",
+            validate: rules.email,
+          },
+        ]}
+      />
+      <p className="mt-4 text-center text-sm">
+        <Link to="/login" className="text-muted-foreground hover:text-foreground">
+          Back to sign in
+        </Link>
+      </p>
     </AuthCard>
   ),
 });

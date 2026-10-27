@@ -12,5 +12,19 @@ export const Route = createFileRoute("/terms")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: () => <LegalPage title="Terms of Service" sections={["Acceptance of terms", "Description of service", "Acceptable use", "No guarantee of removal", "Fees and billing", "Liability", "Termination", "Governing law"]} />,
+  component: () => (
+    <LegalPage
+      title="Terms of Service"
+      sections={[
+        "Acceptance of terms",
+        "Description of service",
+        "Acceptable use",
+        "No guarantee of removal",
+        "Fees and billing",
+        "Liability",
+        "Termination",
+        "Governing law",
+      ]}
+    />
+  ),
 });

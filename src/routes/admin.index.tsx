@@ -10,7 +10,12 @@ export const Route = createFileRoute("/admin/")({
 function Page() {
   return (
     <InfoPage title="Global Dashboard" description="Platform-wide health and usage.">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><StatCard label="Tenants" value={null} /><StatCard label="Users" value={null} /><StatCard label="Active jobs" value={null} /><StatCard label="Open escalations" value={null} /></div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="Tenants" value={null} />
+        <StatCard label="Users" value={null} />
+        <StatCard label="Active jobs" value={null} />
+        <StatCard label="Open escalations" value={null} />
+      </div>
     </InfoPage>
   );
 }

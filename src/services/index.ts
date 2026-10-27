@@ -35,10 +35,40 @@ export const services = {
 
 // Catalogue of integrations we plan to support. Status reflects reality: none are built.
 export const INTEGRATION_CATALOGUE: Integration[] = [
-  { key: "google", name: "Google Business Profile", description: "Read reviews and file flagging requests.", status: "not_available" },
-  { key: "yelp", name: "Yelp", description: "Monitor reviews for listed locations.", status: "not_available" },
-  { key: "trustpilot", name: "Trustpilot", description: "Monitor and report reviews.", status: "not_available" },
-  { key: "facebook", name: "Facebook Pages", description: "Monitor page recommendations.", status: "not_available" },
-  { key: "web", name: "Web search monitoring", description: "Discover mentions across the open web.", status: "not_available" },
-  { key: "slack", name: "Slack", description: "Send case alerts to channels.", status: "not_available" },
+  {
+    key: "google",
+    name: "Google Business Profile",
+    description: "Read reviews and file flagging requests.",
+    status: "not_available",
+  },
+  {
+    key: "yelp",
+    name: "Yelp",
+    description: "Monitor reviews for listed locations.",
+    status: "not_available",
+  },
+  {
+    key: "trustpilot",
+    name: "Trustpilot",
+    description: "Monitor and report reviews.",
+    status: "not_available",
+  },
+  {
+    key: "facebook",
+    name: "Facebook Pages",
+    description: "Monitor page recommendations.",
+    status: "not_available",
+  },
+  {
+    key: "web",
+    name: "Web search monitoring",
+    description: "Discover mentions across the open web.",
+    status: "not_available",
+  },
+  {
+    key: "slack",
+    name: "Slack",
+    description: "Send case alerts to channels.",
+    status: "not_available",
+  },
 ];

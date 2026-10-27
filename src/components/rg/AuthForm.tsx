@@ -3,10 +3,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export interface Field { name: string; label: string; type?: string; autoComplete?: string; validate: (v: string, all: Record<string, string>) => string | null }
+export interface Field {
+  name: string;
+  label: string;
+  type?: string;
+  autoComplete?: string;
+  validate: (v: string, all: Record<string, string>) => string | null;
+}
 
 export const rules = {
-  email: (v: string) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : "Enter a valid email address."),
+  email: (v: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : "Enter a valid email address.",
   required: (label: string) => (v: string) => (v.trim() ? null : `${label} is required.`),
   password: (v: string) => (v.length >= 8 ? null : "Password must be at least 8 characters."),
 };
@@ -38,10 +45,16 @@ export function AuthForm({ fields, submitLabel }: { fields: Field[]; submitLabel
             value={values[f.name] ?? ""}
             onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
           />
-          {errors[f.name] && <p id={`${f.name}-err`} className="text-xs text-destructive">{errors[f.name]}</p>}
+          {errors[f.name] && (
+            <p id={`${f.name}-err`} className="text-xs text-destructive">
+              {errors[f.name]}
+            </p>
+          )}
         </div>
       ))}
-      <Button type="submit" className="w-full">{submitLabel}</Button>
+      <Button type="submit" className="w-full">
+        {submitLabel}
+      </Button>
       {notice && (
         <p role="status" className="rounded-md border border-warning/40 bg-warning/10 p-3 text-sm">
           Your details look valid, but accounts are not connected yet — nothing was sent or saved.

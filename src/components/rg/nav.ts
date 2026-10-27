@@ -1,10 +1,39 @@
 import {
-  LayoutDashboard, Radar, Star, FileSearch, Briefcase, FolderLock, CheckCheck, Send, RotateCcw,
-  Building2, Plug, Users, BarChart3, CreditCard, Settings, Globe, UserCog, Activity, Cog, ScrollText,
-  LifeBuoy, Server, Receipt, Sparkles, FilePen, Bell, KeyRound, UserCircle,
+  LayoutDashboard,
+  Radar,
+  Star,
+  FileSearch,
+  Briefcase,
+  FolderLock,
+  CheckCheck,
+  Send,
+  RotateCcw,
+  Building2,
+  Plug,
+  Users,
+  BarChart3,
+  CreditCard,
+  Settings,
+  Globe,
+  UserCog,
+  Activity,
+  Cog,
+  ScrollText,
+  LifeBuoy,
+  Server,
+  Receipt,
+  Sparkles,
+  FilePen,
+  Bell,
+  KeyRound,
+  UserCircle,
 } from "lucide-react";
 
-export interface NavItem { title: string; to: string; icon: typeof Star }
+export interface NavItem {
+  title: string;
+  to: string;
+  icon: typeof Star;
+}
 
 export const APP_NAV: NavItem[] = [
   { title: "Overview", to: "/app", icon: LayoutDashboard },

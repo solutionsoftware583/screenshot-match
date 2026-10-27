@@ -12,5 +12,18 @@ export const Route = createFileRoute("/privacy")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: () => <LegalPage title="Privacy Policy" sections={["Data we collect", "How we use data", "Evidence and uploaded content", "Sharing and processors", "Retention", "Your rights", "Contact"]} />,
+  component: () => (
+    <LegalPage
+      title="Privacy Policy"
+      sections={[
+        "Data we collect",
+        "How we use data",
+        "Evidence and uploaded content",
+        "Sharing and processors",
+        "Retention",
+        "Your rights",
+        "Contact",
+      ]}
+    />
+  ),
 });
