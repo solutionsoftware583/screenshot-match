@@ -12,6 +12,10 @@ import { useMemo, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import roundLogo from "@/assets/rating-guard-round-logo.jpg.asset.json";
+import bannerLogo from "@/assets/rating-guard-banner.jpg.asset.json";
+
+export const BRAND_IMAGES = { round: roundLogo.url, banner: bannerLogo.url };
 
 export function Brand({
   inverted = false,
@@ -22,9 +26,7 @@ export function Brand({
 }) {
   return (
     <Link to="/" className="flex items-center gap-2" aria-label="Rating Guard home">
-      <span className="grid h-8 w-8 place-items-center rounded-md bg-accent text-accent-foreground shadow-glow">
-        <ShieldCheck className="h-5 w-5" />
-      </span>
+      <img src={roundLogo.url} alt="Rating Guard logo" width={36} height={36} className="h-9 w-9 rounded-full shadow-glow" />
       {!compact && (
         <span className="leading-tight">
           <span
