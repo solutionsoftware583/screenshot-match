@@ -22,11 +22,13 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedInviteRouteImport } from './routes/_authenticated/invite'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminConfigRouteImport } from './routes/_authenticated/admin.config'
 import { Route as AuthenticatedAdminIntegrationsRouteImport } from './routes/_authenticated/admin.integrations'
 import { Route as AuthenticatedAdminJobsRouteImport } from './routes/_authenticated/admin.jobs'
+import { Route as AuthenticatedAdminResellersRouteImport } from './routes/_authenticated/admin.resellers'
 import { Route as AuthenticatedAdminSubscriptionsRouteImport } from './routes/_authenticated/admin.subscriptions'
 import { Route as AuthenticatedAdminSupportRouteImport } from './routes/_authenticated/admin.support'
 import { Route as AuthenticatedAdminTenantsRouteImport } from './routes/_authenticated/admin.tenants'
@@ -40,7 +42,9 @@ import { Route as AuthenticatedAppBusinessesRouteImport } from './routes/_authen
 import { Route as AuthenticatedAppDiscoverRouteImport } from './routes/_authenticated/app.discover'
 import { Route as AuthenticatedAppEvidenceRouteImport } from './routes/_authenticated/app.evidence'
 import { Route as AuthenticatedAppFindingsRouteImport } from './routes/_authenticated/app.findings'
+import { Route as AuthenticatedAppGeographyRouteImport } from './routes/_authenticated/app.geography'
 import { Route as AuthenticatedAppIntegrationsRouteImport } from './routes/_authenticated/app.integrations'
+import { Route as AuthenticatedAppInvitationsRouteImport } from './routes/_authenticated/app.invitations'
 import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
 import { Route as AuthenticatedAppRemovalsRouteImport } from './routes/_authenticated/app.removals'
@@ -49,6 +53,7 @@ import { Route as AuthenticatedAppRolesRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAppSettingsRouteImport } from './routes/_authenticated/app.settings'
 import { Route as AuthenticatedAppSubmissionsRouteImport } from './routes/_authenticated/app.submissions'
 import { Route as AuthenticatedAppTeamRouteImport } from './routes/_authenticated/app.team'
+import { Route as AuthenticatedAppTeamsRouteImport } from './routes/_authenticated/app.teams'
 import { Route as AuthenticatedAppCasesIndexRouteImport } from './routes/_authenticated/app.cases.index'
 import { Route as AuthenticatedAppCasesIdRouteImport } from './routes/_authenticated/app.cases.$id'
 import { Route as AuthenticatedAppReviewsIndexRouteImport } from './routes/_authenticated/app.reviews.index'
@@ -118,6 +123,11 @@ const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
   path: '/app',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInviteRoute = AuthenticatedInviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -145,6 +155,12 @@ const AuthenticatedAdminJobsRoute = AuthenticatedAdminJobsRouteImport.update({
   path: '/jobs',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminResellersRoute =
+  AuthenticatedAdminResellersRouteImport.update({
+    id: '/resellers',
+    path: '/resellers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminSubscriptionsRoute =
   AuthenticatedAdminSubscriptionsRouteImport.update({
     id: '/subscriptions',
@@ -219,10 +235,22 @@ const AuthenticatedAppFindingsRoute =
     path: '/findings',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
+const AuthenticatedAppGeographyRoute =
+  AuthenticatedAppGeographyRouteImport.update({
+    id: '/geography',
+    path: '/geography',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppIntegrationsRoute =
   AuthenticatedAppIntegrationsRouteImport.update({
     id: '/integrations',
     path: '/integrations',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppInvitationsRoute =
+  AuthenticatedAppInvitationsRouteImport.update({
+    id: '/invitations',
+    path: '/invitations',
     getParentRoute: () => AuthenticatedAppRoute,
   } as any)
 const AuthenticatedAppNotificationsRoute =
@@ -269,6 +297,11 @@ const AuthenticatedAppTeamRoute = AuthenticatedAppTeamRouteImport.update({
   path: '/team',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppTeamsRoute = AuthenticatedAppTeamsRouteImport.update({
+  id: '/teams',
+  path: '/teams',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 const AuthenticatedAppCasesIndexRoute =
   AuthenticatedAppCasesIndexRouteImport.update({
     id: '/cases/',
@@ -306,10 +339,12 @@ export interface FileRoutesByFullPath {
   '/workflows': typeof WorkflowsRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/app': typeof AuthenticatedAppRouteWithChildren
+  '/invite': typeof AuthenticatedInviteRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/config': typeof AuthenticatedAdminConfigRoute
   '/admin/integrations': typeof AuthenticatedAdminIntegrationsRoute
   '/admin/jobs': typeof AuthenticatedAdminJobsRoute
+  '/admin/resellers': typeof AuthenticatedAdminResellersRoute
   '/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsRoute
   '/admin/support': typeof AuthenticatedAdminSupportRoute
   '/admin/tenants': typeof AuthenticatedAdminTenantsRoute
@@ -322,7 +357,9 @@ export interface FileRoutesByFullPath {
   '/app/discover': typeof AuthenticatedAppDiscoverRoute
   '/app/evidence': typeof AuthenticatedAppEvidenceRoute
   '/app/findings': typeof AuthenticatedAppFindingsRoute
+  '/app/geography': typeof AuthenticatedAppGeographyRoute
   '/app/integrations': typeof AuthenticatedAppIntegrationsRoute
+  '/app/invitations': typeof AuthenticatedAppInvitationsRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/removals': typeof AuthenticatedAppRemovalsRoute
@@ -331,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/submissions': typeof AuthenticatedAppSubmissionsRoute
   '/app/team': typeof AuthenticatedAppTeamRoute
+  '/app/teams': typeof AuthenticatedAppTeamsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/app/': typeof AuthenticatedAppIndexRoute
   '/app/cases/$id': typeof AuthenticatedAppCasesIdRoute
@@ -349,10 +387,12 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/workflows': typeof WorkflowsRoute
+  '/invite': typeof AuthenticatedInviteRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/config': typeof AuthenticatedAdminConfigRoute
   '/admin/integrations': typeof AuthenticatedAdminIntegrationsRoute
   '/admin/jobs': typeof AuthenticatedAdminJobsRoute
+  '/admin/resellers': typeof AuthenticatedAdminResellersRoute
   '/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsRoute
   '/admin/support': typeof AuthenticatedAdminSupportRoute
   '/admin/tenants': typeof AuthenticatedAdminTenantsRoute
@@ -365,7 +405,9 @@ export interface FileRoutesByTo {
   '/app/discover': typeof AuthenticatedAppDiscoverRoute
   '/app/evidence': typeof AuthenticatedAppEvidenceRoute
   '/app/findings': typeof AuthenticatedAppFindingsRoute
+  '/app/geography': typeof AuthenticatedAppGeographyRoute
   '/app/integrations': typeof AuthenticatedAppIntegrationsRoute
+  '/app/invitations': typeof AuthenticatedAppInvitationsRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
   '/app/removals': typeof AuthenticatedAppRemovalsRoute
@@ -374,6 +416,7 @@ export interface FileRoutesByTo {
   '/app/settings': typeof AuthenticatedAppSettingsRoute
   '/app/submissions': typeof AuthenticatedAppSubmissionsRoute
   '/app/team': typeof AuthenticatedAppTeamRoute
+  '/app/teams': typeof AuthenticatedAppTeamsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/app': typeof AuthenticatedAppIndexRoute
   '/app/cases/$id': typeof AuthenticatedAppCasesIdRoute
@@ -396,10 +439,12 @@ export interface FileRoutesById {
   '/workflows': typeof WorkflowsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/invite': typeof AuthenticatedInviteRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/config': typeof AuthenticatedAdminConfigRoute
   '/_authenticated/admin/integrations': typeof AuthenticatedAdminIntegrationsRoute
   '/_authenticated/admin/jobs': typeof AuthenticatedAdminJobsRoute
+  '/_authenticated/admin/resellers': typeof AuthenticatedAdminResellersRoute
   '/_authenticated/admin/subscriptions': typeof AuthenticatedAdminSubscriptionsRoute
   '/_authenticated/admin/support': typeof AuthenticatedAdminSupportRoute
   '/_authenticated/admin/tenants': typeof AuthenticatedAdminTenantsRoute
@@ -412,7 +457,9 @@ export interface FileRoutesById {
   '/_authenticated/app/discover': typeof AuthenticatedAppDiscoverRoute
   '/_authenticated/app/evidence': typeof AuthenticatedAppEvidenceRoute
   '/_authenticated/app/findings': typeof AuthenticatedAppFindingsRoute
+  '/_authenticated/app/geography': typeof AuthenticatedAppGeographyRoute
   '/_authenticated/app/integrations': typeof AuthenticatedAppIntegrationsRoute
+  '/_authenticated/app/invitations': typeof AuthenticatedAppInvitationsRoute
   '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
   '/_authenticated/app/removals': typeof AuthenticatedAppRemovalsRoute
@@ -421,6 +468,7 @@ export interface FileRoutesById {
   '/_authenticated/app/settings': typeof AuthenticatedAppSettingsRoute
   '/_authenticated/app/submissions': typeof AuthenticatedAppSubmissionsRoute
   '/_authenticated/app/team': typeof AuthenticatedAppTeamRoute
+  '/_authenticated/app/teams': typeof AuthenticatedAppTeamsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
   '/_authenticated/app/cases/$id': typeof AuthenticatedAppCasesIdRoute
@@ -443,10 +491,12 @@ export interface FileRouteTypes {
     | '/workflows'
     | '/admin'
     | '/app'
+    | '/invite'
     | '/admin/audit'
     | '/admin/config'
     | '/admin/integrations'
     | '/admin/jobs'
+    | '/admin/resellers'
     | '/admin/subscriptions'
     | '/admin/support'
     | '/admin/tenants'
@@ -459,7 +509,9 @@ export interface FileRouteTypes {
     | '/app/discover'
     | '/app/evidence'
     | '/app/findings'
+    | '/app/geography'
     | '/app/integrations'
+    | '/app/invitations'
     | '/app/notifications'
     | '/app/profile'
     | '/app/removals'
@@ -468,6 +520,7 @@ export interface FileRouteTypes {
     | '/app/settings'
     | '/app/submissions'
     | '/app/team'
+    | '/app/teams'
     | '/admin/'
     | '/app/'
     | '/app/cases/$id'
@@ -486,10 +539,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/terms'
     | '/workflows'
+    | '/invite'
     | '/admin/audit'
     | '/admin/config'
     | '/admin/integrations'
     | '/admin/jobs'
+    | '/admin/resellers'
     | '/admin/subscriptions'
     | '/admin/support'
     | '/admin/tenants'
@@ -502,7 +557,9 @@ export interface FileRouteTypes {
     | '/app/discover'
     | '/app/evidence'
     | '/app/findings'
+    | '/app/geography'
     | '/app/integrations'
+    | '/app/invitations'
     | '/app/notifications'
     | '/app/profile'
     | '/app/removals'
@@ -511,6 +568,7 @@ export interface FileRouteTypes {
     | '/app/settings'
     | '/app/submissions'
     | '/app/team'
+    | '/app/teams'
     | '/admin'
     | '/app'
     | '/app/cases/$id'
@@ -532,10 +590,12 @@ export interface FileRouteTypes {
     | '/workflows'
     | '/_authenticated/admin'
     | '/_authenticated/app'
+    | '/_authenticated/invite'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/config'
     | '/_authenticated/admin/integrations'
     | '/_authenticated/admin/jobs'
+    | '/_authenticated/admin/resellers'
     | '/_authenticated/admin/subscriptions'
     | '/_authenticated/admin/support'
     | '/_authenticated/admin/tenants'
@@ -548,7 +608,9 @@ export interface FileRouteTypes {
     | '/_authenticated/app/discover'
     | '/_authenticated/app/evidence'
     | '/_authenticated/app/findings'
+    | '/_authenticated/app/geography'
     | '/_authenticated/app/integrations'
+    | '/_authenticated/app/invitations'
     | '/_authenticated/app/notifications'
     | '/_authenticated/app/profile'
     | '/_authenticated/app/removals'
@@ -557,6 +619,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/settings'
     | '/_authenticated/app/submissions'
     | '/_authenticated/app/team'
+    | '/_authenticated/app/teams'
     | '/_authenticated/admin/'
     | '/_authenticated/app/'
     | '/_authenticated/app/cases/$id'
@@ -672,6 +735,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/invite': {
+      id: '/_authenticated/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof AuthenticatedInviteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
@@ -705,6 +775,13 @@ declare module '@tanstack/react-router' {
       path: '/jobs'
       fullPath: '/admin/jobs'
       preLoaderRoute: typeof AuthenticatedAdminJobsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/resellers': {
+      id: '/_authenticated/admin/resellers'
+      path: '/resellers'
+      fullPath: '/admin/resellers'
+      preLoaderRoute: typeof AuthenticatedAdminResellersRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/subscriptions': {
@@ -798,11 +875,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppFindingsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/geography': {
+      id: '/_authenticated/app/geography'
+      path: '/geography'
+      fullPath: '/app/geography'
+      preLoaderRoute: typeof AuthenticatedAppGeographyRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/integrations': {
       id: '/_authenticated/app/integrations'
       path: '/integrations'
       fullPath: '/app/integrations'
       preLoaderRoute: typeof AuthenticatedAppIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/invitations': {
+      id: '/_authenticated/app/invitations'
+      path: '/invitations'
+      fullPath: '/app/invitations'
+      preLoaderRoute: typeof AuthenticatedAppInvitationsRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
     '/_authenticated/app/notifications': {
@@ -861,6 +952,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppTeamRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/teams': {
+      id: '/_authenticated/app/teams'
+      path: '/teams'
+      fullPath: '/app/teams'
+      preLoaderRoute: typeof AuthenticatedAppTeamsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/cases/': {
       id: '/_authenticated/app/cases/'
       path: '/cases'
@@ -897,6 +995,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminConfigRoute: typeof AuthenticatedAdminConfigRoute
   AuthenticatedAdminIntegrationsRoute: typeof AuthenticatedAdminIntegrationsRoute
   AuthenticatedAdminJobsRoute: typeof AuthenticatedAdminJobsRoute
+  AuthenticatedAdminResellersRoute: typeof AuthenticatedAdminResellersRoute
   AuthenticatedAdminSubscriptionsRoute: typeof AuthenticatedAdminSubscriptionsRoute
   AuthenticatedAdminSupportRoute: typeof AuthenticatedAdminSupportRoute
   AuthenticatedAdminTenantsRoute: typeof AuthenticatedAdminTenantsRoute
@@ -909,6 +1008,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminConfigRoute: AuthenticatedAdminConfigRoute,
   AuthenticatedAdminIntegrationsRoute: AuthenticatedAdminIntegrationsRoute,
   AuthenticatedAdminJobsRoute: AuthenticatedAdminJobsRoute,
+  AuthenticatedAdminResellersRoute: AuthenticatedAdminResellersRoute,
   AuthenticatedAdminSubscriptionsRoute: AuthenticatedAdminSubscriptionsRoute,
   AuthenticatedAdminSupportRoute: AuthenticatedAdminSupportRoute,
   AuthenticatedAdminTenantsRoute: AuthenticatedAdminTenantsRoute,
@@ -928,7 +1028,9 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppDiscoverRoute: typeof AuthenticatedAppDiscoverRoute
   AuthenticatedAppEvidenceRoute: typeof AuthenticatedAppEvidenceRoute
   AuthenticatedAppFindingsRoute: typeof AuthenticatedAppFindingsRoute
+  AuthenticatedAppGeographyRoute: typeof AuthenticatedAppGeographyRoute
   AuthenticatedAppIntegrationsRoute: typeof AuthenticatedAppIntegrationsRoute
+  AuthenticatedAppInvitationsRoute: typeof AuthenticatedAppInvitationsRoute
   AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
   AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
   AuthenticatedAppRemovalsRoute: typeof AuthenticatedAppRemovalsRoute
@@ -937,6 +1039,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppSettingsRoute: typeof AuthenticatedAppSettingsRoute
   AuthenticatedAppSubmissionsRoute: typeof AuthenticatedAppSubmissionsRoute
   AuthenticatedAppTeamRoute: typeof AuthenticatedAppTeamRoute
+  AuthenticatedAppTeamsRoute: typeof AuthenticatedAppTeamsRoute
   AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
   AuthenticatedAppCasesIdRoute: typeof AuthenticatedAppCasesIdRoute
   AuthenticatedAppReviewsIdRoute: typeof AuthenticatedAppReviewsIdRoute
@@ -953,7 +1056,9 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppDiscoverRoute: AuthenticatedAppDiscoverRoute,
   AuthenticatedAppEvidenceRoute: AuthenticatedAppEvidenceRoute,
   AuthenticatedAppFindingsRoute: AuthenticatedAppFindingsRoute,
+  AuthenticatedAppGeographyRoute: AuthenticatedAppGeographyRoute,
   AuthenticatedAppIntegrationsRoute: AuthenticatedAppIntegrationsRoute,
+  AuthenticatedAppInvitationsRoute: AuthenticatedAppInvitationsRoute,
   AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
   AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
   AuthenticatedAppRemovalsRoute: AuthenticatedAppRemovalsRoute,
@@ -962,6 +1067,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppSettingsRoute: AuthenticatedAppSettingsRoute,
   AuthenticatedAppSubmissionsRoute: AuthenticatedAppSubmissionsRoute,
   AuthenticatedAppTeamRoute: AuthenticatedAppTeamRoute,
+  AuthenticatedAppTeamsRoute: AuthenticatedAppTeamsRoute,
   AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
   AuthenticatedAppCasesIdRoute: AuthenticatedAppCasesIdRoute,
   AuthenticatedAppReviewsIdRoute: AuthenticatedAppReviewsIdRoute,
@@ -975,11 +1081,13 @@ const AuthenticatedAppRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedInviteRoute: typeof AuthenticatedInviteRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedInviteRoute: AuthenticatedInviteRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
