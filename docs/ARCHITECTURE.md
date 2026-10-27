@@ -102,3 +102,17 @@ Lovable commits each change to the synced branch. Work locally on feature branch
 - Invitations: random token returned once, only its SHA-256 hash stored; accept requires the signed-in email to match; 7-day expiry. Email delivery is NOT configured — the link is shown for manual sharing.
 - Known limits: team managers hold `teams.manage` organization-wide (not limited to their own team); geographic managers' data visibility is not yet narrowed to their region (needs case data); there is no ownership-transfer flow for the last Org Admin.
 - Verify: run `db/tests/management.sql` and `db/tests/tenant_isolation.sql` with a privileged connection; both end with `..._RESULT:ALL_PASSED` and roll back.
+
+## Super Admin gate, dashboards, audit log, profile
+
+- `/admin/*` is gated in `src/routes/_authenticated/admin.tsx`: `rg_my_access().can_view_platform` (roles holding `platform.view_all`: super_admin, global_manager, auditor) or redirect to `/app?denied=admin`. The menu link is hidden by the same check. This is UX only — admin data and writes are still re-checked by RLS and `rg_*` functions.
+- Dashboards (`/app`): `getDashboard` counts rows through RLS as the caller; `src/lib/dashboard.ts` picks the layout from the caller's real role rows.
+- Audit log (`/admin/audit` platform-wide, `/app/audit` per organization): `rg_audit_list` applies the same rule as the audit RLS policy; `audit_events` remains insert-only via `rg_audit`, with update/delete blocked by trigger.
+- Profile: only `full_name` and `organization` are writable (own row, RLS). Roles live in separate tables.
+
+## Disabling demo accounts before launch
+
+Preview and live share one database. Do not delete demo accounts automatically. Before launch, the owner should:
+1. Sign in as the real Super Admin and remove platform roles from `superadmin@ratingguard.test`, `global.manager@…`, `auditor@…` in Super Admin → Users.
+2. Delete the `[DEMO] …` organizations and `[DEMO] Reseller` (Super Admin → Organizations / Resellers); this removes their memberships.
+3. Ask the agent to ban the `@ratingguard.test` users (service-role script, run once, with explicit approval), then delete `/mnt/documents/rating-guard-demo-accounts.md`.
