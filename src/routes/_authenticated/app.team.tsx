@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  ActionMessage, GEO_ROLE_LEVEL, LEVEL_LABEL, NoOrg, OrgPicker, QueryState, useAction, useCurrentOrg, useOrgDetail, useRoleCatalog,
+  ActionMessage, GEO_ROLE_LEVEL, LEVEL_LABEL, NoOrg, QueryState, useAction, useCurrentOrg, useOrgDetail, useRoleCatalog,
 } from "@/components/rg/manage";
 import { removeOrgMember, setOrgRole, updateOrganization } from "@/lib/management.functions";
 
@@ -27,7 +27,7 @@ function Page() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Members & Roles" description="Who belongs to this organization and what they can do. Invite people from Invitations." actions={<OrgPicker {...cur} />} />
+      <PageHeader title="Members & Roles" description="Who belongs to this organization and what they can do. Invite people from Invitations." />
       <QueryState q={cur.orgs}>
         {!cur.orgId ? <NoOrg /> : (
           <QueryState q={q}>

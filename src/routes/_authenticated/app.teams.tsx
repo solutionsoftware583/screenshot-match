@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  ActionMessage, LEVEL_LABEL, NoOrg, OrgPicker, QueryState, personLabel, useAction, useCurrentOrg, useOrgDetail,
+  ActionMessage, LEVEL_LABEL, NoOrg, QueryState, personLabel, useAction, useCurrentOrg, useOrgDetail,
 } from "@/components/rg/manage";
 import { deleteTeam, removeTeamMember, saveTeam, setTeamMember } from "@/lib/management.functions";
 
@@ -31,7 +31,7 @@ function Page() {
 
   return (
     <div className="space-y-5">
-      <PageHeader title="Teams" description="People can belong to several teams. Team Leaders and Members only work on their team's assignments." actions={<OrgPicker {...cur} />} />
+      <PageHeader title="Teams" description="People can belong to several teams. Team Leaders and Members only work on their team's assignments." />
       <QueryState q={cur.orgs}>
         {!cur.orgId ? <NoOrg /> : (
           <QueryState q={q}>

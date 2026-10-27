@@ -36,21 +36,30 @@ const ORG_KEY = "rg.currentOrg"; // UI preference only; access is decided by the
 export function useCurrentOrg() {
   const orgs = useOrganizations();
   const [picked, setPicked] = useState<string | null>(null);
-  useEffect(() => setPicked(window.localStorage.getItem(ORG_KEY)), []);
+  useEffect(() => {
+    const read = () => setPicked(window.localStorage.getItem(ORG_KEY));
+    read();
+    window.addEventListener("rg-org-change", read);
+    return () => window.removeEventListener("rg-org-change", read);
+  }, []);
   const list = orgs.data ?? [];
   const orgId = list.find((o) => o.id === picked)?.id ?? list[0]?.id ?? null;
   const select = (id: string) => {
     window.localStorage.setItem(ORG_KEY, id);
     setPicked(id);
+    window.dispatchEvent(new Event("rg-org-change"));
   };
   return { orgs, list, orgId, select };
 }
 
-export function OrgPicker({ list, orgId, select }: ReturnType<typeof useCurrentOrg>) {
-  if (list.length < 2) return null;
+/** Header organization switcher; every management page follows its selection. */
+export function OrgPicker() {
+  const { list, orgId, select, orgs } = useCurrentOrg();
+  if (orgs.isLoading) return null;
+  if (list.length === 0) return <span className="hidden text-sm text-muted-foreground sm:inline">No organization</span>;
   return (
     <Select value={orgId ?? ""} onValueChange={select}>
-      <SelectTrigger className="w-60" aria-label="Organization">
+      <SelectTrigger className="hidden h-8 w-56 sm:flex" aria-label="Organization">
         <SelectValue placeholder="Organization" />
       </SelectTrigger>
       <SelectContent>
