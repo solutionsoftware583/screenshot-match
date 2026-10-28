@@ -1,195 +1,162 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Lock, Eye } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  BackendNotice,
-  EmptyState,
-  PageHeader,
-  UnavailableButton,
-} from "@/components/rg/primitives";
-import { services } from "@/services";
-import type { Case } from "@/lib/contracts";
+import { EmptyState, PageHeader } from "@/components/rg/primitives";
+import { ActionMessage, MKEY, QueryState, fmtDate, useAction } from "@/components/rg/manage";
+import { addEvidence, getCase, recordRecheck, transitionCase } from "@/lib/cases.functions";
+import { STATUS_LABEL, nextStatuses, recheckDueAt, sha256Hex, type CaseStatus } from "@/lib/caseflow";
 
 export const Route = createFileRoute("/_authenticated/app/cases/$id")({
   head: () => ({
     meta: [
       { title: "Case workspace — Rating Guard" },
-      { name: "description", content: "Case details, evidence and timeline." },
+      { name: "description", content: "Case details, evidence, approvals and timeline." },
       { name: "robots", content: "noindex" },
     ],
   }),
   component: CaseWorkspace,
 });
 
-function Field({ label, value }: { label: string; value?: string | null | undefined }) {
-  return (
-    <div>
-      <dt className="text-xs uppercase tracking-wide text-muted-foreground">{label}</dt>
-      <dd className="mt-0.5 text-sm">
-        {value || <span className="text-muted-foreground">—</span>}
-      </dd>
-    </div>
-  );
-}
-
 function CaseWorkspace() {
   const { id } = Route.useParams();
-  const { data: c, isLoading } = useQuery({
-    queryKey: ["case", id],
-    queryFn: () => services.cases.get(id),
-  });
-  if (isLoading) return <div className="h-40 animate-pulse rounded bg-muted" />;
-  const ev = (type: string, vis?: "internal" | "client") =>
-    (c?.events ?? []).filter((e) => e.type === type || (vis && e.visibility === vis));
-
+  const fn = useServerFn(getCase);
+  const q = useQuery({ queryKey: [...MKEY, "case", id], queryFn: () => fn({ data: { id } }) });
   return (
-    <div>
-      <PageHeader
-        title={c ? `Case ${c.reference}` : `Case ${id}`}
-        description={c ? c.targetUrl : "No case record found."}
-        actions={
-          <>
-            <UnavailableButton variant="outline">Request approval</UnavailableButton>
-            <UnavailableButton>Prepare submission</UnavailableButton>
-          </>
-        }
-      />
-      <BackendNotice feature="The case workspace" />
-      {!c && (
-        <div className="mb-6">
-          <EmptyState
-            title="Case not found"
-            description="Below is the workspace layout; every section is empty because no case record exists."
-            action={
-              <Button asChild variant="outline">
-                <Link to="/app/cases">Back to cases</Link>
-              </Button>
-            }
-          />
-        </div>
-      )}
-      <CaseBody c={c} ev={ev} />
+    <QueryState q={q}>
+      {q.data === null ? (
+        <EmptyState title="Case not found" description="It doesn't exist or you don't have access." />
+      ) : q.data ? (
+        <Body d={q.data} />
+      ) : null}
+    </QueryState>
+  );
+}
+
+type D = NonNullable<Awaited<ReturnType<typeof getCase>>>;
+
+function Body({ d }: { d: D }) {
+  const c = d.case;
+  const due = recheckDueAt(c);
+  return (
+    <div className="space-y-6">
+      <Link to="/app/cases" className="text-sm text-primary underline">← All cases</Link>
+      <PageHeader title={`${c.reference} · ${c.title}`} description={`${c.platform} · priority ${c.priority}`} />
+      <div className="flex flex-wrap gap-2">
+        <Badge>{STATUS_LABEL[c.status]}</Badge>
+        {due && <Badge variant="secondary">Recheck {due <= new Date() ? "due now" : `on ${fmtDate(due.toISOString())}`}</Badge>}
+      </div>
+      <section className="rounded-lg border p-4 text-sm space-y-2">
+        <p><span className="text-muted-foreground">Reason: </span>{c.reason}</p>
+        {c.review_url && <p><span className="text-muted-foreground">Review: </span><a className="text-primary underline break-all" href={c.review_url} target="_blank" rel="noreferrer noopener">{c.review_url}</a></p>}
+        <p className="text-muted-foreground">Outcomes depend on the platform's decision; removal is never guaranteed.</p>
+      </section>
+      <Actions d={d} />
+      <Evidence d={d} />
+      <section>
+        <h2 className="mb-2 font-semibold">Timeline</h2>
+        <ol className="space-y-2 text-sm">
+          {d.events.map((e) => (
+            <li key={e.id} className="rounded border p-2">
+              <span className="text-muted-foreground">{fmtDate(e.at)} · </span>
+              {e.kind === "status" ? `${STATUS_LABEL[e.from_status as CaseStatus] ?? e.from_status} → ${STATUS_LABEL[e.to_status as CaseStatus] ?? e.to_status}` : e.kind.replace(/_/g, " ")}
+              {e.channel && ` · via ${e.channel}`}{e.external_ref && ` · ref ${e.external_ref}`}
+              {e.note && <div className="text-muted-foreground">{e.note}</div>}
+            </li>
+          ))}
+        </ol>
+      </section>
     </div>
   );
 }
 
-function CaseBody({
-  c,
-  ev,
-}: {
-  c: Case | null | undefined;
-  ev: (t: string, v?: "internal" | "client") => Case["events"];
-}) {
-  const list = (items: Case["events"], empty: string) =>
-    items.length ? (
-      <ol className="space-y-3 border-l pl-4">
-        {items.map((e) => (
-          <li key={e.id} className="text-sm">
-            <p className="text-xs text-muted-foreground">
-              {e.at} · {e.actor}
-            </p>
-            {e.message}
-          </li>
-        ))}
-      </ol>
-    ) : (
-      <EmptyState title={empty} />
-    );
-
+function Actions({ d }: { d: D }) {
+  const c = d.case;
+  const t = useServerFn(transitionCase);
+  const r = useServerFn(recordRecheck);
+  const [note, setNote] = useState("");
+  const [channel, setChannel] = useState("");
+  const [ref, setRef] = useState("");
+  const act = useAction((to: CaseStatus) => t({ data: { id: c.id, to, note, channel, ref } }), "Case updated");
+  const re = useAction((still: boolean) => r({ data: { id: c.id, stillRemoved: still, note } }), "Recheck recorded");
+  let next = nextStatuses(c.status, d.permissions);
+  if (c.created_by === d.me) next = next.filter((s) => s !== "approved" && s !== "rejected");
+  const own = c.status === "pending_approval" && c.created_by === d.me && d.permissions.includes("cases.approve");
+  if (next.length === 0 && c.status !== "removed")
+    return own ? <p className="text-sm text-muted-foreground">Another approver must review a case you created.</p> : null;
+  const needsChannel = next.some((s) => s === "submitted" || s === "appealed");
   return (
-    <div className="grid gap-5 lg:grid-cols-3">
-      <aside className="space-y-5 lg:order-2">
-        <div className="rounded-lg border bg-card p-5">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">Status: {c?.status ?? "—"}</Badge>
-            <Badge variant="secondary">Priority: {c?.priority ?? "—"}</Badge>
-          </div>
-          <dl className="mt-4 grid grid-cols-2 gap-4">
-            <Field label="Case ID" value={c?.reference} />
-            <Field label="Platform" value={c?.platform} />
-            <Field label="Category" value={c?.category} />
-            <Field label="Owner" value={c?.ownerName} />
-            <Field label="Team" value={c?.team} />
-            <Field label="Follow-up" value={c?.followUpAt} />
-          </dl>
-          <div className="mt-4">
-            <Field label="Target URL" value={c?.targetUrl} />
-          </div>
+    <section className="space-y-3 rounded-lg border p-4">
+      <h2 className="font-semibold">Next step</h2>
+      {needsChannel && (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <Input aria-label="Submitted via" placeholder="Submitted via (e.g. Google report form)" value={channel} onChange={(e) => setChannel(e.target.value)} />
+          <Input aria-label="Platform reference" placeholder="Platform ticket / reference (optional)" value={ref} onChange={(e) => setRef(e.target.value)} />
         </div>
-        <div className="rounded-lg border bg-card p-5">
-          <h3 className="font-semibold">AI assessment</h3>
-          {c?.assessment ? (
-            <div className="mt-2 text-sm">
-              <p>
-                {c.assessment.verdict} ({Math.round(c.assessment.confidence * 100)}%)
-              </p>
-              <p className="mt-2 text-muted-foreground">{c.assessment.rationale}</p>
-            </div>
-          ) : (
-            <p className="mt-2 text-sm text-muted-foreground">
-              No assessment. AI analysis is not connected. Assessments are advisory and require
-              human review.
-            </p>
-          )}
-        </div>
-      </aside>
-      <div className="lg:col-span-2">
-        <Tabs defaultValue="internal">
-          <TabsList className="flex h-auto flex-wrap">
-            <TabsTrigger value="internal">
-              <Lock className="mr-1 h-3.5 w-3.5" />
-              Internal
-            </TabsTrigger>
-            <TabsTrigger value="client">
-              <Eye className="mr-1 h-3.5 w-3.5" />
-              Client-visible
-            </TabsTrigger>
-            <TabsTrigger value="evidence">Evidence</TabsTrigger>
-            <TabsTrigger value="approvals">Approvals</TabsTrigger>
-            <TabsTrigger value="submissions">Submissions</TabsTrigger>
-            <TabsTrigger value="appeals">Appeals</TabsTrigger>
-            <TabsTrigger value="audit">Audit</TabsTrigger>
-          </TabsList>
-          <TabsContent value="internal" className="space-y-4">
-            <p className="flex items-center gap-2 rounded-md bg-primary p-2 text-xs text-primary-foreground">
-              <Lock className="h-3.5 w-3.5" /> Internal only — never shown to clients.
-            </p>
-            <Textarea placeholder="Add an internal note…" aria-label="Internal note" disabled />
-            {list(ev("note", "internal"), "No internal notes")}
-          </TabsContent>
-          <TabsContent value="client" className="space-y-4">
-            <p className="flex items-center gap-2 rounded-md bg-accent/30 p-2 text-xs">
-              <Eye className="h-3.5 w-3.5" /> Visible to the client.
-            </p>
-            {list(
-              (c?.events ?? []).filter((e) => e.visibility === "client"),
-              "No client communications",
-            )}
-          </TabsContent>
-          <TabsContent value="evidence">
-            {c?.evidence.length ? (
-              <ul className="text-sm">
-                {c.evidence.map((e) => (
-                  <li key={e.id}>{e.fileName}</li>
-                ))}
-              </ul>
-            ) : (
-              <EmptyState title="No evidence attached" />
-            )}
-          </TabsContent>
-          <TabsContent value="approvals">{list(ev("approval"), "No approval history")}</TabsContent>
-          <TabsContent value="submissions" className="space-y-4">
-            {list(ev("submission"), "No submissions")}
-            {list(ev("platform_response"), "No platform responses")}
-          </TabsContent>
-          <TabsContent value="appeals">{list(ev("appeal"), "No appeals")}</TabsContent>
-          <TabsContent value="audit">{list(ev("audit"), "No audit events")}</TabsContent>
-        </Tabs>
+      )}
+      <Textarea aria-label="Note" placeholder="Note (required to reject)" value={note} onChange={(e) => setNote(e.target.value)} />
+      <div className="flex flex-wrap gap-2">
+        {next.map((s) => (
+          <Button key={s} variant={s === "rejected" || s === "closed" ? "outline" : "default"} disabled={act.isPending} onClick={() => act.mutate(s)}>
+            {s === "pending_approval" ? "Request approval" : `Mark ${STATUS_LABEL[s].toLowerCase()}`}
+          </Button>
+        ))}
+        {c.status === "removed" && d.permissions.includes("cases.edit") && (
+          <>
+            <Button variant="outline" disabled={re.isPending} onClick={() => re.mutate(true)}>Recheck: still removed</Button>
+            <Button variant="outline" disabled={re.isPending} onClick={() => re.mutate(false)}>Recheck: found again</Button>
+          </>
+        )}
       </div>
-    </div>
+      <ActionMessage msg={act.msg ?? re.msg} />
+    </section>
+  );
+}
+
+function Evidence({ d }: { d: D }) {
+  const add = useServerFn(addEvidence);
+  const canAdd = d.permissions.includes("evidence.upload") && d.case.status !== "closed";
+  const [f, setF] = useState({ title: "", kind: "screenshot", sourceUrl: "", notes: "" });
+  const [file, setFile] = useState<File | null>(null);
+  const act = useAction(async () => {
+    const meta = file ? { fileName: file.name, fileSize: file.size, sha256: await sha256Hex(await file.arrayBuffer()) } : {};
+    return add({ data: { caseId: d.case.id, ...f, ...meta } });
+  }, "Evidence recorded");
+  return (
+    <section className="space-y-3">
+      <h2 className="font-semibold">Evidence</h2>
+      {d.evidence.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No evidence yet. At least one item is needed before approval.</p>
+      ) : (
+        <ul className="space-y-2 text-sm">
+          {d.evidence.map((e) => (
+            <li key={e.id} className="rounded border p-2">
+              <div className="font-medium">{e.title} <Badge variant="secondary">{e.kind}</Badge></div>
+              <div className="text-muted-foreground">Recorded {fmtDate(e.captured_at)}{e.file_name && ` · ${e.file_name}`}</div>
+              {e.sha256 && <div className="font-mono text-xs break-all">SHA-256 {e.sha256}</div>}
+              {e.source_url && <a className="text-primary underline break-all" href={e.source_url} target="_blank" rel="noreferrer noopener">{e.source_url}</a>}
+              {e.notes && <div>{e.notes}</div>}
+            </li>
+          ))}
+        </ul>
+      )}
+      {canAdd && (
+        <form className="grid gap-2 rounded-lg border p-3 sm:grid-cols-2" onSubmit={(e) => { e.preventDefault(); act.mutate(undefined, { onSuccess: () => { setF({ title: "", kind: "screenshot", sourceUrl: "", notes: "" }); setFile(null); } }); }}>
+          <Input aria-label="Evidence title" placeholder="Title" value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} required />
+          <select aria-label="Evidence type" className="h-9 rounded-md border bg-background px-2 text-sm" value={f.kind} onChange={(e) => setF({ ...f, kind: e.target.value })}>
+            {["screenshot", "document", "link", "note"].map((k) => <option key={k}>{k}</option>)}
+          </select>
+          <Input aria-label="Source link" placeholder="https://… (optional)" value={f.sourceUrl} onChange={(e) => setF({ ...f, sourceUrl: e.target.value })} />
+          <Input aria-label="File" type="file" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+          <Textarea aria-label="Evidence notes" className="sm:col-span-2" placeholder="Notes" value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} />
+          <p className="text-xs text-muted-foreground sm:col-span-2">The file's fingerprint (SHA-256), name and size are recorded with a server timestamp. The file itself is not stored yet.</p>
+          <div className="flex items-center gap-3"><Button type="submit" disabled={act.isPending}>Add evidence</Button><ActionMessage msg={act.msg} /></div>
+        </form>
+      )}
+    </section>
   );
 }
