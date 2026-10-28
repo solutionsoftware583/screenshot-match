@@ -185,7 +185,7 @@ export const addEvidence = createServerFn({ method: "POST" })
     };
   })
   .handler(async ({ data, context }) => {
-    const { data: id, error } = await context.supabase.rpc("rg_add_evidence", data);
+    const { data: id, error } = await context.supabase.rpc("rg_add_evidence", data as typeof data & { _size: number });
     if (error) throw new Error(error.message);
     return id as string;
   });
