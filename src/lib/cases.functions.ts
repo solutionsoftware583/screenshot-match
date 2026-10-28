@@ -67,16 +67,16 @@ const url = (v: unknown) => {
 const PRIORITIES = ["low", "normal", "high", "urgent"];
 
 function caseInput(d: Record<string, unknown>) {
-  const priority = String(d.priority ?? "normal");
+  const priority = String(d['priority'] ?? "normal");
   if (!PRIORITIES.includes(priority)) throw new Error("Invalid priority");
-  const recheck = Number(d.recheckDays ?? 30);
+  const recheck = Number(d['recheckDays'] ?? 30);
   if (!Number.isInteger(recheck) || recheck < 0 || recheck > 365)
     throw new Error("Recheck days must be 0–365");
   return {
-    _title: text(d.title, "Title", 3, 200),
-    _platform: text(d.platform, "Platform", 2, 80),
-    _url: url(d.reviewUrl),
-    _reason: text(d.reason, "Reason", 10, 4000),
+    _title: text(d['title'], "Title", 3, 200),
+    _platform: text(d['platform'], "Platform", 2, 80),
+    _url: url(d['reviewUrl']),
+    _reason: text(d['reason'], "Reason", 10, 4000),
     _priority: priority,
     _recheck: recheck,
   };
@@ -120,7 +120,7 @@ export const getCase = createServerFn({ method: "GET" })
 
 export const createCase = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: Record<string, unknown>) => ({ _org: uuid(d.orgId), ...caseInput(d) }))
+  .inputValidator((d: Record<string, unknown>) => ({ _org: uuid(d['orgId']), ...caseInput(d) }))
   .handler(async ({ data, context }) => {
     const { data: id, error } = await context.supabase.rpc("rg_create_case", data);
     if (error) throw new Error(error.message);
@@ -129,7 +129,7 @@ export const createCase = createServerFn({ method: "POST" })
 
 export const updateCase = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: Record<string, unknown>) => ({ _id: uuid(d.id), ...caseInput(d) }))
+  .inputValidator((d: Record<string, unknown>) => ({ _id: uuid(d['id']), ...caseInput(d) }))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.rpc("rg_update_case", data);
     if (error) throw new Error(error.message);
@@ -138,14 +138,14 @@ export const updateCase = createServerFn({ method: "POST" })
 export const transitionCase = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: Record<string, unknown>) => {
-    const to = String(d.to);
+    const to = String(d['to']);
     if (!(CASE_STATUSES as readonly string[]).includes(to)) throw new Error("Invalid status");
     return {
-      _id: uuid(d.id),
+      _id: uuid(d['id']),
       _to: to,
-      _note: opt(d.note, 2000),
-      _channel: opt(d.channel, 120),
-      _ref: opt(d.ref, 200),
+      _note: opt(d['note'], 2000),
+      _channel: opt(d['channel'], 120),
+      _ref: opt(d['ref'], 200),
     };
   })
   .handler(async ({ data, context }) => {
@@ -156,9 +156,9 @@ export const transitionCase = createServerFn({ method: "POST" })
 export const recordRecheck = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: Record<string, unknown>) => ({
-    _id: uuid(d.id),
-    _still_removed: d.stillRemoved === true,
-    _note: opt(d.note, 2000),
+    _id: uuid(d['id']),
+    _still_removed: d['stillRemoved'] === true,
+    _note: opt(d['note'], 2000),
   }))
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.rpc("rg_record_recheck", data);
@@ -168,20 +168,20 @@ export const recordRecheck = createServerFn({ method: "POST" })
 export const addEvidence = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: Record<string, unknown>) => {
-    const kind = String(d.kind);
+    const kind = String(d['kind']);
     if (!["screenshot", "document", "link", "note"].includes(kind)) throw new Error("Invalid type");
-    const sha = opt(d.sha256, 64).toLowerCase();
+    const sha = opt(d['sha256'], 64).toLowerCase();
     if (sha && !/^[0-9a-f]{64}$/.test(sha)) throw new Error("Invalid file fingerprint");
-    const size = d.fileSize == null ? null : Number(d.fileSize);
+    const size = d['fileSize'] == null ? null : Number(d['fileSize']);
     return {
-      _case: uuid(d.caseId),
-      _title: text(d.title, "Title", 2, 200),
+      _case: uuid(d['caseId']),
+      _title: text(d['title'], "Title", 2, 200),
       _kind: kind,
-      _url: url(d.sourceUrl),
-      _file: opt(d.fileName, 255),
+      _url: url(d['sourceUrl']),
+      _file: opt(d['fileName'], 255),
       _size: size != null && Number.isFinite(size) ? Math.max(0, Math.floor(size)) : null,
       _sha: sha,
-      _notes: opt(d.notes, 2000),
+      _notes: opt(d['notes'], 2000),
     };
   })
   .handler(async ({ data, context }) => {
