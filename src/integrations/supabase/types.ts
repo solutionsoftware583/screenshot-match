@@ -109,10 +109,12 @@ export type Database = {
           file_size: number | null
           id: string
           kind: string
+          mime_type: string | null
           notes: string | null
           organization_id: string
           sha256: string | null
           source_url: string | null
+          storage_path: string | null
           title: string
         }
         Insert: {
@@ -123,10 +125,12 @@ export type Database = {
           file_size?: number | null
           id?: string
           kind: string
+          mime_type?: string | null
           notes?: string | null
           organization_id: string
           sha256?: string | null
           source_url?: string | null
+          storage_path?: string | null
           title: string
         }
         Update: {
@@ -137,15 +141,58 @@ export type Database = {
           file_size?: number | null
           id?: string
           kind?: string
+          mime_type?: string | null
           notes?: string | null
           organization_id?: string
           sha256?: string | null
           source_url?: string | null
+          storage_path?: string | null
           title?: string
         }
         Relationships: [
           {
             foreignKeyName: "case_evidence_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_letters: {
+        Row: {
+          body: string
+          case_id: string
+          created_at: string
+          created_by: string
+          id: string
+          model: string | null
+          organization_id: string
+          source: string
+        }
+        Insert: {
+          body: string
+          case_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          model?: string | null
+          organization_id: string
+          source: string
+        }
+        Update: {
+          body?: string
+          case_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          model?: string | null
+          organization_id?: string
+          source?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_letters_case_id_fkey"
             columns: ["case_id"]
             isOneToOne: false
             referencedRelation: "cases"
@@ -778,6 +825,10 @@ export type Database = {
         Args: { _assign: boolean; _org: string; _user: string }
         Returns: undefined
       }
+      rg_attach_evidence_file: {
+        Args: { _evidence: string; _mime: string; _path: string }
+        Returns: undefined
+      }
       rg_audit: {
         Args: {
           _action: string
@@ -918,6 +969,10 @@ export type Database = {
         Returns: undefined
       }
       rg_revoke_invitation: { Args: { _id: string }; Returns: undefined }
+      rg_save_letter: {
+        Args: { _body: string; _case: string; _model: string; _source: string }
+        Returns: string
+      }
       rg_save_team: {
         Args: { _geo: string; _id: string; _name: string; _org: string }
         Returns: string
