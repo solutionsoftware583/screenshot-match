@@ -2,7 +2,7 @@
 DO $$
 DECLARE
   sa uuid := gen_random_uuid(); oadm uuid := gen_random_uuid(); mem uuid := gen_random_uuid(); outsider uuid := gen_random_uuid();
-  o1 uuid; o2 uuid; c uuid; n int; fails text := '';
+  o1 uuid; o2 uuid; c uuid; tm uuid; n int; fails text := '';
 BEGIN
   INSERT INTO auth.users(id, email, aud, role) VALUES
     (sa,'c-sa@test.invalid','authenticated','authenticated'),(oadm,'c-oadm@test.invalid','authenticated','authenticated'),
@@ -10,7 +10,9 @@ BEGIN
   INSERT INTO user_roles(user_id, role_key) VALUES (sa,'super_admin');
   PERFORM set_config('request.jwt.claims', json_build_object('sub', sa)::text, true);
   o1 := rg_create_org('C Org 1', NULL); o2 := rg_create_org('C Org 2', NULL);
-  INSERT INTO organization_memberships(organization_id,user_id,role_key) VALUES (o1,oadm,'org_admin'),(o1,mem,'team_member'),(o2,outsider,'org_admin');
+  INSERT INTO organization_memberships(organization_id,user_id,role_key) VALUES (o1,oadm,'org_admin'),(o2,outsider,'org_admin');
+  tm := rg_save_team(o1, NULL, 'C Team', NULL);
+  INSERT INTO team_memberships(team_id,organization_id,user_id,role_key) VALUES (tm,o1,mem,'team_member');
 
   PERFORM set_config('request.jwt.claims', json_build_object('sub', mem)::text, true);
   c := rg_create_case(o1,'Fake review','Google','https://example.com/r','Posted by a non-customer, violates policy','normal',30);
