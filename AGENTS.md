@@ -20,3 +20,4 @@
 - Demo accounts are provisioned only by `scripts/seed-demo-accounts.ts` (service-role, run from a terminal, unique random passwords written to a private file); never seed accounts from app code or migrations.
 - `/admin/*` is gated in `_authenticated/admin.tsx` by `rg_my_access().can_view_platform`; nav visibility uses the same check, and the database still authorizes every admin read/write — so the gate is UX, never the security boundary.
 - Pages that read real data pass `connected` to `InfoPage` to hide the "not connected" notice — keeps the notice truthful per page.
+- Removal cases (`cases`, `case_evidence`, `case_events`) follow the status table in `src/lib/caseflow.ts`, mirrored by `rg_case_transition_perm` in the database; change both together. Creators can't approve their own case, approval needs evidence, and only a recorded recheck can mark a case reappeared. Check: `db/tests/cases.sql`. Ported-code attribution lives in `THIRD_PARTY_NOTICES.md`.
