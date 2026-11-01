@@ -64,6 +64,13 @@
       "when": 1793239876077,
       "tag": "0008_case_letters_and_evidence_files",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793504308126,
+      "tag": "0009_case_notifications",
+      "breakpoints": true
     }
   ]
 }
