@@ -1,33 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { InfoPage, Section, meta } from "@/components/rg/InfoPage";
-import { EmptyState } from "@/components/rg/primitives";
-import { Switch } from "@/components/ui/switch";
+import { NotificationList } from "@/components/rg/notifications";
 
 export const Route = createFileRoute("/_authenticated/app/notifications")({
-  head: meta("Notifications", "Your notifications and delivery preferences."),
+  head: meta("Notifications", "Case updates for cases you created, worked on, or follow."),
   component: Page,
 });
 
 function Page() {
   return (
-    <InfoPage title="Notifications" description="Your notifications and delivery preferences.">
-      <Section title="Inbox">
-        <EmptyState title="No notifications" />
-      </Section>
-      <Section title="Preferences" description="Saving preferences requires the backend.">
-        <div className="space-y-3">
-          {[
-            "New review flagged",
-            "Approval requested",
-            "Platform response received",
-            "Follow-up due",
-          ].map((n) => (
-            <label key={n} className="flex items-center justify-between text-sm">
-              {n}
-              <Switch disabled aria-label={n} />
-            </label>
-          ))}
-        </div>
+    <InfoPage connected title="Notifications" description="Case updates for cases you created, worked on, or follow.">
+      <Section title="Inbox" description="You're told when a case you created, acted on, or follow changes status or is rechecked. Approvers are told when approval is requested. Email delivery isn't set up yet — notifications appear here and on the bell.">
+        <NotificationList />
       </Section>
     </InfoPage>
   );

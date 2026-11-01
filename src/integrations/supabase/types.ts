@@ -200,6 +200,38 @@ export type Database = {
           },
         ]
       }
+      case_watchers: {
+        Row: {
+          added_by: string | null
+          case_id: string
+          created_at: string
+          organization_id: string
+          user_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          case_id: string
+          created_at?: string
+          organization_id: string
+          user_id: string
+        }
+        Update: {
+          added_by?: string | null
+          case_id?: string
+          created_at?: string
+          organization_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_watchers_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cases: {
         Row: {
           created_at: string
@@ -380,6 +412,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          case_id: string | null
+          created_at: string
+          id: string
+          kind: string
+          organization_id: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          case_id?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          organization_id?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          case_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          organization_id?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       organization_memberships: {
         Row: {
@@ -918,6 +986,10 @@ export type Database = {
           team_name: string
         }[]
       }
+      rg_mark_notifications_read: {
+        Args: { _ids: string[] }
+        Returns: undefined
+      }
       rg_my_access: { Args: never; Returns: Json }
       rg_org_people: {
         Args: { _org: string }
@@ -928,6 +1000,10 @@ export type Database = {
         }[]
       }
       rg_org_permissions: { Args: { _org: string }; Returns: string[] }
+      rg_org_users_with: {
+        Args: { _org: string; _perm: string }
+        Returns: string[]
+      }
       rg_platform_people: {
         Args: never
         Returns: {
@@ -976,6 +1052,10 @@ export type Database = {
       rg_save_team: {
         Args: { _geo: string; _id: string; _name: string; _org: string }
         Returns: string
+      }
+      rg_set_case_watcher: {
+        Args: { _case: string; _user: string; _watch: boolean }
+        Returns: undefined
       }
       rg_set_org_reseller: {
         Args: { _id: string; _reseller: string }
