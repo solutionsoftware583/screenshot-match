@@ -189,3 +189,77 @@ export const addEvidence = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return id as string;
   });
+
+export interface LetterRow {
+  id: string;
+  body: string;
+  source: string;
+  model: string | null;
+  created_by: string;
+  created_at: string;
+}
+
+export const listLetters = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { caseId: string }) => ({ caseId: uuid(d.caseId) }))
+  .handler(async ({ data, context }) => {
+    const { data: rows, error } = await context.supabase
+      .from("case_letters")
+      .select("id, body, source, model, created_by, created_at")
+      .eq("case_id", data.caseId)
+      .order("created_at", { ascending: false })
+      .limit(20);
+    if (error) throw new Error(error.message);
+    return (rows ?? []) as LetterRow[];
+  });
+
+export const draftLetter = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: Record<string, unknown>) => ({ caseId: uuid(d["caseId"]), extra: opt(d["extra"], 3000) }))
+  .handler(async ({ data, context }) => {
+    const s = context.supabase;
+    const { data: c, error } = await s.from("cases").select("*").eq("id", data.caseId).maybeSingle();
+    if (error) throw new Error(error.message);
+    if (!c) throw new Error("Case not found");
+    // Check admin permission before spending AI credits; rg_save_letter re-checks.
+    const { data: perms } = await s.rpc("rg_org_permissions", { _org: c.organization_id });
+    if (!((perms ?? []) as string[]).includes("roles.assign"))
+      throw new Error("Only organization admins can draft letters");
+    const [{ data: org }, { data: ev }] = await Promise.all([
+      s.from("organizations").select("name").eq("id", c.organization_id).maybeSingle(),
+      s.from("case_evidence").select("title, kind, notes, sha256, captured_at").eq("case_id", c.id).order("captured_at"),
+    ]);
+    const { draftLetterText, LETTER_MODEL } = await import("./letter-ai.server");
+    const body = await draftLetterText({
+      orgName: org?.name ?? "[ORGANIZATION]",
+      title: c.title,
+      platform: c.platform,
+      reviewUrl: c.review_url,
+      reason: c.reason,
+      extra: data.extra,
+      evidence: (ev ?? []) as { title: string; kind: string; notes: string | null; sha256: string | null; captured_at: string }[],
+    });
+    const { error: e2 } = await s.rpc("rg_save_letter", { _case: c.id, _body: body, _source: "ai_draft", _model: LETTER_MODEL });
+    if (e2) throw new Error(e2.message);
+    return body;
+  });
+
+export const saveLetter = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: Record<string, unknown>) => ({ _case: uuid(d["caseId"]), _body: text(d["body"], "Letter", 20, 20000) }))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.rpc("rg_save_letter", { ...data, _source: "edited", _model: "" });
+    if (error) throw new Error(error.message);
+  });
+
+export const attachEvidenceFile = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: Record<string, unknown>) => ({
+    _evidence: uuid(d["evidenceId"]),
+    _path: text(d["path"], "Path", 10, 500),
+    _mime: opt(d["mime"], 120),
+  }))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.rpc("rg_attach_evidence_file", data);
+    if (error) throw new Error(error.message);
+  });
