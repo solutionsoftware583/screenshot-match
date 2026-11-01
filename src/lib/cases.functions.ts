@@ -32,6 +32,8 @@ export interface EvidenceRow {
   notes: string | null;
   captured_by: string;
   captured_at: string;
+  storage_path: string | null;
+  mime_type: string | null;
 }
 export interface CaseEventRow {
   id: string;
