@@ -265,3 +265,83 @@ export const attachEvidenceFile = createServerFn({ method: "POST" })
     const { error } = await context.supabase.rpc("rg_attach_evidence_file", data);
     if (error) throw new Error(error.message);
   });
+
+export interface NotificationRow {
+  id: string;
+  case_id: string | null;
+  kind: string;
+  title: string;
+  body: string | null;
+  read_at: string | null;
+  created_at: string;
+}
+
+export const listNotifications = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data, error } = await context.supabase
+      .from("notifications")
+      .select("id, case_id, kind, title, body, read_at, created_at")
+      .order("created_at", { ascending: false })
+      .limit(100);
+    if (error) throw new Error(error.message);
+    return (data ?? []) as NotificationRow[];
+  });
+
+export const markNotificationsRead = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { ids: string[] | null }) => ({ _ids: d.ids === null ? null : d.ids.map(uuid) }))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.rpc("rg_mark_notifications_read", data as { _ids: string[] });
+    if (error) throw new Error(error.message);
+  });
+
+export const getCaseWatchers = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { caseId: string; orgId: string }) => ({ caseId: uuid(d.caseId), orgId: uuid(d.orgId) }))
+  .handler(async ({ data, context }) => {
+    const [w, p] = await Promise.all([
+      context.supabase.from("case_watchers").select("user_id").eq("case_id", data.caseId),
+      context.supabase.rpc("rg_org_people", { _org: data.orgId }),
+    ]);
+    if (w.error) throw new Error(w.error.message);
+    return {
+      watchers: (w.data ?? []).map((r: { user_id: string }) => r.user_id),
+      people: (p.error ? [] : (p.data ?? [])) as { user_id: string; email: string; full_name: string | null }[],
+      me: context.userId,
+    };
+  });
+
+export const setCaseWatcher = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: Record<string, unknown>) => ({ _case: uuid(d["caseId"]), _user: uuid(d["userId"]), _watch: d["watch"] === true }))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.rpc("rg_set_case_watcher", data);
+    if (error) throw new Error(error.message);
+  });
+
+export const listPendingApprovals = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { orgId: string }) => ({ orgId: uuid(d.orgId) }))
+  .handler(async ({ data, context }) => {
+    const s = context.supabase;
+    const [c, perms] = await Promise.all([
+      s.from("cases").select("*").eq("organization_id", data.orgId).eq("status", "pending_approval").order("updated_at"),
+      s.rpc("rg_org_permissions", { _org: data.orgId }),
+    ]);
+    if (c.error) throw new Error(c.error.message);
+    const cases = (c.data ?? []) as CaseRow[];
+    const ids = cases.map((x) => x.id);
+    const ev = ids.length
+      ? await s.from("case_evidence").select("*").in("case_id", ids).order("captured_at")
+      : { data: [], error: null };
+    if (ev.error) throw new Error(ev.error.message);
+    return {
+      cases: cases.map((x) => ({
+        ...x,
+        evidence: ((ev.data ?? []) as (EvidenceRow & { case_id: string })[]).filter((e) => e.case_id === x.id),
+      })),
+      canApprove: ((perms.data ?? []) as string[]).includes("cases.approve"),
+      me: context.userId,
+    };
+  });

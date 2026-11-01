@@ -1,4 +1,5 @@
 import { Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
+import { NotificationList, useNotifications } from "./notifications";
 import { Bell, ChevronsUpDown, Menu, Search, ShieldAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -201,20 +202,19 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
             </Button>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Notifications">
+                <Button variant="ghost" size="icon" aria-label="Notifications" className="relative">
                   <Bell className="h-4 w-4" />
+                  <UnreadDot />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align="end" className="w-72 text-sm">
-                <p className="font-medium">Notifications</p>
-                <p className="mt-1 text-muted-foreground">
-                  No notifications. Delivery starts once the backend is connected.
-                </p>
+              <PopoverContent align="end" className="w-80 text-sm">
+                <p className="mb-2 font-medium">Notifications</p>
+                <div className="max-h-80 overflow-y-auto"><NotificationList limit={6} /></div>
                 <Link
                   to="/app/notifications"
                   className="mt-2 inline-block text-xs text-primary underline"
                 >
-                  Notification settings
+                  All notifications
                 </Link>
               </PopoverContent>
             </Popover>
@@ -295,4 +295,11 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
       </CommandDialog>
     </div>
   );
+}
+
+function UnreadDot() {
+  const q = useNotifications();
+  const n = (q.data ?? []).filter((x) => !x.read_at).length;
+  if (!n) return null;
+  return <span className="absolute -right-0.5 -top-0.5 rounded-full bg-primary px-1 text-[10px] leading-4 text-primary-foreground">{n > 9 ? "9+" : n}</span>;
 }
