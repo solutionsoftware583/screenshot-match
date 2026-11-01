@@ -133,7 +133,7 @@ function Evidence({ d }: { d: D }) {
     if (file) {
       const safe = file.name.replace(/[^\w.-]+/g, "_").slice(-100);
       const path = `${d.case.organization_id}/${d.case.id}/${crypto.randomUUID()}-${safe}`;
-      const up = await supabase.storage.from("case-evidence").upload(path, file, { contentType: file.type || undefined });
+      const up = await supabase.storage.from("case-evidence").upload(path, file, file.type ? { contentType: file.type } : {});
       if (up.error) throw new Error(`Details saved, but the file upload failed: ${up.error.message}`);
       await attach({ data: { evidenceId, path, mime: file.type } });
     }
