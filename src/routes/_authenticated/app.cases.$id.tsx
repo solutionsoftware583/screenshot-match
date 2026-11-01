@@ -8,7 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { EmptyState, PageHeader } from "@/components/rg/primitives";
 import { ActionMessage, MKEY, QueryState, fmtDate, useAction } from "@/components/rg/manage";
-import { addEvidence, getCase, recordRecheck, transitionCase } from "@/lib/cases.functions";
+import { addEvidence, attachEvidenceFile, draftLetter, getCase, listLetters, recordRecheck, saveLetter, transitionCase } from "@/lib/cases.functions";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery as useQ } from "@tanstack/react-query";
 import { STATUS_LABEL, nextStatuses, recheckDueAt, sha256Hex, type CaseStatus } from "@/lib/caseflow";
 
 export const Route = createFileRoute("/_authenticated/app/cases/$id")({
@@ -57,6 +59,7 @@ function Body({ d }: { d: D }) {
       </section>
       <Actions d={d} />
       <Evidence d={d} />
+      {d.permissions.includes("roles.assign") && <Letter d={d} />}
       <section>
         <h2 className="mb-2 font-semibold">Timeline</h2>
         <ol className="space-y-2 text-sm">
@@ -176,6 +179,43 @@ function Evidence({ d }: { d: D }) {
           <div className="flex items-center gap-3"><Button type="submit" disabled={act.isPending}>Add evidence</Button><ActionMessage msg={act.msg} /></div>
         </form>
       )}
+    </section>
+  );
+}
+
+function Letter({ d }: { d: D }) {
+  const list = useServerFn(listLetters);
+  const draft = useServerFn(draftLetter);
+  const save = useServerFn(saveLetter);
+  const q = useQ({ queryKey: [...MKEY, "letters", d.case.id], queryFn: () => list({ data: { caseId: d.case.id } }) });
+  const [extra, setExtra] = useState("");
+  const [body, setBody] = useState<string | null>(null);
+  const latest = q.data?.[0];
+  const text = body ?? latest?.body ?? "";
+  const gen = useAction(async () => { const t = await draft({ data: { caseId: d.case.id, extra } }); setBody(t); return t; }, "Draft ready — review and edit before sending");
+  const sv = useAction(() => save({ data: { caseId: d.case.id, body: text } }), "Letter saved");
+  return (
+    <section className="space-y-3 rounded-lg border p-4">
+      <h2 className="font-semibold">Removal letter (AI-powered draft)</h2>
+      <p className="text-sm text-muted-foreground">Drafted from this case's details and evidence. Always review it — facts, names and placeholders must be checked before sending. It is not legal advice.</p>
+      <Textarea aria-label="Extra details for the letter" placeholder="Extra details for the letter (optional): dates, policy names, business contact…" value={extra} onChange={(e) => setExtra(e.target.value)} />
+      <div className="flex flex-wrap items-center gap-2">
+        <Button disabled={gen.isPending} onClick={() => gen.mutate(undefined)}>{gen.isPending ? "Drafting…" : latest ? "Draft again" : "Draft letter"}</Button>
+        <ActionMessage msg={gen.msg} />
+      </div>
+      <QueryState q={q}>
+        {text ? (
+          <>
+            <Textarea aria-label="Letter text" className="min-h-80 font-mono text-sm" value={text} onChange={(e) => setBody(e.target.value)} />
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant="outline" disabled={sv.isPending || body === null} onClick={() => sv.mutate(undefined)}>Save edits</Button>
+              <Button variant="outline" onClick={() => navigator.clipboard.writeText(text)}>Copy</Button>
+              {latest && <span className="text-xs text-muted-foreground">Last saved {fmtDate(latest.created_at)} · {latest.source === "ai_draft" ? "AI draft" : "edited"} · {q.data?.length} version(s)</span>}
+              <ActionMessage msg={sv.msg} />
+            </div>
+          </>
+        ) : null}
+      </QueryState>
     </section>
   );
 }
