@@ -8,7 +8,37 @@ import { Textarea } from "@/components/ui/textarea";
 import { EmptyState, PageHeader } from "@/components/rg/primitives";
 import { ActionMessage, MKEY, NoOrg, NoPermission, QueryState, fmtDate, useAction, useCurrentOrg } from "@/components/rg/manage";
 import { EvidenceList } from "@/components/rg/evidence";
-import { listPendingApprovals, transitionCase } from "@/lib/cases.functions";
+import { listPendingApprovals, summarizeForApproval, transitionCase } from "@/lib/cases.functions";
+
+function AiReview({ caseId, reference }: { caseId: string; reference: string }) {
+  const fn = useServerFn(summarizeForApproval);
+  const [focus, setFocus] = useState("");
+  const [out, setOut] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const run = async () => {
+    setBusy(true);
+    setErr(null);
+    try {
+      const r = await fn({ data: { caseId, focus } });
+      setOut(r.text);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Summary failed");
+    } finally {
+      setBusy(false);
+    }
+  };
+  return (
+    <section className="space-y-2 rounded-md border border-dashed p-3">
+      <h3 className="text-sm font-semibold">AI review summary</h3>
+      <p className="text-xs text-muted-foreground">Drafted only from this case's reason and evidence. It is a guide, not a decision — check the evidence yourself.</p>
+      <Textarea aria-label={`Review focus for ${reference}`} placeholder="Optional: what should the summary pay extra attention to?" value={focus} maxLength={1000} onChange={(e) => setFocus(e.target.value)} />
+      <Button variant="secondary" size="sm" disabled={busy} onClick={run}>{busy ? "Summarizing…" : out ? "Summarize again" : "Summarize case"}</Button>
+      {err && <p role="alert" className="text-sm text-destructive">{err}</p>}
+      {out && <pre className="whitespace-pre-wrap rounded bg-muted p-3 font-sans text-sm">{out}</pre>}
+    </section>
+  );
+}
 
 export const Route = createFileRoute("/_authenticated/app/approvals")({
   head: () => ({
@@ -64,6 +94,7 @@ function Item({ c, canApprove, me }: { c: Data["cases"][number]; canApprove: boo
         <h3 className="mb-1 text-sm font-semibold">Evidence ({c.evidence.length})</h3>
         <EvidenceList items={c.evidence} />
       </div>
+      {canApprove && <AiReview caseId={c.id} reference={c.reference} />}
       {canApprove && (own ? (
         <p className="text-sm text-muted-foreground">You created this case, so another approver must decide.</p>
       ) : (
