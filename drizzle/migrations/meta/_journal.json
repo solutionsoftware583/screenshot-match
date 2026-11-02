@@ -71,6 +71,13 @@
       "when": 1793504308126,
       "tag": "0009_case_notifications",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793660263588,
+      "tag": "0010_letters_for_approvers",
+      "breakpoints": true
     }
   ]
 }

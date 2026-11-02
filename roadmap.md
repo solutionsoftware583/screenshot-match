@@ -1,5 +1,8 @@
 # Roadmap
-- [ ] AI-drafted removal letter on case page (org admins review/edit; saved per case)
-- [ ] Secure evidence file storage (upload + retrieve files per case, org-scoped)
-- [ ] Approvals page: approvers review pending cases, inspect evidence, approve/reject
-- [ ] In-app notifications for case status changes (approval, submission, appeal, rechecks)
+- [x] AI-drafted removal letter on case page
+- [x] Secure evidence file storage
+- [x] Approvals page
+- [x] In-app notifications for case status changes
+- [ ] Letter generator for approvers (case + evidence + AI summary) and email to platform — email blocked until a sender domain is set up
+- [ ] End-to-end test: real case → evidence → approve → bell → AI summary
+- [ ] Regional data limit: managers see only cases/teams in their assigned regions
