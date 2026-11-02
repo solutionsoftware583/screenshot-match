@@ -19,6 +19,7 @@ export async function draftLetterText(input: {
   reviewUrl: string | null;
   reason: string;
   extra: string;
+  summary?: string;
   evidence: { title: string; kind: string; notes: string | null; sha256: string | null; captured_at: string }[];
 }) {
   const apiKey = process.env["LOVABLE_API_KEY"];
@@ -35,6 +36,9 @@ export async function draftLetterText(input: {
     `Review link: ${input.reviewUrl ?? "[REVIEW LINK]"}`,
     `Why it should be removed: ${input.reason}`,
     input.extra ? `Additional details from the admin: ${input.extra}` : "",
+    input.summary
+      ? `Internal approver review summary (use only to focus the letter on well-supported points; do not quote internal concerns or questions to the platform):\n${input.summary}`
+      : "",
     "Evidence on file:",
     ...input.evidence.map(
       (e, i) =>

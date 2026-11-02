@@ -217,16 +217,21 @@ export const listLetters = createServerFn({ method: "GET" })
 
 export const draftLetter = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: Record<string, unknown>) => ({ caseId: uuid(d["caseId"]), extra: opt(d["extra"], 3000) }))
+  .inputValidator((d: Record<string, unknown>) => ({
+    caseId: uuid(d["caseId"]),
+    extra: opt(d["extra"], 3000),
+    summary: opt(d["summary"], 6000),
+  }))
   .handler(async ({ data, context }) => {
     const s = context.supabase;
     const { data: c, error } = await s.from("cases").select("*").eq("id", data.caseId).maybeSingle();
     if (error) throw new Error(error.message);
     if (!c) throw new Error("Case not found");
-    // Check admin permission before spending AI credits; rg_save_letter re-checks.
+    // Check permission before spending AI credits; rg_save_letter re-checks.
     const { data: perms } = await s.rpc("rg_org_permissions", { _org: c.organization_id });
-    if (!((perms ?? []) as string[]).includes("roles.assign"))
-      throw new Error("Only organization admins can draft letters");
+    const p = (perms ?? []) as string[];
+    if (!p.includes("roles.assign") && !p.includes("cases.approve"))
+      throw new Error("Only approvers and organization admins can draft letters");
     const [{ data: org }, { data: ev }] = await Promise.all([
       s.from("organizations").select("name").eq("id", c.organization_id).maybeSingle(),
       s.from("case_evidence").select("title, kind, notes, sha256, captured_at").eq("case_id", c.id).order("captured_at"),
@@ -239,6 +244,7 @@ export const draftLetter = createServerFn({ method: "POST" })
       reviewUrl: c.review_url,
       reason: c.reason,
       extra: data.extra,
+      summary: data.summary,
       evidence: (ev ?? []) as { title: string; kind: string; notes: string | null; sha256: string | null; captured_at: string }[],
     });
     const { error: e2 } = await s.rpc("rg_save_letter", { _case: c.id, _body: body, _source: "ai_draft", _model: LETTER_MODEL });
