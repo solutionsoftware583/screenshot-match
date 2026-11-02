@@ -246,6 +246,36 @@ export const draftLetter = createServerFn({ method: "POST" })
     return body;
   });
 
+export const summarizeForApproval = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: Record<string, unknown>) => ({ caseId: uuid(d["caseId"]), focus: opt(d["focus"], 1000) }))
+  .handler(async ({ data, context }) => {
+    const s = context.supabase;
+    const { data: c, error } = await s.from("cases").select("*").eq("id", data.caseId).maybeSingle();
+    if (error) throw new Error(error.message);
+    if (!c) throw new Error("Case not found");
+    if (c.status !== "pending_approval") throw new Error("Only cases waiting for approval can be summarized");
+    const { data: perms } = await s.rpc("rg_org_permissions", { _org: c.organization_id });
+    if (!((perms ?? []) as string[]).includes("cases.approve"))
+      throw new Error("Only approvers can request a review summary");
+    const { data: ev, error: e2 } = await s
+      .from("case_evidence")
+      .select("title, kind, notes, sha256, captured_at")
+      .eq("case_id", c.id)
+      .order("captured_at");
+    if (e2) throw new Error(e2.message);
+    const { reviewSummaryText, REVIEW_MODEL } = await import("./review-ai.server");
+    const text = await reviewSummaryText({
+      title: c.title,
+      platform: c.platform,
+      reviewUrl: c.review_url,
+      reason: c.reason,
+      focus: data.focus,
+      evidence: (ev ?? []) as { title: string; kind: string; notes: string | null; sha256: string | null; captured_at: string }[],
+    });
+    return { text, model: REVIEW_MODEL };
+  });
+
 export const saveLetter = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: Record<string, unknown>) => ({ _case: uuid(d["caseId"]), _body: text(d["body"], "Letter", 20, 20000) }))
