@@ -187,18 +187,35 @@ function Letter({ d }: { d: D }) {
   const list = useServerFn(listLetters);
   const draft = useServerFn(draftLetter);
   const save = useServerFn(saveLetter);
+  const summarize = useServerFn(summarizeForApproval);
+  const canSummarize = d.permissions.includes("cases.approve") && d.case.status !== "draft";
   const q = useQ({ queryKey: [...MKEY, "letters", d.case.id], queryFn: () => list({ data: { caseId: d.case.id } }) });
   const [extra, setExtra] = useState("");
+  const [summary, setSummary] = useState("");
+  const [to, setTo] = useState("");
   const [body, setBody] = useState<string | null>(null);
   const latest = q.data?.[0];
   const text = body ?? latest?.body ?? "";
-  const gen = useAction(async () => { const t = await draft({ data: { caseId: d.case.id, extra } }); setBody(t); return t; }, "Draft ready — review and edit before sending");
+  const sum = useAction(async () => { const r = await summarize({ data: { caseId: d.case.id, focus: "" } }); setSummary(r.text); return r; }, "AI summary added");
+  const gen = useAction(async () => { const t = await draft({ data: { caseId: d.case.id, extra, summary } }); setBody(t); return t; }, "Draft ready — review and edit before sending");
   const sv = useAction(() => save({ data: { caseId: d.case.id, body: text } }), "Letter saved");
+  const subjectLine = text.match(/^subject:\s*(.+)$/im)?.[1] ?? `Content removal request — ${d.case.reference}`;
+  const validTo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to.trim());
+  const mailto = `mailto:${encodeURIComponent(to.trim())}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(text)}`;
   return (
     <section className="space-y-3 rounded-lg border p-4">
       <h2 className="font-semibold">Removal letter (AI-powered draft)</h2>
-      <p className="text-sm text-muted-foreground">Drafted from this case's details and evidence. Always review it — facts, names and placeholders must be checked before sending. It is not legal advice.</p>
+      <p className="text-sm text-muted-foreground">Drafted from this case's details, evidence and the approver summary. Always review it — facts, names and placeholders must be checked before sending. It is not legal advice.</p>
       <Textarea aria-label="Extra details for the letter" placeholder="Extra details for the letter (optional): dates, policy names, business contact…" value={extra} onChange={(e) => setExtra(e.target.value)} />
+      {canSummarize && (
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <Button variant="outline" disabled={sum.isPending} onClick={() => sum.mutate(undefined)}>{sum.isPending ? "Summarizing…" : "Add AI review summary"}</Button>
+            <ActionMessage msg={sum.msg} />
+          </div>
+          {summary && <Textarea aria-label="AI review summary" className="min-h-40 text-sm" value={summary} onChange={(e) => setSummary(e.target.value)} />}
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-2">
         <Button disabled={gen.isPending} onClick={() => gen.mutate(undefined)}>{gen.isPending ? "Drafting…" : latest ? "Draft again" : "Draft letter"}</Button>
         <ActionMessage msg={gen.msg} />
@@ -212,6 +229,15 @@ function Letter({ d }: { d: D }) {
               <Button variant="outline" onClick={() => navigator.clipboard.writeText(text)}>Copy</Button>
               {latest && <span className="text-xs text-muted-foreground">Last saved {fmtDate(latest.created_at)} · {latest.source === "ai_draft" ? "AI draft" : "edited"} · {q.data?.length} version(s)</span>}
               <ActionMessage msg={sv.msg} />
+            </div>
+            <div className="space-y-2 rounded-md border p-3">
+              <h3 className="text-sm font-medium">Email to the platform</h3>
+              <Input aria-label="Platform email address" type="email" placeholder="Platform's removal/support email address" value={to} onChange={(e) => setTo(e.target.value)} />
+              <div className="flex flex-wrap items-center gap-2">
+                <Button disabled title="Not connected" >Send from Rating Guard</Button>
+                {validTo ? <Button asChild variant="outline"><a href={mailto}>Open in my email app</a></Button> : <Button variant="outline" disabled>Open in my email app</Button>}
+              </div>
+              <p className="text-xs text-muted-foreground">Sending directly from Rating Guard is not connected yet — it needs a sender email domain. For now, open the letter in your own email app, attach the evidence files, send it, then use "Mark submitted" above with channel "email".</p>
             </div>
           </>
         ) : null}
