@@ -260,7 +260,7 @@ export const summarizeForApproval = createServerFn({ method: "POST" })
     const { data: c, error } = await s.from("cases").select("*").eq("id", data.caseId).maybeSingle();
     if (error) throw new Error(error.message);
     if (!c) throw new Error("Case not found");
-    if (c.status !== "pending_approval") throw new Error("Only cases waiting for approval can be summarized");
+    if (c.status === "draft") throw new Error("Request approval before summarizing this case");
     const { data: perms } = await s.rpc("rg_org_permissions", { _org: c.organization_id });
     if (!((perms ?? []) as string[]).includes("cases.approve"))
       throw new Error("Only approvers can request a review summary");
