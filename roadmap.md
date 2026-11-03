@@ -3,6 +3,6 @@
 - [x] Secure evidence file storage
 - [x] Approvals page
 - [x] In-app notifications for case status changes
-- [ ] Letter generator for approvers (case + evidence + AI summary) and email to platform — email blocked until a sender domain is set up
-- [ ] End-to-end test: real case → evidence → approve → bell → AI summary
+- [x] Letter generator for approvers (case + evidence + AI summary) and email to platform — email blocked until a sender domain is set up
+- [x] End-to-end test: real case → evidence → approve → bell → AI summary
 - [ ] Regional data limit: managers see only cases/teams in their assigned regions
