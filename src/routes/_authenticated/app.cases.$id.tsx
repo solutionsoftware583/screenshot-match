@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { EmptyState, PageHeader } from "@/components/rg/primitives";
 import { ActionMessage, MKEY, QueryState, fmtDate, useAction } from "@/components/rg/manage";
-import { addEvidence, attachEvidenceFile, draftLetter, getCase, listLetters, recordRecheck, saveLetter, transitionCase } from "@/lib/cases.functions";
+import { addEvidence, attachEvidenceFile, draftLetter, getCase, listLetters, recordRecheck, saveLetter, summarizeForApproval, transitionCase } from "@/lib/cases.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery as useQ } from "@tanstack/react-query";
 import { STATUS_LABEL, nextStatuses, recheckDueAt, sha256Hex, type CaseStatus } from "@/lib/caseflow";
@@ -59,7 +59,7 @@ function Body({ d }: { d: D }) {
       </section>
       <Actions d={d} />
       <Evidence d={d} />
-      {d.permissions.includes("roles.assign") && <Letter d={d} />}
+      {(d.permissions.includes("roles.assign") || d.permissions.includes("cases.approve")) && <Letter d={d} />}
       <section>
         <h2 className="mb-2 font-semibold">Timeline</h2>
         <ol className="space-y-2 text-sm">
@@ -175,7 +175,7 @@ function Evidence({ d }: { d: D }) {
           <Input aria-label="Source link" placeholder="https://… (optional)" value={f.sourceUrl} onChange={(e) => setF({ ...f, sourceUrl: e.target.value })} />
           <Input aria-label="File" type="file" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
           <Textarea aria-label="Evidence notes" className="sm:col-span-2" placeholder="Notes" value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} />
-          <p className="text-xs text-muted-foreground sm:col-span-2">The file's fingerprint (SHA-256), name and size are recorded with a server timestamp. The file itself is not stored yet.</p>
+          <p className="text-xs text-muted-foreground sm:col-span-2">The file's fingerprint (SHA-256), name and size are recorded with a server timestamp. The file is stored privately for your organization.</p>
           <div className="flex items-center gap-3"><Button type="submit" disabled={act.isPending}>Add evidence</Button><ActionMessage msg={act.msg} /></div>
         </form>
       )}
