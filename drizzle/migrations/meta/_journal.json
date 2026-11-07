@@ -78,6 +78,13 @@
       "when": 1793660263588,
       "tag": "0010_letters_for_approvers",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1794065925661,
+      "tag": "0011_regional_case_scoping",
+      "breakpoints": true
     }
   ]
 }
