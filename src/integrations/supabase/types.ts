@@ -236,6 +236,7 @@ export type Database = {
         Row: {
           created_at: string
           created_by: string
+          geographic_scope_id: string | null
           id: string
           last_checked_at: string | null
           organization_id: string
@@ -253,6 +254,7 @@ export type Database = {
         Insert: {
           created_at?: string
           created_by: string
+          geographic_scope_id?: string | null
           id?: string
           last_checked_at?: string | null
           organization_id: string
@@ -270,6 +272,7 @@ export type Database = {
         Update: {
           created_at?: string
           created_by?: string
+          geographic_scope_id?: string | null
           id?: string
           last_checked_at?: string | null
           organization_id?: string
@@ -285,6 +288,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "cases_geographic_scope_id_fkey"
+            columns: ["geographic_scope_id"]
+            isOneToOne: false
+            referencedRelation: "geographic_scopes"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "cases_organization_id_fkey"
             columns: ["organization_id"]
@@ -934,6 +944,10 @@ export type Database = {
           total: number
         }[]
       }
+      rg_case_in_scope: {
+        Args: { _case: string; _uid: string }
+        Returns: boolean
+      }
       rg_case_transition_perm: {
         Args: { _from: string; _to: string }
         Returns: string
@@ -973,6 +987,11 @@ export type Database = {
       rg_delete_org: { Args: { _id: string }; Returns: undefined }
       rg_delete_reseller: { Args: { _id: string }; Returns: undefined }
       rg_delete_team: { Args: { _id: string }; Returns: undefined }
+      rg_geo_limited: { Args: { _org: string; _uid: string }; Returns: boolean }
+      rg_in_region: {
+        Args: { _geo: string; _org: string; _uid: string }
+        Returns: boolean
+      }
       rg_invitation_by_token: {
         Args: { _token: string }
         Returns: {
@@ -1053,6 +1072,10 @@ export type Database = {
         Args: { _geo: string; _id: string; _name: string; _org: string }
         Returns: string
       }
+      rg_set_case_region: {
+        Args: { _case: string; _geo: string }
+        Returns: undefined
+      }
       rg_set_case_watcher: {
         Args: { _case: string; _user: string; _watch: boolean }
         Returns: undefined
@@ -1108,6 +1131,10 @@ export type Database = {
       rg_update_reseller: {
         Args: { _id: string; _name: string }
         Returns: undefined
+      }
+      rg_user_geo_ids: {
+        Args: { _org: string; _uid: string }
+        Returns: string[]
       }
     }
     Enums: {
