@@ -58,7 +58,7 @@ function NavList({
                     onClick={onNavigate}
                     className={cn(
                       "flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                      active && "bg-sidebar-accent font-medium text-sidebar-primary",
+                      active && "bg-sidebar-accent font-medium text-sidebar-primary shadow-[inset_3px_0_0_var(--sidebar-primary)]",
                     )}
                   >
                     <i.icon className="h-4 w-4" /> {i.title}
@@ -122,7 +122,7 @@ export function AppShell({ variant }: { variant: "app" | "admin" }) {
   });
 
   const sidebar = (onNavigate?: () => void) => (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+    <div className="flex h-full flex-col bg-gradient-sidebar text-sidebar-foreground">
       <div className="border-b border-sidebar-border px-4 py-4">
         <Brand inverted />
       </div>
