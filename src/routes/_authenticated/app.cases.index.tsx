@@ -102,7 +102,7 @@ function NewCase({ orgId, onDone }: { orgId: string; onDone: () => void }) {
   const set = (k: keyof typeof f) => (e: { target: { value: string } }) => setF({ ...f, [k]: k === "recheckDays" ? Number(e.target.value) : e.target.value });
   return (
     <form
-      className="grid gap-3 rounded-lg border p-4 sm:grid-cols-2"
+      className="grid gap-3 rounded-xl border border-primary/10 bg-card p-4 shadow-card sm:grid-cols-2"
       onSubmit={(e) => {
         e.preventDefault();
         act.mutate(f, { onSuccess: (id) => { onDone(); nav({ to: "/app/cases/$id", params: { id } }); } });

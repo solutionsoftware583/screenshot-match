@@ -86,7 +86,7 @@ function Page() {
                   {d.geo.filter((g) => !g.parent_id).length === 0 ? (
                     <EmptyState title="No regions yet" />
                   ) : (
-                    <div className="rounded-lg border bg-card p-4">
+                    <div className="rounded-xl border border-primary/10 bg-card shadow-card p-4">
                       <ul className="space-y-1">
                         {d.geo
                           .filter((g) => !g.parent_id)

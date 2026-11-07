@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_authenticated/app/integrations")({
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {INTEGRATION_CATALOGUE.map((i) => (
-          <div key={i.key} className="flex flex-col rounded-lg border bg-card p-5">
+          <div key={i.key} className="flex flex-col rounded-xl border border-primary/10 bg-card shadow-card p-5">
             <div className="flex items-start justify-between gap-2">
               <h2 className="font-semibold">{i.name}</h2>
               <Badge variant="outline">

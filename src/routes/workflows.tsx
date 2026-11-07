@@ -59,7 +59,7 @@ function Workflows() {
         </p>
         <div className="mt-10 space-y-5">
           {W.map((w) => (
-            <div key={w.t} className="rounded-lg border bg-card p-5">
+            <div key={w.t} className="rounded-xl border border-primary/10 bg-card shadow-card p-5">
               <h2 className="font-semibold">{w.t}</h2>
               <ol className="mt-3 flex flex-wrap gap-2 text-sm">
                 {w.s.map((s, i) => (

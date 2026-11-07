@@ -69,7 +69,7 @@ export function PageHeader({
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h1 className="text-2xl font-semibold text-foreground">{title}</h1>
+        <h1 className="text-3xl font-semibold text-foreground">{title}</h1>
         {description && (
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{description}</p>
         )}
@@ -107,8 +107,8 @@ export function EmptyState({
   icon?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-card px-6 py-14 text-center">
-      <div className="mb-3 grid h-11 w-11 place-items-center rounded-full bg-muted text-muted-foreground">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-primary/25 bg-gradient-card px-6 py-14 shadow-card text-center">
+      <div className="mb-3 grid h-12 w-12 place-items-center rounded-full bg-accent text-primary">
         {icon ?? <Inbox className="h-5 w-5" />}
       </div>
       <h3 className="font-medium text-foreground">{title}</h3>
@@ -142,9 +142,9 @@ export function StatCard({
   hint?: string;
 }) {
   return (
-    <div className="rounded-lg border bg-card p-4">
-      <p className="text-xs uppercase tracking-wide text-muted-foreground">{label}</p>
-      <p className="mt-2 font-display text-2xl font-semibold text-foreground">{value ?? "—"}</p>
+    <div className="relative overflow-hidden rounded-xl border border-primary/10 bg-gradient-card p-4 shadow-card before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-gradient-primary">
+      <p className="text-xs font-medium uppercase tracking-wide text-secondary-foreground">{label}</p>
+      <p className="mt-2 font-display text-3xl font-semibold text-primary">{value ?? "—"}</p>
       <p className="mt-1 text-xs text-muted-foreground">
         {hint ?? (value === null ? "No data source connected" : "")}
       </p>
@@ -198,7 +198,7 @@ export function DataTable<T extends { id: string }>({
   const current = filtered.slice(page * pageSize, page * pageSize + pageSize);
 
   return (
-    <div className="rounded-lg border bg-card">
+    <div className="overflow-hidden rounded-xl border border-primary/10 bg-card shadow-card">
       <div className="flex flex-col gap-2 border-b p-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

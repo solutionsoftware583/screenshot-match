@@ -96,7 +96,7 @@ function Page() {
             }
           />
         ) : (
-          <div className="overflow-x-auto rounded-lg border bg-card">
+          <div className="overflow-x-auto rounded-xl border border-primary/10 bg-card shadow-card">
             <table className="w-full text-sm">
               <thead className="text-left text-xs uppercase text-muted-foreground">
                 <tr>

@@ -80,7 +80,7 @@ function Item({ c, canApprove, me }: { c: Data["cases"][number]; canApprove: boo
   const act = useAction((to: "approved" | "rejected") => t({ data: { id: c.id, to, note } }), "Decision saved");
   const own = c.created_by === me;
   return (
-    <article className="space-y-3 rounded-lg border p-4">
+    <article className="space-y-3 rounded-xl border border-primary/10 bg-card p-4 shadow-card">
       <div className="flex flex-wrap items-center gap-2">
         <Link to="/app/cases/$id" params={{ id: c.id }} className="font-mono text-primary underline">{c.reference}</Link>
         <span className="font-medium">{c.title}</span>

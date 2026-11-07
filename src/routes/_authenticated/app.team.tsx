@@ -156,7 +156,7 @@ function MemberCard({
   const regionName = (id: string | null) => d.geo.find((g) => g.id === id)?.name;
 
   return (
-    <div className="rounded-lg border bg-card p-4">
+    <div className="rounded-xl border border-primary/10 bg-card shadow-card p-4">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <p className="font-medium">{person.full_name ?? person.email}</p>

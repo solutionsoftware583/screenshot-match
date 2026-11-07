@@ -57,7 +57,7 @@ export function AuditLogView({ scope }: { scope: "platform" | "org" }) {
   return (
     <div className="space-y-4">
       <form
-        className="grid gap-3 rounded-lg border bg-card p-4 sm:grid-cols-2 lg:grid-cols-5"
+        className="grid gap-3 rounded-xl border border-primary/10 bg-card shadow-card p-4 sm:grid-cols-2 lg:grid-cols-5"
         onSubmit={(e) => {
           e.preventDefault();
           setApplied(search);
@@ -141,7 +141,7 @@ export function AuditLogView({ scope }: { scope: "platform" | "org" }) {
             />
           ) : (
             <>
-              <div className="overflow-x-auto rounded-lg border bg-card">
+              <div className="overflow-x-auto rounded-xl border border-primary/10 bg-card shadow-card">
                 <table className="w-full text-sm">
                   <thead className="border-b bg-muted/50 text-left text-xs uppercase tracking-wide text-muted-foreground">
                     <tr>
