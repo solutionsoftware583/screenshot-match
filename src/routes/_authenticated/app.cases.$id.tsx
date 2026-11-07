@@ -52,7 +52,7 @@ function Body({ d }: { d: D }) {
         <Badge>{STATUS_LABEL[c.status]}</Badge>
         {due && <Badge variant="secondary">Recheck {due <= new Date() ? "due now" : `on ${fmtDate(due.toISOString())}`}</Badge>}
       </div>
-      <section className="rounded-lg border p-4 text-sm space-y-2">
+      <section className="rounded-xl border border-primary/10 bg-card p-4 shadow-card text-sm space-y-2">
         <p><span className="text-muted-foreground">Reason: </span>{c.reason}</p>
         {c.review_url && <p><span className="text-muted-foreground">Review: </span><a className="text-primary underline break-all" href={c.review_url} target="_blank" rel="noreferrer noopener">{c.review_url}</a></p>}
         <p className="text-muted-foreground">Outcomes depend on the platform's decision; removal is never guaranteed.</p>
@@ -93,7 +93,7 @@ function Actions({ d }: { d: D }) {
     return own ? <p className="text-sm text-muted-foreground">Another approver must review a case you created.</p> : null;
   const needsChannel = next.some((s) => s === "submitted" || s === "appealed");
   return (
-    <section className="space-y-3 rounded-lg border p-4">
+    <section className="space-y-3 rounded-xl border border-primary/10 bg-card p-4 shadow-card">
       <h2 className="font-semibold">Next step</h2>
       {needsChannel && (
         <div className="grid gap-2 sm:grid-cols-2">
@@ -203,7 +203,7 @@ function Letter({ d }: { d: D }) {
   const validTo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to.trim());
   const mailto = `mailto:${encodeURIComponent(to.trim())}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(text)}`;
   return (
-    <section className="space-y-3 rounded-lg border p-4">
+    <section className="space-y-3 rounded-xl border border-primary/10 bg-card p-4 shadow-card">
       <h2 className="font-semibold">Removal letter (AI-powered draft)</h2>
       <p className="text-sm text-muted-foreground">Drafted from this case's details, evidence and the approver summary. Always review it — facts, names and placeholders must be checked before sending. It is not legal advice.</p>
       <Textarea aria-label="Extra details for the letter" placeholder="Extra details for the letter (optional): dates, policy names, business contact…" value={extra} onChange={(e) => setExtra(e.target.value)} />

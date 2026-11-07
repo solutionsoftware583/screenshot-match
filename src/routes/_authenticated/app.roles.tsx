@@ -28,7 +28,7 @@ function Page() {
         description="Live role catalog. Every change is checked by the database against these permissions — hiding a button is never the only protection."
       />
       <QueryState q={q}>
-        <div className="overflow-x-auto rounded-lg border bg-card">
+        <div className="overflow-x-auto rounded-xl border border-primary/10 bg-card shadow-card">
           <table className="w-full text-xs">
             <thead>
               <tr className="text-left">

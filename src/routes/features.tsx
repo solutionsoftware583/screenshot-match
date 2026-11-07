@@ -51,7 +51,7 @@ function Features() {
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           {F.map(([t, d]) => (
-            <div key={t} className="rounded-lg border bg-card p-5">
+            <div key={t} className="rounded-xl border border-primary/10 bg-card shadow-card p-5">
               <h2 className="font-semibold">{t}</h2>
               <p className="mt-1 text-sm text-muted-foreground">{d}</p>
             </div>

@@ -102,7 +102,7 @@ function Landing() {
         <h2 className="text-3xl font-semibold">One workflow, end to end</h2>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PILLARS.map((p) => (
-            <div key={p.title} className="rounded-lg border bg-card p-5">
+            <div key={p.title} className="rounded-xl border border-primary/10 bg-card shadow-card p-5">
               <p.icon className="h-6 w-6 text-primary" />
               <h3 className="mt-4 font-semibold">{p.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{p.text}</p>

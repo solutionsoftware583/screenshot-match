@@ -11,7 +11,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-lg border bg-card p-5">
+    <section className="rounded-xl border border-primary/10 bg-card shadow-card p-5">
       <h2 className="font-semibold">{title}</h2>
       {description && <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>}
       <div className="mt-4">{children}</div>

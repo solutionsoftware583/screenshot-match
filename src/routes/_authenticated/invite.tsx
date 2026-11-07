@@ -42,7 +42,7 @@ function Page() {
   return (
     <div className="mx-auto max-w-md px-4 py-16">
       <Brand />
-      <div className="mt-8 rounded-lg border bg-card p-6">
+      <div className="mt-8 rounded-xl border border-primary/10 bg-card shadow-card p-6">
         <h1 className="text-xl font-semibold">Invitation</h1>
         {!token ? (
           <p className="mt-2 text-sm text-muted-foreground">
