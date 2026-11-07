@@ -8,3 +8,4 @@
 - [ ] Regional data limit: managers see only cases/teams in their assigned regions
 - [ ] Hide change buttons from Global Manager and Auditor
 - [ ] Premium styling on Approvals, Notifications, Overview + screenshots of every role's dashboard
+- [ ] Follow button on case pages (anyone who can view the case gets status notifications)
