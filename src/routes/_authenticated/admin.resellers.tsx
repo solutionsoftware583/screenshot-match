@@ -174,7 +174,7 @@ function ResellerRow({
       <td>{fmtDate(r.created_at)}</td>
       <td className="p-3 text-right whitespace-nowrap">
         <Button size="sm" variant="outline" onClick={onSelect}>
-          {selected ? "Close" : "Manage"}
+          {selected ? "Close" : canManage ? "Manage" : "View"}
         </Button>
         {canManage && edit === null && (
           <>
