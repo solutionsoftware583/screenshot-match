@@ -130,6 +130,7 @@ function Page() {
                     key={o.id}
                     o={o}
                     isPlatform={isPlatform}
+                    canRename={isPlatform || (!!o.reseller_id && adminOf.includes(o.reseller_id))}
                     resellers={resellers.data ?? []}
                   />
                 ))}
@@ -145,10 +146,12 @@ function Page() {
 function OrgRowView({
   o,
   isPlatform,
+  canRename,
   resellers,
 }: {
   o: OrgRow;
   isPlatform: boolean;
+  canRename: boolean;
   resellers: { id: string; name: string }[];
 }) {
   const [edit, setEdit] = useState<string | null>(null);
@@ -223,7 +226,7 @@ function OrgRowView({
       <td className="py-3">{o.teams_enabled ? "On" : "Off"}</td>
       <td className="py-3">{fmtDate(o.created_at)}</td>
       <td className="p-3 text-right whitespace-nowrap">
-        {edit === null && (
+        {edit === null && canRename && (
           <Button size="sm" variant="ghost" onClick={() => setEdit(o.name)}>
             Rename
           </Button>

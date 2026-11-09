@@ -26,7 +26,7 @@ export function NotificationList({ limit }: { limit?: number }) {
       )}
       <ul className="space-y-1.5">
         {rows.map((n) => (
-          <li key={n.id} className={`rounded border p-2 text-sm ${n.read_at ? "opacity-70" : "border-primary/40 bg-primary/5"}`}>
+          <li key={n.id} className={`rounded-lg border p-2.5 text-sm shadow-card ${n.read_at ? "border-primary/10 bg-card opacity-80" : "border-l-4 border-primary bg-accent/60"}`}>
             {n.case_id ? (
               <Link to="/app/cases/$id" params={{ id: n.case_id }} className="font-medium text-primary underline" onClick={() => !n.read_at && act.mutate([n.id])}>{n.title}</Link>
             ) : <span className="font-medium">{n.title}</span>}

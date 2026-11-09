@@ -29,13 +29,13 @@ function AiReview({ caseId, reference }: { caseId: string; reference: string }) 
     }
   };
   return (
-    <section className="space-y-2 rounded-md border border-dashed p-3">
+    <section className="space-y-2 rounded-lg border border-primary/20 bg-gradient-card p-3 shadow-card">
       <h3 className="text-sm font-semibold">AI review summary</h3>
       <p className="text-xs text-muted-foreground">Drafted only from this case's reason and evidence. It is a guide, not a decision — check the evidence yourself.</p>
       <Textarea aria-label={`Review focus for ${reference}`} placeholder="Optional: what should the summary pay extra attention to?" value={focus} maxLength={1000} onChange={(e) => setFocus(e.target.value)} />
       <Button variant="secondary" size="sm" disabled={busy} onClick={run}>{busy ? "Summarizing…" : out ? "Summarize again" : "Summarize case"}</Button>
       {err && <p role="alert" className="text-sm text-destructive">{err}</p>}
-      {out && <pre className="whitespace-pre-wrap rounded bg-muted p-3 font-sans text-sm">{out}</pre>}
+      {out && <pre className="whitespace-pre-wrap rounded-lg border-l-4 border-primary bg-accent/60 p-3 font-sans text-sm">{out}</pre>}
     </section>
   );
 }
@@ -80,7 +80,7 @@ function Item({ c, canApprove, me }: { c: Data["cases"][number]; canApprove: boo
   const act = useAction((to: "approved" | "rejected") => t({ data: { id: c.id, to, note } }), "Decision saved");
   const own = c.created_by === me;
   return (
-    <article className="space-y-3 rounded-xl border border-primary/10 bg-card p-4 shadow-card">
+    <article className="relative space-y-3 overflow-hidden rounded-xl border border-primary/10 bg-card p-4 pt-5 shadow-card before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-gradient-primary">
       <div className="flex flex-wrap items-center gap-2">
         <Link to="/app/cases/$id" params={{ id: c.id }} className="font-mono text-primary underline">{c.reference}</Link>
         <span className="font-medium">{c.title}</span>
