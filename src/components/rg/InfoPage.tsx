@@ -12,7 +12,7 @@ export function Section({
 }) {
   return (
     <section className="rounded-xl border border-primary/10 bg-card shadow-card p-5">
-      <h2 className="font-semibold">{title}</h2>
+      <h2 className="flex items-center gap-2 font-semibold"><span className="h-4 w-1 rounded-full bg-gradient-primary" />{title}</h2>
       {description && <p className="mt-0.5 text-sm text-muted-foreground">{description}</p>}
       <div className="mt-4">{children}</div>
     </section>
