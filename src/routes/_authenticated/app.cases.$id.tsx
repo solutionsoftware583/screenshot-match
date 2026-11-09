@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { EmptyState, PageHeader } from "@/components/rg/primitives";
 import { ActionMessage, MKEY, QueryState, fmtDate, useAction } from "@/components/rg/manage";
-import { addEvidence, attachEvidenceFile, draftLetter, getCase, listLetters, recordRecheck, saveLetter, summarizeForApproval, transitionCase } from "@/lib/cases.functions";
+import { addEvidence, attachEvidenceFile, draftLetter, getCase, listLetters, recordRecheck, saveLetter, setCaseRegion, setCaseWatcher, summarizeForApproval, transitionCase } from "@/lib/cases.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery as useQ } from "@tanstack/react-query";
 import { STATUS_LABEL, nextStatuses, recheckDueAt, sha256Hex, type CaseStatus } from "@/lib/caseflow";
@@ -57,6 +57,7 @@ function Body({ d }: { d: D }) {
         {c.review_url && <p><span className="text-muted-foreground">Review: </span><a className="text-primary underline break-all" href={c.review_url} target="_blank" rel="noreferrer noopener">{c.review_url}</a></p>}
         <p className="text-muted-foreground">Outcomes depend on the platform's decision; removal is never guaranteed.</p>
       </section>
+      <RegionAndFollow d={d} />
       <Actions d={d} />
       <Evidence d={d} />
       {(d.permissions.includes("roles.assign") || d.permissions.includes("cases.approve")) && <Letter d={d} />}
@@ -242,6 +243,35 @@ function Letter({ d }: { d: D }) {
           </>
         ) : null}
       </QueryState>
+    </section>
+  );
+}
+
+function RegionAndFollow({ d }: { d: D }) {
+  const c = d.case;
+  const reg = useServerFn(setCaseRegion);
+  const watch = useServerFn(setCaseWatcher);
+  const canEdit = d.permissions.includes("cases.edit") && c.status !== "closed";
+  const regionName = d.geos.find((g) => g.id === c.geographic_scope_id);
+  const r = useAction((geoId: string) => reg({ data: { caseId: c.id, geoId } }), "Region updated");
+  const f = useAction(() => watch({ data: { caseId: c.id, userId: d.me, watch: !d.watching } }), d.watching ? "You stopped following this case" : "You're following this case");
+  return (
+    <section className="flex flex-wrap items-center gap-3 rounded-xl border border-primary/10 bg-card p-4 shadow-card text-sm">
+      <span className="text-muted-foreground">Region:</span>
+      {canEdit ? (
+        <select aria-label="Case region" className="h-9 rounded-md border bg-background px-2" value={c.geographic_scope_id ?? ""} disabled={r.isPending} onChange={(e) => r.mutate(e.target.value)}>
+          <option value="">Whole organization</option>
+          {d.geos.map((g) => <option key={g.id} value={g.id}>{g.name} ({g.level})</option>)}
+        </select>
+      ) : (
+        <Badge variant="secondary">{regionName ? `${regionName.name} (${regionName.level})` : "Whole organization"}</Badge>
+      )}
+      <span className="flex-1" />
+      <Button variant={d.watching ? "outline" : "default"} size="sm" disabled={f.isPending} onClick={() => f.mutate(undefined)}>
+        {d.watching ? "Following ✓ — Unfollow" : "Follow case"}
+      </Button>
+      <ActionMessage msg={r.msg ?? f.msg} />
+      <p className="w-full text-xs text-muted-foreground">Followers get a notification whenever this case changes status. Regional managers only see cases in their region.</p>
     </section>
   );
 }

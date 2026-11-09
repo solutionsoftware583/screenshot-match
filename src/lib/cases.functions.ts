@@ -20,6 +20,7 @@ export interface CaseRow {
   created_by: string;
   created_at: string;
   updated_at: string;
+  geographic_scope_id: string | null;
 }
 export interface EvidenceRow {
   id: string;
@@ -110,8 +111,14 @@ export const getCase = createServerFn({ method: "GET" })
     ]);
     if (c.error) throw new Error(c.error.message);
     if (!c.data) return null;
-    const perms = await s.rpc("rg_org_permissions", { _org: c.data.organization_id });
+    const [perms, geos, watch] = await Promise.all([
+      s.rpc("rg_org_permissions", { _org: c.data.organization_id }),
+      s.from("geographic_scopes").select("id, name, level, parent_id").eq("organization_id", c.data.organization_id).order("name"),
+      s.from("case_watchers").select("user_id").eq("case_id", data.id).eq("user_id", context.userId).maybeSingle(),
+    ]);
     return {
+      geos: (geos.data ?? []) as { id: string; name: string; level: string; parent_id: string | null }[],
+      watching: !!watch.data,
       case: c.data as CaseRow,
       evidence: (ev.data ?? []) as EvidenceRow[],
       events: (evts.data ?? []) as CaseEventRow[],
@@ -380,4 +387,12 @@ export const listPendingApprovals = createServerFn({ method: "GET" })
       canApprove: ((perms.data ?? []) as string[]).includes("cases.approve"),
       me: context.userId,
     };
+  });
+
+export const setCaseRegion = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: Record<string, unknown>) => ({ _case: uuid(d["caseId"]), _geo: d["geoId"] ? uuid(d["geoId"]) : null }))
+  .handler(async ({ data, context }) => {
+    const { error } = await context.supabase.rpc("rg_set_case_region", data as { _case: string; _geo: string });
+    if (error) throw new Error(error.message);
   });
