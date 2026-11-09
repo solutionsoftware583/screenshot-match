@@ -82,7 +82,7 @@ function Overview() {
                     {d.platform_roles.map((r) => (
                       <li
                         key={r}
-                        className="flex items-center justify-between rounded-md border p-2.5"
+                        className="flex items-center justify-between rounded-lg border border-primary/10 bg-gradient-card p-2.5 shadow-card"
                       >
                         <span>Platform</span>
                         <Badge variant="secondary">{roleName(r)}</Badge>
@@ -91,7 +91,7 @@ function Overview() {
                     {d.reseller_roles.map((r) => (
                       <li
                         key={r.reseller_id + r.role_key}
-                        className="flex items-center justify-between rounded-md border p-2.5"
+                        className="flex items-center justify-between rounded-lg border border-primary/10 bg-gradient-card p-2.5 shadow-card"
                       >
                         <span>{r.reseller_name}</span>
                         <Badge variant="secondary">{roleName(r.role_key)}</Badge>
@@ -100,7 +100,7 @@ function Overview() {
                     {d.org_roles.map((r) => (
                       <li
                         key={r.org_id + r.role_key}
-                        className="flex items-center justify-between gap-2 rounded-md border p-2.5"
+                        className="flex items-center justify-between gap-2 rounded-lg border border-primary/10 bg-gradient-card p-2.5 shadow-card"
                       >
                         <span>
                           {r.org_name}
@@ -117,7 +117,7 @@ function Overview() {
                     {d.team_roles.map((r) => (
                       <li
                         key={r.team_id + r.role_key}
-                        className="flex items-center justify-between rounded-md border p-2.5"
+                        className="flex items-center justify-between rounded-lg border border-primary/10 bg-gradient-card p-2.5 shadow-card"
                       >
                         <span>Team: {r.team_name}</span>
                         <Badge variant="secondary">{roleName(r.role_key)}</Badge>
