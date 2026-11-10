@@ -158,6 +158,12 @@ export const ROLES = {
     description: "Manages work within a district scope",
     permissions: GEO_MANAGER,
   },
+  regional_member: {
+    scope: "organization",
+    name: "Regional Team Member",
+    description: "Works on cases inside one assigned region only",
+    permissions: ["org.view", "cases.view", "cases.edit", "reviews.view", "evidence.view", "evidence.upload"],
+  },
   org_auditor: {
     scope: "organization",
     name: "Organization Auditor",

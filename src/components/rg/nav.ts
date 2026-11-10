@@ -55,6 +55,7 @@ export const APP_NAV: NavItem[] = [
   { title: "Teams", to: "/app/teams", icon: UsersRound },
   { title: "Invitations", to: "/app/invitations", icon: MailPlus },
   { title: "Geography", to: "/app/geography", icon: Map },
+  { title: "Regional Team", to: "/app/regional-team", icon: UsersRound },
   { title: "Reports", to: "/app/reports", icon: BarChart3 },
   { title: "Billing", to: "/app/billing", icon: CreditCard },
   { title: "Settings", to: "/app/settings", icon: Settings },

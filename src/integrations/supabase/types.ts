@@ -1005,6 +1005,10 @@ export type Database = {
           team_name: string
         }[]
       }
+      rg_manages_geo: {
+        Args: { _geo: string; _org: string; _uid: string }
+        Returns: boolean
+      }
       rg_mark_notifications_read: {
         Args: { _ids: string[] }
         Returns: undefined
@@ -1036,6 +1040,18 @@ export type Database = {
       rg_record_recheck: {
         Args: { _id: string; _note: string; _still_removed: boolean }
         Returns: undefined
+      }
+      rg_regional_team: {
+        Args: { _org: string }
+        Returns: {
+          email: string
+          full_name: string
+          geographic_scope_id: string
+          region_level: string
+          region_name: string
+          role_key: string
+          user_id: string
+        }[]
       }
       rg_remove_member: {
         Args: { _org: string; _user: string }
@@ -1096,6 +1112,16 @@ export type Database = {
       }
       rg_set_platform_role: {
         Args: { _email: string; _remove: boolean; _role: string }
+        Returns: undefined
+      }
+      rg_set_regional_member: {
+        Args: {
+          _geo: string
+          _org: string
+          _remove: boolean
+          _role: string
+          _user: string
+        }
         Returns: undefined
       }
       rg_set_team_member: {

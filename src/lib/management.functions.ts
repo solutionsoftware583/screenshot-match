@@ -553,3 +553,72 @@ export const respondInvitation = createServerFn({ method: "POST" })
     await rpc(context, "rg_respond_invitation", { _token: data.token, _accept: data.accept });
     return true;
   });
+
+// ---------- Regional team ----------
+export interface RegionalMember {
+  user_id: string;
+  email: string;
+  full_name: string | null;
+  role_key: string;
+  geographic_scope_id: string;
+  region_name: string;
+  region_level: string;
+}
+
+export const getRegionalTeam = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { orgId: string }) => ({ orgId: uuid(d?.orgId) }))
+  .handler(async ({ data, context }) => {
+    const s = context.supabase;
+    const [team, geos, mine, perms] = await Promise.all([
+      s.rpc("rg_regional_team", { _org: data.orgId }),
+      s.from("geographic_scopes").select("id, parent_id, level, name").eq("organization_id", data.orgId).order("name"),
+      s.from("organization_memberships").select("role_key, geographic_scope_id").eq("organization_id", data.orgId).eq("user_id", context.userId),
+      s.rpc("rg_org_permissions", { _org: data.orgId }),
+    ]);
+    for (const r of [team, geos, mine, perms]) fail(r.error);
+    const all = (geos.data ?? []) as { id: string; parent_id: string | null; level: string; name: string }[];
+    const isAdmin = ((perms.data ?? []) as string[]).includes("roles.assign");
+    const own = ((mine.data ?? []) as { role_key: string; geographic_scope_id: string | null }[])
+      .filter((m) => m.geographic_scope_id && m.role_key.endsWith("_manager"))
+      .map((m) => m.geographic_scope_id as string);
+    // Subtree of the caller's own regions (the database re-checks every write).
+    const allowed = new Set<string>(isAdmin ? all.map((g) => g.id) : own);
+    let grew = true;
+    while (grew) {
+      grew = false;
+      for (const g of all)
+        if (g.parent_id && allowed.has(g.parent_id) && !allowed.has(g.id)) {
+          allowed.add(g.id);
+          grew = true;
+        }
+    }
+    return {
+      isAdmin,
+      ownRegionIds: own,
+      regions: all.filter((g) => allowed.has(g.id)),
+      team: (team.data ?? []) as RegionalMember[],
+    };
+  });
+
+export const setRegionalMember = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: { orgId: string; userId: string; role: string; regionId: string; remove?: boolean }) => ({
+      orgId: uuid(d?.orgId),
+      userId: uuid(d?.userId),
+      role: str(d?.role, "Role", 50),
+      regionId: uuid(d?.regionId),
+      remove: !!d?.remove,
+    }),
+  )
+  .handler(async ({ data, context }) => {
+    await rpc(context, "rg_set_regional_member", {
+      _org: data.orgId,
+      _user: data.userId,
+      _role: data.role,
+      _geo: data.regionId,
+      _remove: data.remove,
+    });
+    return true;
+  });
