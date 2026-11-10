@@ -9,3 +9,6 @@
 - [x] Hide change buttons from Global Manager and Auditor
 - [x] Premium styling on Approvals, Notifications, Overview + screenshots of every role's dashboard
 - [x] Follow button on case pages (anyone who can view the case gets status notifications)
+- [ ] Regional team list: managers assign their own regional members, dashboards limited to region
+- [ ] Sender email domain so "Send from Rating Guard" actually emails the platform
+- [ ] Test: case with region → regional manager sees it; approval refused in other region
