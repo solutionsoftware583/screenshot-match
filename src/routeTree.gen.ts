@@ -48,6 +48,7 @@ import { Route as AuthenticatedAppIntegrationsRouteImport } from './routes/_auth
 import { Route as AuthenticatedAppInvitationsRouteImport } from './routes/_authenticated/app.invitations'
 import { Route as AuthenticatedAppNotificationsRouteImport } from './routes/_authenticated/app.notifications'
 import { Route as AuthenticatedAppProfileRouteImport } from './routes/_authenticated/app.profile'
+import { Route as AuthenticatedAppRegionalTeamRouteImport } from './routes/_authenticated/app.regional-team'
 import { Route as AuthenticatedAppRemovalsRouteImport } from './routes/_authenticated/app.removals'
 import { Route as AuthenticatedAppReportsRouteImport } from './routes/_authenticated/app.reports'
 import { Route as AuthenticatedAppRolesRouteImport } from './routes/_authenticated/app.roles'
@@ -270,6 +271,12 @@ const AuthenticatedAppProfileRoute = AuthenticatedAppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedAppRoute,
 } as any)
+const AuthenticatedAppRegionalTeamRoute =
+  AuthenticatedAppRegionalTeamRouteImport.update({
+    id: '/regional-team',
+    path: '/regional-team',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
 const AuthenticatedAppRemovalsRoute =
   AuthenticatedAppRemovalsRouteImport.update({
     id: '/removals',
@@ -369,6 +376,7 @@ export interface FileRoutesByFullPath {
   '/app/invitations': typeof AuthenticatedAppInvitationsRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
+  '/app/regional-team': typeof AuthenticatedAppRegionalTeamRoute
   '/app/removals': typeof AuthenticatedAppRemovalsRoute
   '/app/reports': typeof AuthenticatedAppReportsRoute
   '/app/roles': typeof AuthenticatedAppRolesRoute
@@ -418,6 +426,7 @@ export interface FileRoutesByTo {
   '/app/invitations': typeof AuthenticatedAppInvitationsRoute
   '/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/app/profile': typeof AuthenticatedAppProfileRoute
+  '/app/regional-team': typeof AuthenticatedAppRegionalTeamRoute
   '/app/removals': typeof AuthenticatedAppRemovalsRoute
   '/app/reports': typeof AuthenticatedAppReportsRoute
   '/app/roles': typeof AuthenticatedAppRolesRoute
@@ -471,6 +480,7 @@ export interface FileRoutesById {
   '/_authenticated/app/invitations': typeof AuthenticatedAppInvitationsRoute
   '/_authenticated/app/notifications': typeof AuthenticatedAppNotificationsRoute
   '/_authenticated/app/profile': typeof AuthenticatedAppProfileRoute
+  '/_authenticated/app/regional-team': typeof AuthenticatedAppRegionalTeamRoute
   '/_authenticated/app/removals': typeof AuthenticatedAppRemovalsRoute
   '/_authenticated/app/reports': typeof AuthenticatedAppReportsRoute
   '/_authenticated/app/roles': typeof AuthenticatedAppRolesRoute
@@ -524,6 +534,7 @@ export interface FileRouteTypes {
     | '/app/invitations'
     | '/app/notifications'
     | '/app/profile'
+    | '/app/regional-team'
     | '/app/removals'
     | '/app/reports'
     | '/app/roles'
@@ -573,6 +584,7 @@ export interface FileRouteTypes {
     | '/app/invitations'
     | '/app/notifications'
     | '/app/profile'
+    | '/app/regional-team'
     | '/app/removals'
     | '/app/reports'
     | '/app/roles'
@@ -625,6 +637,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app/invitations'
     | '/_authenticated/app/notifications'
     | '/_authenticated/app/profile'
+    | '/_authenticated/app/regional-team'
     | '/_authenticated/app/removals'
     | '/_authenticated/app/reports'
     | '/_authenticated/app/roles'
@@ -929,6 +942,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppProfileRouteImport
       parentRoute: typeof AuthenticatedAppRoute
     }
+    '/_authenticated/app/regional-team': {
+      id: '/_authenticated/app/regional-team'
+      path: '/regional-team'
+      fullPath: '/app/regional-team'
+      preLoaderRoute: typeof AuthenticatedAppRegionalTeamRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
     '/_authenticated/app/removals': {
       id: '/_authenticated/app/removals'
       path: '/removals'
@@ -1053,6 +1073,7 @@ interface AuthenticatedAppRouteChildren {
   AuthenticatedAppInvitationsRoute: typeof AuthenticatedAppInvitationsRoute
   AuthenticatedAppNotificationsRoute: typeof AuthenticatedAppNotificationsRoute
   AuthenticatedAppProfileRoute: typeof AuthenticatedAppProfileRoute
+  AuthenticatedAppRegionalTeamRoute: typeof AuthenticatedAppRegionalTeamRoute
   AuthenticatedAppRemovalsRoute: typeof AuthenticatedAppRemovalsRoute
   AuthenticatedAppReportsRoute: typeof AuthenticatedAppReportsRoute
   AuthenticatedAppRolesRoute: typeof AuthenticatedAppRolesRoute
@@ -1082,6 +1103,7 @@ const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
   AuthenticatedAppInvitationsRoute: AuthenticatedAppInvitationsRoute,
   AuthenticatedAppNotificationsRoute: AuthenticatedAppNotificationsRoute,
   AuthenticatedAppProfileRoute: AuthenticatedAppProfileRoute,
+  AuthenticatedAppRegionalTeamRoute: AuthenticatedAppRegionalTeamRoute,
   AuthenticatedAppRemovalsRoute: AuthenticatedAppRemovalsRoute,
   AuthenticatedAppReportsRoute: AuthenticatedAppReportsRoute,
   AuthenticatedAppRolesRoute: AuthenticatedAppRolesRoute,
