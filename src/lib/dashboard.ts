@@ -12,6 +12,7 @@ export const DASHBOARD_PRIORITY = [
   "state_manager",
   "divisional_manager",
   "district_manager",
+  "regional_member",
   "team_manager",
   "team_leader",
   "team_member",
@@ -113,6 +114,12 @@ export const DASHBOARDS: Record<DashboardRole, DashboardSpec> = {
   state_manager: geo("State Manager"),
   divisional_manager: geo("Divisional Manager"),
   district_manager: geo("District Manager"),
+  regional_member: {
+    title: "Regional team dashboard",
+    summary: "You see only cases in the region your manager assigned to you.",
+    metrics: ["regions"],
+    links: [{ label: "Cases", to: "/app/cases" }],
+  },
   team_manager: {
     title: "Team Manager dashboard",
     summary: "Teams you manage in your organization.",
