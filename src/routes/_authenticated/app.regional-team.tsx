@@ -56,7 +56,7 @@ function Page() {
 
   const d = q.data;
   const region = d?.regions.find((r) => r.id === regionId);
-  const role = kind === "member" ? "regional_member" : region ? ROLE_FOR_LEVEL[region.level] : "";
+  const role = kind === "member" ? "regional_member" : region ? (ROLE_FOR_LEVEL[region.level] ?? "") : "";
   const managerBlocked = kind === "manager" && !d?.isAdmin && !!region && d?.ownRegionIds.includes(region.id);
 
   return (
@@ -89,7 +89,7 @@ function Page() {
                       <select aria-label="Region" className="h-10 rounded-md border bg-background px-3 text-sm" value={regionId} onChange={(e) => setRegionId(e.target.value)}>
                         <option value="">Choose region…</option>
                         {d.regions.map((r) => (
-                          <option key={r.id} value={r.id}>{LEVEL_LABEL[r.level]}: {r.name}</option>
+                          <option key={r.id} value={r.id}>{LEVEL_LABEL[r.level] ?? r.level}: {r.name}</option>
                         ))}
                       </select>
                       <select aria-label="Role" className="h-10 rounded-md border bg-background px-3 text-sm" value={kind} onChange={(e) => setKind(e.target.value as "member" | "manager")}>
